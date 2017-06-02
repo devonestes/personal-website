@@ -13,10 +13,10 @@
    
 	<item>
 	  <title>A Full and Comprehensive Style Test</title>
-	  <link>/jasper//a-full-and-comprehensive-style-test</link>
+	  <link>//a-full-and-comprehensive-style-test/</link>
 	  <author>Casper McFadden</author>
-	  <pubDate>2014-09-27T11:18:00+01:00</pubDate>
-	  <guid>/jasper//a-full-and-comprehensive-style-test</guid>
+	  <pubDate>2014-09-27T12:18:00+02:00</pubDate>
+	  <guid>//a-full-and-comprehensive-style-test/</guid>
 	  <description><![CDATA[
 	     <p>This is just an <em>ipsis verbis</em> copy of the first example running on the <a href="http://demo.ghost.io">Ghost Demo</a>. This shows how you can use html styling to achieve your hopes.</p>
 
@@ -136,11 +136,66 @@
 
 <p>Code can be presented inline, like <code>&lt;?php bloginfo('stylesheet_url'); ?&gt;</code>, or within a <code>&lt;pre&gt;</code> block. Because we have more specific typographic needs for code, we’ll specify Consolas and Monaco ahead of the browser-defined monospace font.</p>
 
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nf">#container</span> <span class="p">{</span>
-    <span class="k">float</span><span class="o">:</span> <span class="k">left</span><span class="p">;</span>
-    <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="m">-240px</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span>
-    <span class="k">width</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+<p>Code blocks can also be inserted with the highlight tag as below:</p>
+<pre>
+    
+    {% highlight language-x %}
+    # some code
+    {% endhighlight %}
+    
+</pre>
+
+<p>More information about code highlighting in jekyll can be found  <a href="https://jekyllrb.com/docs/templates/#code-snippet-highlighting">in Jekyll documentation</a>.</p>
+
+<p>These area a couple of examples showing the resulting highlighted code:</p>
+
+<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="c">/* css code sample */</span>
+<span class="nf">#container</span> <span class="p">{</span>
+    <span class="nl">float</span><span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span> <span class="m">-240px</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
+
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// javascript code sample</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+  <span class="na">type</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'backend.php'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:</span> <span class="s2">"q="</span><span class="o">+</span><span class="nx">myform</span><span class="p">.</span><span class="nx">serialize</span><span class="p">(),</span>
+  <span class="na">success</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="c1">// on success use return data here</span>
+  <span class="p">},</span>
+  <span class="na">error</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span> <span class="nx">type</span><span class="p">,</span> <span class="nx">exception</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// if ajax fails display error alert</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">"ajax error response type "</span><span class="o">+</span><span class="nx">type</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span></code></pre></figure>
+
+<p>Now you can also use <a href="https://highlightjs.org/">highlight.js</a>.
+For more on how to use it and on the available styles check their
+<a href="https://highlightjs.org/static/demo/">demo</a> and
+<a href="http://highlightjs.readthedocs.org/en/latest/">documentation</a> pages.</p>
+
+<div class="system">
+<pre><code class="swift">// Swift code sample
+import Foundation
+
+@objc class Person: Entity {
+  var name: String!
+  var age:  Int!
+
+  init(name: String, age: Int) {
+    /* /* ... */ */
+  }
+
+  // Return a descriptive string for this person
+  func description(offset: Int = 0) -> String {
+    return "\(name) is \(age + offset) years old"
+  }
+}
+</code></pre>
+</div>
+
 
 <hr />
 
@@ -372,7 +427,7 @@ c.draw = function() {
 
 <p></div><script async src="//codepen.io/assets/embed/ei.js"></script></p>
 
-<p>Isn't it beautiful.</p>
+<p>Isn't it beautiful?</p>
 	  ]]></description>
 	</item>
 
