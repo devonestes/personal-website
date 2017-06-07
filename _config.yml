@@ -2,28 +2,22 @@
 markdown: kramdown
 highlighter: rouge
 paginate: 5
-language: 'en-uk'
+language: 'en-us'
 
 # Website info
-name: 'Finding The Way Home'
-description: "A beautiful narrative written with the world's most elegant publishing platform. The story begins here."
+name: 'Devon C. Estes'
 
 # Author's info
-author: 'Casper McFadden'
-# edit 'categories' in the front matter of every post to match this username
-nickname: casper
-bio: 'A paranormal expert and his daughter bunk in an abandoned house populated by 3 mischievous ghosts and one friendly one.'
-location: 'Maine, USA'
-url: 'http://biomadeira.github.io/jasper/'
-image: 'assets/images/casper.png'
+author: 'Devon C. Estes'
+nickname: devon
+bio: 'Ruby and Elixir developer, chess player, and American living in Germany'
+location: 'Berlin, Germany'
+url: 'http://www.devonestes.com'
+image: 'assets/images/cropped_headshot.jpg'
+short_url: 'http://www.devonestes.com'
 
-short_url: 'biomadeira.github.io/jasper/'
-# edit baseurl to simply '/' if using as your personal page (instead of a project page)
 baseurl: /
-
-# Permalinks
 permalink: /:title/
-
 
 # gems and other configs
 gems: [jekyll-paginate]
@@ -38,3 +32,16 @@ exclude:
   - "*.Rmd"
   - vendor
   - .travis.yml
+  - Procfile
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      logo: "assets/images/logo.png"
+      navigation: True
+      subclass: 'post tag-test tag-content'
+      categories: 'devon'
