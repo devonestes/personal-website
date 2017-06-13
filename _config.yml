@@ -1,7 +1,7 @@
-# Jykell configuration
+# Jekyll configuration
 markdown: kramdown
 highlighter: rouge
-paginate: 5
+paginate: 7
 language: 'en-us'
 
 # Website info

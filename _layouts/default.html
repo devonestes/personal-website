@@ -39,18 +39,11 @@
         <!-- [[! Everything else gets inserted here ]] -->
         {{ content }}
 
-        <footer class="site-footer clearfix">
-          <section class="copyright"><a href="{{ site.baseurl }}">{{ site.name }}</a> &copy; {{  site.time | date: '%Y' }}</section>
-          <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> using <a href="https://github.com/biomadeira/jasper">Jasper</a></section>
-        </footer>
     </div>
     <!-- [[! Ghost outputs important scripts and data with this tag ]] -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <!-- [[! The main JavaScript file for Casper ]] -->
     <script type="text/javascript" src="{{ site.baseurl }}assets/js/jquery.fitvids.js"></script>
     <script type="text/javascript" src="{{ site.baseurl }}assets/js/index.js"></script>
-
-    <!-- Add Google Analytics  -->
-    {% include analytics.html %}   
 </body>
 </html>

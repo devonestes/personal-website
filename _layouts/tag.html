@@ -1,20 +1,16 @@
 ---
 layout: default
-cover: 'assets/images/cover2.jpg'
 class: 'tag-template'
 navigation: True
-logo: 'assets/images/ghost.png'
+logo: "assets/images/logo.png"
 current: tag
 ---
 
 <!-- < dynamically overriding backgrounds for tags as well as descriptions -->
-{% if page.url contains 'fables' %}
-   {% assign tag_description='A series of short stories that make you think.' %}
-{% elsif page.url contains 'speeches' %}
-    {% assign new_cover='assets/images/cover7.jpg' %}
-    {% assign tag_description='Some of the greatest words ever spoken.' %}
-{% elsif page.url contains 'fiction' %}
-    {% assign new_cover='assets/images/cover1.jpg' %}
+{% if page.url contains 'Elixir' %}
+   {% assign tag_description='Posts on my favorite functional language' %}
+{% elsif page.url contains 'Ruby' %}
+    {% assign tag_description='Posts on my first programming language love' %}
 {% endif %}
 
 <!-- < default}} -->
