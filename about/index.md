@@ -7,7 +7,7 @@ logo: 'assets/images/logo.png'
 current: about
 ---
 
-Howdy! My name is Devon, and I write code. Most of the time when I'm writing code people pay me to do it, but sometimes I write code just for fun! When I'm writing code for fun, I like contributing to [Scenic](https://github.com/thoughtbot/scenic), [Credo](https://github.com/rrrene/credo), [Benchee](https://github.com/PragTob/benchee), and I'm one of the maintainers of the [Elixir track](https://github.com/exercism/xelixir) on [exercism.io](https://www.exercism.io). If you hadn't guessed, open source is pretty important to me. You can see all my open source stuff on my [GitHub profile](https://github.com/devonestes).
+Howdy! My name is Devon, and I write code. Most of the time when I'm writing code people pay me to do it, but sometimes I write code just for fun! When I'm writing code for fun, I like contributing to [Scenic](https://github.com/thoughtbot/scenic), [Credo](https://github.com/rrrene/credo), [Benchee](https://github.com/PragTob/benchee), and I'm one of the maintainers of the [Elixir track](https://github.com/exercism/elixir) on [exercism.io](https://www.exercism.io). If you hadn't guessed, open source is pretty important to me. You can see all my open source stuff on my [GitHub profile](https://github.com/devonestes).
 
 I also do other things for fun, like spending time with my family, playing chess, and studying German. Well, to be honest, studying German isn't _really_ for fun, but mostly because I live in Germany, and speaking German is a really useful skill to have when you live in Germany. I've lived in Berlin since 2015, and before that I lived in California and New York (although never at the same time).
 
