@@ -62,7 +62,7 @@ really a great fit for that language.
 
 In programming we generally revere experience, but we need to be careful to only do so when it's been _proven_ to
 be a marker of someone who contributes high-quality code. Funny enough, in the
-medical example I gave enough, there actually was one place where experience
+medical example I gave above, there actually was one place where experience
 correlated highly with positive outcomes, and that was in surgery. Until we know
 which side of the spectrum we fall on as software developers, we should be much
 more careful about how we prejudge those with experience to be inherintly
