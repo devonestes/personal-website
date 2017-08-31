@@ -1,6 +1,7 @@
 ---
 title: Experience is Ruining Software
 tags: OSS Software 
+description: Experience isn't always helpful, and it often doesn't mean what we think it means. The correlation between years of experience and the ability to meaningfully contribute to a team has yet to be proven, so we shouldn't rely on that as a key indicator of potential.
 date: 2017-06-25 10:18:00
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: Replacing Inheritance with Composition
 tags: Inheritance Composition OOP Refactoring
+description: In general I really like composition over inheritance in my Ruby code. Yes, there are times when inheritance is cool, but in my mind if you're going to use inheritance you need to really nail it
 date: 2016-07-16 10:18:00
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: On Programmers and Labor Markets 
 tags: refactoring Elixir Testing
+description: It looks like I'm going to have to learn some new things for work soon (specifically some machine learning stuff). This isn't at the top of my list of things I want to be learning, but since my manager said that it’s likely 
 date: 2017-02-17 10:18:00
 ---
 

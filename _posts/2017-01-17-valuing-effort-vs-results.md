@@ -1,6 +1,7 @@
 ---
 title: Valuing Effort vs. Results 
 tags: Germany Visas Remote 
+description: After a very long and drawn out process, I finally got my residence permit here in Germany today! In the end I had to hire a lawyer to help me through the process, which turned out to be rather expensive.
 date: 2017-01-17 10:18:00
 ---
 

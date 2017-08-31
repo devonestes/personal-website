@@ -1,6 +1,7 @@
 ---
 title: Patronizing Open Source
 tags: OSS Economics 
+description: In this week's episode of The Bikeshed, Sean Griffin went through some of his issues with funding open source work through services such as Patreon, which allow individuals or companies to contribute to an individual or group on a
 date: 2017-07-18 10:18:00
 ---
 

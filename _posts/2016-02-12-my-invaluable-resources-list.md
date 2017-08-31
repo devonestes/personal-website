@@ -1,6 +1,7 @@
 ---
 title: My Invaluable Resources List
 tags: Elixir Ruby Screencasts Podcasts Golang
+description: Quite a few folks have asked me in the recent past about stuff I read / watch / listen to that is related to programming / tech. I'm a big fan of learning cool new stuff, and over the years I've put
 date: 2016-02-12 10:18:00
 ---
 

@@ -1,8 +1,10 @@
 ---
 title: Ruby vs. Elixir - Projects & People edition
 tags: RailsConf ElixirConf.eu Ruby Elixir 
+description: I haven't been writing as much these days because I was super busy preparing two talks for two very different conferences at the same time. The first was RailsConf, and the second was ElixirConf.eu, and both of these happened just 5 days apart from each other. For the second time in 12 months, I've had the opportunity to attend two very different conferences just a couple days apart from each other. But despite the differences, there were also a lot of similarities. Let's start there first.
 date:   2017-05-09 10:18:00
 ---
+
 I haven't been writing as much these days because I was _super_ busy preparing two talks for two very different conferences at the same time. The first was RailsConf, and the second was ElixirConf.eu, and both of these happened just 5 days apart from each other. For the second time in 12 months, I've had the opportunity to attend two very different conferences just a couple days apart from each other. But despite the differences, there were also a lot of similarities. Let's start there first.
 
 ##### "Where are we going?"

@@ -1,6 +1,7 @@
 ---
 title: My New Favorite Elixir Testing Trick 
 tags: Elixir TDD Testing
+description: When I write my Ruby tests, I'm a big fan of using test doubles and asserting those doubles receive messages with the correct arguments. I guess I like to practice what Justin Searls calls Discovery Testing
 date: 2017-07-13 10:18:00
 ---
 

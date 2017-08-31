@@ -1,6 +1,7 @@
 ---
 title: Code Like an Economist
 tags: Testing Economics RSpec 
+description: I love learning about economics - especially behaviorial economics - so of course, I love the Freakonomics podcast & blog and such. One of the really awesome things that they've covered several times is
 date: 2016-11-15 10:18:00
 ---
 

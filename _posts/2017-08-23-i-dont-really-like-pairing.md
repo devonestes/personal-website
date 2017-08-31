@@ -1,6 +1,7 @@
 ---
 title: I don't really like pairing (but I want to)
 tags: pairing XP 
+description: Yeah, you read that title right. I've tried to do it many times over the past few years, and I've just never felt like it was helpful or enjoyable.
 date: 2017-08-23 00:18:00
 ---
 

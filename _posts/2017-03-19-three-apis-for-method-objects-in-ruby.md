@@ -1,6 +1,8 @@
 ---
 title: Three APIs for Method Objects in Ruby
 tags: APIs Testing Singleton 
+description: I've written (and spoken) before about my love of Method Objects in Ruby, but there's one very important thing I wanted to cover in more depth - the API of a method object. There are three different ones that I see, and I think two of them have really good, clear use cases. Let's start with one that we'll call the Stateful Method Object.
+
 date: 2017-03-19 10:18:00
 ---
 ####TLDR;

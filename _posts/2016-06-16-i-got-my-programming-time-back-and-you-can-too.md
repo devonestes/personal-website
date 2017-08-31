@@ -1,6 +1,7 @@
 ---
 title: I Got My Programming Time Back And So Can You
 tags: hacks schedules
+description: I usually work remotely from Berlin (or wherever my family happens to be at the moment, which today is Sacramento), which I really like, but recently I spent about a month in the office. It was great seeing all my colleagues 
 date: 2016-06-16 10:18:00
 ---
 I usually work remotely from Berlin (or wherever my family happens to be at the moment, which today is Sacramento), which I really like, but recently I spent about a month in the office. It was great seeing all my colleagues in person again and having more time to spend with them, but one thing I quickly noticed was that when I got to San Francisco, all my coding time mysteriously dissappeared! I use RescueTime to track my productivity, and while I was working remotely from Berlin I averaged about 25 hours a week of actual time doing things that I considered 'programming' - pretty much any time spent on GitHub reviewing PRs, in the terminal (including vim), in documentation on Dash, or time spent on localhost:3000. But in my first three weeks in the office, I was averaging only about 17 hours per week, and even though I was spending about 33% less time programming, I felt that I was at least half as productive if not less. So what happened?!?

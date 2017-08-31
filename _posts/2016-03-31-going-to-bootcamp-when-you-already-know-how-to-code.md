@@ -1,6 +1,7 @@
 ---
 title: Going To Bootcamp When You Already Know How To Code
 tags: Bootcamps
+description: I went to Dev Bootcamp in 2014, but when I signed up to drop $12,000 to "learn to code", I already knew how to code. I had taught myself Python and written Django apps, taught myself Ruby and 
 date: 2016-03-31 10:18:00
 ---
 

@@ -1,6 +1,7 @@
 ---
-title: 
-tags: 
+title: Thinking about a development philosophy
+tags: XP Philosophy
+description: I've been thinking a lot about my "development philosophy" recently thanks to some great input from a new team member at ESH. It's really impressed upon me again the importance of having a
 date: 2016-04-12 10:18:00
 ---
 

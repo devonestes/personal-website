@@ -1,6 +1,7 @@
 ---
 title: The European Ruby Revolution 
 tags: OSS RubyDay RubyConf Ruby 
+description: I've just returned from RubyDay 2016 in Florence (which is absolutely beautiful, by the way), where I gave a talk encouraging folks to think more about the future of Ruby in today's multi-core world.
 date: 2016-11-16 10:18:00
 ---
 

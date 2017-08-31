@@ -1,6 +1,7 @@
 ---
 title: Go and Elixir - Separated at Birth?
 tags: Ruby Golang Elixir Concurrency
+description: Elixir (and Erlang for that matter) handles concurrency in a really neat way - with single responsibility processes, aka the Actor model. Spawning multiple processes certainly isn't exclusive to Elixir / Erlang, and neith
 date: 2016-01-19 10:18:00
 ---
 

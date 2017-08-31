@@ -1,6 +1,7 @@
 ---
 title: Average != Normal
 tags: Statistics Performance
+description: One of my biggest pet peeves is when I hear weather reports saying something like 'It's 20 degrees above normal today'. I've lived in New York, Pittsburgh, San Francisco and now Berlin, and I feel like only one of
 date: 2016-02-23 10:18:00
 ---
 

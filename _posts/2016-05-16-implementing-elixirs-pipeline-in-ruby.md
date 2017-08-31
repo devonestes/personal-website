@@ -1,8 +1,10 @@
 ---
 title: Implementing Elixir's Pipeline in Ruby
 tags: Elixir Ruby FP Pipeline 
+description: I've been really loving Elixir, and one of the things I've loved the most is the pipeline operator |>. You see it in cases like this
 date: 2016-05-16 10:18:00
 ---
+
 I've been really loving Elixir, and one of the things I've loved the most is the pipeline operator `|>`. You see it in cases like this:
 
 {% highlight elixir %}

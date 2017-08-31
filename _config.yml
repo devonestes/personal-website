@@ -16,6 +16,7 @@ url: 'http://www.devonestes.com'
 image: 'assets/images/cropped_headshot.jpg'
 short_url: 'http://www.devonestes.com'
 
+t_description: 'An (at least) monthly weblog of thoughts on software'
 baseurl: /
 permalink: /:title/
 

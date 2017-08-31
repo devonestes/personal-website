@@ -1,6 +1,7 @@
 ---
 title: What Do I Want To Do Next?
 tags: Decisions Jobs
+description: One of the reasons I was really amped about joining the team at EducationSuperHighway was because the problem we were setting out to solve was one that I felt could be solved rather easily. We've already made great strides towards solving 
 date: 2015-12-15 10:18:00
 ---
 

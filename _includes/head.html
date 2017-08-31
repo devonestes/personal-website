@@ -9,11 +9,27 @@
     <meta property="og:url" content="{{ site.baseurl }}" />
     <meta property="og:image" content="{{ site.baseurl }}assets/images/logo.png" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="{{ site.name }}" />
-    <meta name="twitter:description" content="{{ site.description }}" />
-    <meta name="twitter:url" content="{{ site.baseurl }}" />
-    <meta name="twitter:image:src" content="{{ site.baseurl }}assets/images/logo.png" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@devoncestes">
+    <meta name="twitter:creator" content="@devoncestes">
+
+    {% if page.title %}
+      <meta name="twitter:title" content="{{ page.title }}">
+    {% else %}
+      <meta name="twitter:title" content="{{ site.title }}">
+    {% endif %}
+
+    {% if page.url %}
+      <meta name="twitter:url" content="{{ site.url }}{{ page.url }}">
+    {% endif %}
+
+    {% if page.description %}
+      <meta name="twitter:text:description" content="{{page.description}}">
+    {% else %}
+      <meta name="twitter:text:description" content="An (at least) monthly weblog about software">
+    {% endif %}
+
+    <meta name="twitter:image:src" content="{{ site.url }}/assets/images/cropped_headshot.jpg">
 
     <script type="application/ld+json">
 {

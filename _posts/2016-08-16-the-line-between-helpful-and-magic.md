@@ -1,6 +1,7 @@
 ---
 title: The Line Between Helpful and Magic 
 tags: OOP Registry Inheritance Composition Refactoring
+description: In general I prefer composition over inheritance. However, recently there were a couple bugs around a certain group of objects in our codebase that pointed out a refactoring that was begging to be made
 date: 2016-08-16 10:18:00
 ---
 

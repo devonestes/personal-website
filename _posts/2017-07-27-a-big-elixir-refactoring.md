@@ -1,12 +1,13 @@
 ---
 title: A Big Elixir Refactoring 
 tags: Elixir Refactoring 
+description: I've just finished my first really substantial refactoring of someone else's code in Elixir. I wanted to make some changes to Benchee so that it would be easier to add another feature later on. We needed a new data model, and there
 date: 2017-07-27 00:18:00
 ---
 
 I've just finished my first really substantial refactoring of someone else's
 code in Elixir. I wanted to make some changes to Benchee so that it would be
-easeir to add another feature later on. We needed a new data model, and there
+easier to add another feature later on. We needed a new data model, and there
 were some concepts that I felt needed a little shaking out and naming.
 Today I'm going to cover some of the reasons for this refactoring, as well as
 some of what I learned both specifically and in general about refactoring

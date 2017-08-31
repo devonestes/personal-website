@@ -1,6 +1,7 @@
 ---
 title: Refactoring for Tests in Elixir 
 tags: refactoring Elixir Testing
+description: I've been turning something over in my mind recently, so I'm going to try and write down some of these thoughts to get some clarity around my thinking here. Now that my talks are over for a while, I'm able to dive back 
 date: 2017-05-25 10:18:00
 ---
 
