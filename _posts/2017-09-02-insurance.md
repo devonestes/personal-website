@@ -1,13 +1,13 @@
 ---
 title: Insurance
 tags: Refactoring Design OOP
-description: I come from America. It's a beautiful, but dangerous, place. We have all sorts of terrible natural disasters that can strike at any moment, and without warning. Hurricaines, tornados, earthquakes, wildfires, volcanos, tsunamis, blizzards,
+description: I come from America. It's a beautiful, but dangerous, place. We have all sorts of terrible natural disasters that can strike at any moment, and without warning. Hurricanes, tornadoes, earthquakes, wildfires, volcanoes, tsunamis, blizzards,
 date: 2017-09-01 00:18:00
 ---
 
 I come from America. It's a beautiful, but dangerous, place. We have all sorts of
 terrible natural disasters that can strike at any moment, and without warning.
-Hurricaines, tornados, earthquakes, wildfires, volcanos, tsunamis, blizzards,
+Hurricanes, tornadoes, earthquakes, wildfires, volcanoes, tsunamis, blizzards,
 avalanches, [killer meteors](https://en.wikipedia.org/wiki/Chesapeake_Bay_impact_crater#Formation_and_aftermath) - Nature seems to really have it out for us!
 
 So, we do what any reasonable person would do and we buy insurance. This
@@ -31,7 +31,7 @@ factored code!
 Pretty much everything we call "good OO design" is intended to make it easier to
 change code. Every design pattern, the SOLID principles, all of it. And so we
 create more abstractions, decouple every part of our system, shore up our
-inheritance heirarchies - maybe even move to microservices - and wait for that
+inheritance hierarchies - maybe even move to microservices - and wait for that
 dreaded moment when we have to do something.
 
 And then the thing we're asked to do is actually kind of easy. We would have
@@ -56,7 +56,7 @@ In the real world if there's a tornado bearing down on your house, you can't
 call up and get insurance for the impending disaster. In software, you can. **You
 don't need the insurance.** Take advantage of this fact to avoid premature
 complexity and make changes only at the last minute. Hold on to simplicity until
-something rips it from your hand. Fight valliently against abstraction until it
+something rips it from your hand. Fight valiantly against abstraction until it
 finally begs to be there. We don't need existing abstractions to feel good
 about our code - we should instead rely on our faith in our ability to make
 abstractions when needed to feel prepared for any disaster that might come
