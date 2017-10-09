@@ -1,7 +1,7 @@
 ---
 title: Everything you need to know about Elixir's new formatter 
 tags: Elixir Formatter 1.6 
-description: 
+description: It's been a big weekend! The new formatter that José mentioned in his ElixirConf talk is finally here! It landed on Sunday, and that means we can now poke around
 date: 2017-10-09 00:18:00
 ---
 
