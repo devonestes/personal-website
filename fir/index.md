@@ -1,13 +1,13 @@
 ---
 layout: page
-title: Functions in Ruby Mailing List
+title: Joy of Ruby Mailing List
 class: 'post'
 navigation: True
 logo: 'assets/images/logo.png'
 current: fir
 ---
 
-Sign up here and I'll send you some free excerpts from "Functions in Ruby", and
+Sign up here and I'll send you some free excerpts from _The Joy of Ruby_, and
 a notice on where you can buy it (probably with some sort of discount code) when
 it's available!
 
