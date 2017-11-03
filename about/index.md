@@ -20,4 +20,10 @@ Occasionally I also get up in front of people to talk about things that are inte
 * The Beginner's Guide to Open Source - Newbie Remote Conf 2016
 * The "New" Attributes API in Rails 5 - Fog City Ruby 2016
 
+If you want to hear me talk about things on the internet, I've also been on a couple podcasts. You can check those out here:
+
+* [Ruby Rogues 295](https://devchat.tv/ruby-rogues/rr-295-the-european-ruby-community-with-devon-c-estes)
+* [My Ruby story 003](https://devchat.tv/ruby-rogues/my-ruby-story-devon-c-estes)
+* [Ruby Rogues 330](https://devchat.tv/ruby-rogues/rr-330-functions-vs-methods-devon-estes)
+
 Want to get in touch with me? I'd love that! The best way to reach me is on twitter at [@devoncestes](https://www.twitter.com/devoncestes), and I occasionally respond to emails at `devon.c.estes AT gmail DOT com`.
