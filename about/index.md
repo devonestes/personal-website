@@ -13,6 +13,7 @@ I also do other things for fun, like spending time with my family, playing chess
 
 Occasionally I also get up in front of people to talk about things that are interesting to me. Here's a partial list of some of the talks and workshops I've given:
 
+* It's a Small World - [LambdaDays](http://www.lambdadays.org/lambdadays2018/devon-estes) 2018 and Elixir Berlin 2018
 * Functions in Ruby - [Ruby Dev Summit](https://rubydevsummit.com/) 2017 and Ruby User Group Berlin (RUG::B) 2017
 * Refactoring Elixir: Lessons Learned From A Year on Exercism.io - [ElixirConf.eu](https://www.youtube.com/watch?v=tJJMrtJEK1A) 2017 and Elixir Berlin 2017
 * Make Your Life Easier with Shell Scripting and UNIX Tools - RailsConf 2017
