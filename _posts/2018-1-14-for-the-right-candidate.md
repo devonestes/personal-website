@@ -2,7 +2,7 @@
 title: "For the right candidate" 
 tags: Remote Work 
 description: I recently went through the process of looking for a new job. I've been a remote worker for the last 6 years, and I really like the flexibility of working remotely. 
-date: 2017-12-14 00:18:00
+date: 2018-1-14 00:18:00
 ---
 
 I recently went through the process of looking for a new job. I've been a remote
