@@ -95,3 +95,9 @@ I guess there's still some value in using module attributes as constants since
 they provide a message to the developer reading the code about how they're
 supposed to be used, but without a performance benefit I'm less sure if this is
 a really desirable use case. What's the real benefit here over a function?
+
+### Addendum
+
+After I posted this, of course Michał shared a really good use case for
+constants stored as module attributes instead of a function.
+{% twitter https://twitter.com/michalmuskala/status/964113147299880960 %}
