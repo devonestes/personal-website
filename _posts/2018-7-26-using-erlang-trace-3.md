@@ -1,7 +1,7 @@
 ---
 title: Using :erlang.trace/3 to listen to garbage collection events 
 tags: Elixir
-description: 
+description: I recently did a lot of traveling, which is why I haven't written for a while. In those travels, I got to meet some new Elixir friends, and we even went over some code together.
 date: 2018-7-26 00:18:00
 ---
 
