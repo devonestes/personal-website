@@ -1,7 +1,7 @@
 ---
 title: Writing custom Credo checks 
 tags: Elixir Credo
-description: 
+description: I love automation of things. I especially love automating the simple parts of code review, since much of that stuff can be easily automated with static analysis tools.
 date: 2018-8-29 00:18:00
 ---
 
