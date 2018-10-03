@@ -1,4 +1,8 @@
+require 'bundler'
 require 'bundler/inline'
+
+Bundler.settings.instance_variable_set(:@local_config, {})
+Bundler.settings.instance_variable_set(:@global_config, {})
 
 gemfile do
   source 'https://rubygems.org'
