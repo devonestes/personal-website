@@ -13,6 +13,8 @@ I also do other things for fun, like spending time with my family, playing chess
 
 Occasionally I also get up in front of people to talk about things that are interesting to me. Here's a partial list of some of the talks and workshops I've given:
 
+* Inside memory management on the BEAM - [Code BEAM Lite Munich](https://www.youtube.com/watch?v=fAeLuZN7J6Y) 2018
+* Digging through the garbage - [Code BEAM Lite Berlin](https://www.youtube.com/watch?v=aqLujfzvUgM) 2018 and Elixir Berlin 2019
 * It's a Small World - [LambdaDays](http://www.lambdadays.org/lambdadays2018/devon-estes) 2018 and Elixir Berlin 2018
 * Functions in Ruby - [Ruby Dev Summit](https://rubydevsummit.com/) 2017 and Ruby User Group Berlin (RUG::B) 2017
 * Refactoring Elixir: Lessons Learned From A Year on Exercism.io - [ElixirConf.eu](https://www.youtube.com/watch?v=tJJMrtJEK1A) 2017 and Elixir Berlin 2017
@@ -23,6 +25,8 @@ Occasionally I also get up in front of people to talk about things that are inte
 
 If you want to hear me talk about things on the internet, I've also been on a couple podcasts. You can check those out here:
 
+* [Elixir Mix 30](https://devchat.tv/elixir-mix/emx-030-writing-great-unit-tests-with-devon-estes/)
+* [Elixir Mix 18](https://devchat.tv/elixir-mix/emx-018-devon-estes-all-in-on-elixir/)
 * [Ruby Rogues 295](https://devchat.tv/ruby-rogues/rr-295-the-european-ruby-community-with-devon-c-estes)
 * [My Ruby story 003](https://devchat.tv/ruby-rogues/my-ruby-story-devon-c-estes)
 * [Ruby Rogues 330](https://devchat.tv/ruby-rogues/rr-330-functions-vs-methods-devon-estes)
