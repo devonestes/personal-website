@@ -25,10 +25,11 @@ Occasionally I also get up in front of people to talk about things that are inte
 
 If you want to hear me talk about things on the internet, I've also been on a couple podcasts. You can check those out here:
 
+* [Elixir Talk 137](https://soundcloud.com/elixirtalk/episode-137-feat-devon-estes-benchee-assertions-and-opera-who-knew)
 * [Elixir Mix 30](https://devchat.tv/elixir-mix/emx-030-writing-great-unit-tests-with-devon-estes/)
 * [Elixir Mix 18](https://devchat.tv/elixir-mix/emx-018-devon-estes-all-in-on-elixir/)
-* [Ruby Rogues 295](https://devchat.tv/ruby-rogues/rr-295-the-european-ruby-community-with-devon-c-estes)
-* [My Ruby story 003](https://devchat.tv/ruby-rogues/my-ruby-story-devon-c-estes)
 * [Ruby Rogues 330](https://devchat.tv/ruby-rogues/rr-330-functions-vs-methods-devon-estes)
+* [My Ruby story 003](https://devchat.tv/ruby-rogues/my-ruby-story-devon-c-estes)
+* [Ruby Rogues 295](https://devchat.tv/ruby-rogues/rr-295-the-european-ruby-community-with-devon-c-estes)
 
 Want to get in touch with me? I'd love that! The best way to reach me is on twitter at [@devoncestes](https://www.twitter.com/devoncestes), and I occasionally respond to emails at `devon.c.estes AT gmail DOT com`.
