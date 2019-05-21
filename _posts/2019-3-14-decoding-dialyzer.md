@@ -165,7 +165,7 @@ particular function. In this case, `String.t()` is more strict than just
 binary.
 
 So, how to resolve this warning? Well, you need to use the function according
-to how that functions wants to be used! In this case, we need to change
+to how that function wants to be used! In this case, we need to change
 `concat("string", :atom)` to `concat(:atom, "string")` so the arguments are in
 the correct order. Once we've done that we can re-run Dialyzer and see that we
 now have no more warnings - bug found and fixed!
