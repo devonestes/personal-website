@@ -6,7 +6,7 @@ Bundler.settings.instance_variable_set(:@global_config, {})
 
 gemfile do
   source 'https://rubygems.org'
-  gem 'unf_ext', '0.0.7.5'
+  gem 'unf_ext', '0.0.7.1'
   gem 'twitter', '6.2.0'
 end
 
