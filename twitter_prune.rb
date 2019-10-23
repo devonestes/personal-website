@@ -6,7 +6,8 @@ Bundler.settings.instance_variable_set(:@global_config, {})
 
 gemfile do
   source 'https://rubygems.org'
-  gem 'twitter'
+  gem 'unf_ext', '0.0.7.1'
+  gem 'twitter', '6.2.0'
 end
 
 client = Twitter::REST::Client.new do |config|

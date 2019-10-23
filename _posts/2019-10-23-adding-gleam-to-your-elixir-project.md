@@ -1,14 +1,12 @@
 ---
 title: Adding Gleam to your Elixir project
 tags: Elixir Gleam umbrella
-description: There's a really cool new BEAM language out there called Gleam. It's super early
-days for the language, but wht it offers (strong type safety) I think is worth
-some experimentation for folks that are interested.
+description: There's a really cool new BEAM language out there called Gleam. It's super early days for the language, but what it offers (strong type safety) I think is worth some experimentation for folks that are interested.
 date: 2019-10-23 00:18:00
 ---
 
-There's a really cool new BEAM language out there called Gleam. It's super early
-days for the language, but wht it offers (strong type safety) I think is worth
+There's a really cool new BEAM language out there called [Gleam](https://gleam.run/). It's super early
+days for the language, but what it offers (strong type safety) I think is worth
 some experimentation for folks that are interested. Lucky enough for those of us
 currently using Elixir it's trivially easy to use Gleam code in your Elixir
 applications. Today I'm going to show you how.
