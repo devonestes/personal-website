@@ -169,7 +169,7 @@ affects how Ecto works, and you can see that by looking at that Repo. It's
 totally normal with the exception of that one additional function, and that
 function itself is fairly normal as well.
 
-What's going on in `soft_delete/1` is we have an `Ecto.Multi` operation, and the
+What's going on in `hard_delete/1` is we have an `Ecto.Multi` operation, and the
 first thing we do is to disable the Postgres trigger that we set to do soft
 deletes for us. Once that's disabled, we actually delete the record as we
 normally would, and once that's done we re-enable the trigger again so we go
