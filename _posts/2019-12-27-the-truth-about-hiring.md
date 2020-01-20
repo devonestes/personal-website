@@ -41,8 +41,8 @@ Yes, on the whole Elixir is a tiny, niche language. There are not many
 developers compared to the other languages. This leads companies to say "if we
 choose JavaScript/Java/Python we'll have an easier time hiring - look at all
 these developers we have to choose from!" This is a totally reasonable thing to
-thing to assume, but this doesn't mean you'll have an easy time actually
-_hiring_ one of those developers!
+assume, but this doesn't mean you'll have an easy time actually _hiring_ one of
+those developers!
 
 Because this line of thought is so common, that means that out of the 20,000
 open software development jobs, there are probably **7,000** for JavaScript,
