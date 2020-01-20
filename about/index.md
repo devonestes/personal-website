@@ -13,11 +13,14 @@ I also do other things for fun, like spending time with my family, playing chess
 
 Occasionally I also get up in front of people to talk about things that are interesting to me. Here's a partial list of some of the talks and workshops I've given:
 
+* Elixir Testing - From Zero to Hero - [ElixirConfEU](http://www.elixirconf.eu/#speakers) 2020
+* Embedded Application Development (for Web Developers) - [GOTO Berlin](https://gotober.com/2019/sessions/980/embedded-application-development-for-web-developers) 2019
+* Comparing common concurrency patterns in Elixir and Erlang - [Code BEAM Lite Berlin](https://codesync.global/conferences/code-beam-lite-berlin-2019/#speakers) 2019 and [LambdaDays](https://www.lambdadays.org/lambdadays2020/devon-estes) 2020
 * Inside memory management on the BEAM - [Code BEAM Lite Munich](https://www.youtube.com/watch?v=fAeLuZN7J6Y) 2018
-* Digging through the garbage - [Code BEAM Lite Berlin](https://www.youtube.com/watch?v=aqLujfzvUgM) 2018 and Elixir Berlin 2019
-* It's a Small World - [LambdaDays](http://www.lambdadays.org/lambdadays2018/devon-estes) 2018 and Elixir Berlin 2018
-* Functions in Ruby - [Ruby Dev Summit](https://rubydevsummit.com/) 2017 and Ruby User Group Berlin (RUG::B) 2017
-* Refactoring Elixir: Lessons Learned From A Year on Exercism.io - [ElixirConf.eu](https://www.youtube.com/watch?v=tJJMrtJEK1A) 2017 and Elixir Berlin 2017
+* Digging through the garbage - [Code BEAM Lite Berlin](https://www.youtube.com/watch?v=aqLujfzvUgM) 2018
+* It's a Small World - [LambdaDays](http://www.lambdadays.org/lambdadays2018/devon-estes) 2018
+* Functions in Ruby - [Ruby Dev Summit](https://rubydevsummit.com/) 2017
+* Refactoring Elixir: Lessons Learned From A Year on Exercism.io - [ElixirConf.eu](https://www.youtube.com/watch?v=tJJMrtJEK1A) 2017
 * Make Your Life Easier with Shell Scripting and UNIX Tools - RailsConf 2017
 * The Fun in Functional - [RubyDay](https://www.youtube.com/watch?v=a7opGxpGw3k) 2016
 * The Beginner's Guide to Open Source - Newbie Remote Conf 2016
@@ -28,8 +31,5 @@ If you want to hear me talk about things on the internet, I've also been on a co
 * [Elixir Talk 137](https://soundcloud.com/elixirtalk/episode-137-feat-devon-estes-benchee-assertions-and-opera-who-knew)
 * [Elixir Mix 30](https://devchat.tv/elixir-mix/emx-030-writing-great-unit-tests-with-devon-estes/)
 * [Elixir Mix 18](https://devchat.tv/elixir-mix/emx-018-devon-estes-all-in-on-elixir/)
-* [Ruby Rogues 330](https://devchat.tv/ruby-rogues/rr-330-functions-vs-methods-devon-estes)
-* [My Ruby story 003](https://devchat.tv/ruby-rogues/my-ruby-story-devon-c-estes)
-* [Ruby Rogues 295](https://devchat.tv/ruby-rogues/rr-295-the-european-ruby-community-with-devon-c-estes)
 
 Want to get in touch with me? I'd love that! The best way to reach me is on twitter at [@devoncestes](https://www.twitter.com/devoncestes), and I occasionally respond to emails at `devon.c.estes AT gmail DOT com`.
