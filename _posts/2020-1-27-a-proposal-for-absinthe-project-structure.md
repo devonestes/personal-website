@@ -117,18 +117,15 @@ such):
 |   |   |   +-- queries
 |   |   |   |   +-- user_test.exs
 |   |   |   |   +-- post_test.exs
-|   |   |   |   +-- comment_test.exs
 |   |   |   +-- subscriptions
-|   |   |   |   +-- user_test.exs
 |   |   |   |   +-- post_test.exs
-|   |   |   |   +-- comment_test.exs
 +-- README.md
 +-- mix.exs
 +-- etc...
 {% endhighlight %}
 
 I think the general idea there is pretty clear - we separate `type`s, `resolver`s and `schema`s
-into heir own directories. Each type should have a corresponding resolver, and if there are
+into their own directories. Each type should have a corresponding resolver, and if there are
 queries, mutations or subscriptions for those types, they belong in their own file. Now, onto
 what's in each section!
 
@@ -190,7 +187,7 @@ them is the only remaining option.
 
 I really wish I had a better word for these things (maybe folks can call them schema fragments?),
 but what goes in `blog_web/schemas` are essentially decomposed parts of one large schema, defined
-in `blog_web.schema.ex`. So, we chunk that one huge schema up into smaller pieces, and those
+in `blog_web/schema.ex`. So, we chunk that one huge schema up into smaller pieces, and those
 pieces look something like this (for example, `blog_web/schemas/queries/user.ex`):
 
 {% highlight elixir %}
