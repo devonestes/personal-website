@@ -1,0 +1,273 @@
+<main id="content" class="content" role="main">
+
+    <!-- The tag below includes the post loop - partials/loop.hbs -->
+        <!-- Previous/next page links - only displayed on page 2+ -->
+    <div class="extra-pagination inner">
+        
+            <nav class="pagination" role="pagination">
+    
+    <span class="page-number"> Page 1 of 8 </span>
+     
+        <a class="older-posts" href="/page2/" title="Next Page">Older Posts »</a>
+     
+</nav>
+        
+    </div>
+
+    <!-- This is the post loop - each post will be output using this markup -->
+    
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/local-metrics-aggregation-with-counters">Local Metrics Aggregation With Counters</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>Recently I needed to get a better picture of how my application’s database connection pool was doing, but there was a bit of a hitch. DBConnection... <a class="read-more" href="/local-metrics-aggregation-with-counters">»</a></p>
+        </section>
+        <footer class="post-meta">
+            <img class="author-thumb" src="/images/cropped_headshot.jpg" alt="Author image" nopin="nopin">
+            <!-- author -->
+            <a href="/author/devon">Devon C. Estes</a>
+            <!-- [[tags prefix=" on "]] -->
+             
+                on 
+                
+                    
+                       <a href="/tag/Elixir">Elixir</a>,
+                       
+                
+                    
+                       <a href="/tag/Erlang">Erlang</a>,
+                       
+                
+                    
+                       <a href="/tag/Telemetry">Telemetry</a>,
+                       
+                
+                    
+                       <a href="/tag/Metrics">Metrics</a>,
+                       
+                
+                    
+                       <a href="/tag/Performance">Performance</a>
+                       
+                
+            
+            <time class="post-date" datetime="2020-05-01">01 May 2020</time>
+        </footer>
+    </article>
+    
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/inside-a-reduction">What's Inside a Reduction?</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>I recently finished up the basics for a feature in Benchee that I had been pretty excited about for a while now - reduction counting! But... <a class="read-more" href="/inside-a-reduction">»</a></p>
+        </section>
+        <footer class="post-meta">
+            <img class="author-thumb" src="/images/cropped_headshot.jpg" alt="Author image" nopin="nopin">
+            <!-- author -->
+            <a href="/author/devon">Devon C. Estes</a>
+            <!-- [[tags prefix=" on "]] -->
+             
+                on 
+                
+                    
+                       <a href="/tag/Elixir">Elixir</a>,
+                       
+                
+                    
+                       <a href="/tag/BEAM">Beam</a>,
+                       
+                
+                    
+                       <a href="/tag/OTP">Otp</a>,
+                       
+                
+                    
+                       <a href="/tag/Internals">Internals</a>,
+                       
+                
+                    
+                       <a href="/tag/Performance">Performance</a>
+                       
+                
+            
+            <time class="post-date" datetime="2020-03-02">02 Mar 2020</time>
+        </footer>
+    </article>
+    
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/a-proposal-for-absinthe-project-structure">A proposal for an Absinthe application structure</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>One of the great things about GraphQL is how broad the abstractions are. Everything is just an “object”, with “fields”! This makes things infinitely composable, and... <a class="read-more" href="/a-proposal-for-absinthe-project-structure">»</a></p>
+        </section>
+        <footer class="post-meta">
+            <img class="author-thumb" src="/images/cropped_headshot.jpg" alt="Author image" nopin="nopin">
+            <!-- author -->
+            <a href="/author/devon">Devon C. Estes</a>
+            <!-- [[tags prefix=" on "]] -->
+             
+                on 
+                
+                    
+                       <a href="/tag/Elixir">Elixir</a>,
+                       
+                
+                    
+                       <a href="/tag/Absinthe">Absinthe</a>,
+                       
+                
+                    
+                       <a href="/tag/GraphQL">Graphql</a>
+                       
+                
+            
+            <time class="post-date" datetime="2020-01-27">27 Jan 2020</time>
+        </footer>
+    </article>
+    
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/writing-and-testing-a-custom-credo-check">Writing (and testing) a custom Credo check</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>I’ve previously written about why one might want to write custom Credo checks, but I didn’t talk about the way I actually like to go about... <a class="read-more" href="/writing-and-testing-a-custom-credo-check">»</a></p>
+        </section>
+        <footer class="post-meta">
+            <img class="author-thumb" src="/images/cropped_headshot.jpg" alt="Author image" nopin="nopin">
+            <!-- author -->
+            <a href="/author/devon">Devon C. Estes</a>
+            <!-- [[tags prefix=" on "]] -->
+             
+                on 
+                
+                    
+                       <a href="/tag/Elixir">Elixir</a>,
+                       
+                
+                    
+                       <a href="/tag/Credo">Credo</a>,
+                       
+                
+                    
+                       <a href="/tag/Testing">Testing</a>,
+                       
+                
+                    
+                       <a href="/tag/ExUnit">Exunit</a>
+                       
+                
+            
+            <time class="post-date" datetime="2020-01-20">20 Jan 2020</time>
+        </footer>
+    </article>
+    
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/the-truth-about-hiring">The truth about hiring</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>It’s the end of the decade, and I’m breaking from my normal technical posts for something different that’s been bugging me for the last couple of... <a class="read-more" href="/the-truth-about-hiring">»</a></p>
+        </section>
+        <footer class="post-meta">
+            <img class="author-thumb" src="/images/cropped_headshot.jpg" alt="Author image" nopin="nopin">
+            <!-- author -->
+            <a href="/author/devon">Devon C. Estes</a>
+            <!-- [[tags prefix=" on "]] -->
+             
+                on 
+                
+                    
+                       <a href="/tag/Elixir">Elixir</a>,
+                       
+                
+                    
+                       <a href="/tag/Hiring">Hiring</a>,
+                       
+                
+                    
+                       <a href="/tag/Business">Business</a>
+                       
+                
+            
+            <time class="post-date" datetime="2019-12-27">27 Dec 2019</time>
+        </footer>
+    </article>
+    
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/sneak-peek-at-elixir-1-10">A Sneak Peek at Elixir 1.10</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>It’s already the middle of November, and that means that before you know it, January will be here - and January means time for a new... <a class="read-more" href="/sneak-peek-at-elixir-1-10">»</a></p>
+        </section>
+        <footer class="post-meta">
+            <img class="author-thumb" src="/images/cropped_headshot.jpg" alt="Author image" nopin="nopin">
+            <!-- author -->
+            <a href="/author/devon">Devon C. Estes</a>
+            <!-- [[tags prefix=" on "]] -->
+             
+                on 
+                
+                    
+                       <a href="/tag/Elixir">Elixir</a>,
+                       
+                
+                    
+                       <a href="/tag/1.10">1.10</a>
+                       
+                
+            
+            <time class="post-date" datetime="2019-11-18">18 Nov 2019</time>
+        </footer>
+    </article>
+    
+    <article class="post">
+        <header class="post-header">
+            <h2 class="post-title"><a href="/adding-gleam-to-your-elixir-project">Adding Gleam to your Elixir project</a></h2>
+        </header>
+        <section class="post-excerpt">
+            <p>There’s a really cool new BEAM language out there called Gleam. It’s super early days for the language, but what it offers (strong type safety) I... <a class="read-more" href="/adding-gleam-to-your-elixir-project">»</a></p>
+        </section>
+        <footer class="post-meta">
+            <img class="author-thumb" src="/images/cropped_headshot.jpg" alt="Author image" nopin="nopin">
+            <!-- author -->
+            <a href="/author/devon">Devon C. Estes</a>
+            <!-- [[tags prefix=" on "]] -->
+             
+                on 
+                
+                    
+                       <a href="/tag/Elixir">Elixir</a>,
+                       
+                
+                    
+                       <a href="/tag/Gleam">Gleam</a>,
+                       
+                
+                    
+                       <a href="/tag/umbrella">Umbrella</a>
+                       
+                
+            
+            <time class="post-date" datetime="2019-10-23">23 Oct 2019</time>
+        </footer>
+    </article>
+    
+
+    <!-- Previous/next page links - displayed on every page -->
+    
+        <nav class="pagination" role="pagination">
+    
+    <span class="page-number"> Page 1 of 8 </span>
+     
+        <a class="older-posts" href="/page2/" title="Next Page">Older Posts »</a>
+     
+</nav>
+    
+
+
+</main>
+

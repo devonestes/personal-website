@@ -1,0 +1,307 @@
+<main class="content" role="main">
+
+    <article class="post tag-test tag-content">
+
+        <header class="post-header">
+            <h1 class="post-title">Local Metrics Aggregation With Counters</h1>
+            <section class="post-meta">
+            <!-- <a href='/'>Devon C. Estes</a> -->
+            <time class="post-date" datetime="2020-05-01">01 May 2020</time>
+                <!-- [[tags prefix=" on "]] -->
+                 
+                on 
+                
+                    
+                       <a href="/tag/Elixir">Elixir</a>,
+                       
+                
+                    
+                       <a href="/tag/Erlang">Erlang</a>,
+                       
+                
+                    
+                       <a href="/tag/Telemetry">Telemetry</a>,
+                       
+                
+                    
+                       <a href="/tag/Metrics">Metrics</a>,
+                       
+                
+                    
+                       <a href="/tag/Performance">Performance</a>
+                       
+                
+                
+            </section>
+        </header>
+
+        <section class="post-content">
+
+            <div id="codefund_ad"><div id="cf" data-template="horizontal" data-theme="light"> <span class="cf-wrapper"> <a href="https://app.codefund.io/impressions/032af147-79de-4a96-aca5-e77f33175185/click?campaign_id=804&amp;creative_id=863&amp;property_id=89&amp;template=horizontal&amp;theme=light" class="cf-text" target="_blank" rel="sponsored noopener"> <strong>The Ruby Blend Podcast</strong> <span>🎧 Episode #11 "Open Source Funding"</span> <span class="cf-cta">Listen</span> </a> <a href="https://app.codefund.io/invite/ToOJgtz2ymo" class="cf-powered-by" target="_blank" rel="sponsored noopener"> <em>ethical</em> ad by CodeFund <img src="https://app.codefund.io/display/032af147-79de-4a96-aca5-e77f33175185.gif" data-src="https://app.codefund.io/display/032af147-79de-4a96-aca5-e77f33175185.gif" data-behavior="trackImpression" class="cf-impression" alt=""> </a> </span> </div></div>
+
+            
+            <p>Recently I needed to get a better picture of how my application’s database connection pool was
+doing, but there was a bit of a hitch. <code class="highlighter-rouge">DBConnection</code> has a highly optimized queuing algorithm,
+but the downside of that optimization is that you can’t get an accurate picture of the number of
+idle and busy connections in the pool at any given time like you can with <code class="highlighter-rouge">Poolboy</code>.</p>
+
+<p>The good news is that it <em>does</em> emit some <code class="highlighter-rouge">telemetry</code> events that you can use as a fairly good
+proxy for those measurements. If you attach to <code class="highlighter-rouge">[:my_app, :repo, :query]</code>, you’ll get measurements
+called <code class="highlighter-rouge">queue_time</code> and <code class="highlighter-rouge">idle_time</code> (starting with <code class="highlighter-rouge">ecto_sql</code> 3.3.0) that you can use to get a
+picture of if your queries are waiting in a queue for a connection or how long they were idle
+before being used. If you have a huge <code class="highlighter-rouge">idle_time</code> then you can probably get away with a smaller
+pool size, but if you have a small <code class="highlighter-rouge">idle_time</code> or periods with higher <code class="highlighter-rouge">queue_time</code>s then you might
+need a bigger pool size.</p>
+
+<p>But this comes with another catch! The app I’m instrumenting has quite a high throughput (~750
+RPS), and if I’m going to send these metrics to our external metrics collection service on every
+query we make, we’re quickly going to be using a <em>lot</em> of IO just for those. One answer is to set
+up a local aggregation server like <code class="highlighter-rouge">statsd</code> or the Datadog Agent that runs on your host and then
+forwards the aggregated metrics to the service at some interval.</p>
+
+<p>But I’m a big fan of keeping things simple when it comes to ops, and setting up another thing that
+involves configuration files is the last thing I want to do. Luckily, there’s a way we can do this
+really well and easily with just what’s built-in to Erlang (starting with OTP 21.2) and Elixir.</p>
+
+<h2 id="the-solution">The solution</h2>
+
+<p>Before I go into my solution, I should note that the gist of this solution was José’s and not
+mine. There’s no way I’d come up with something this good on my own, so thanks to him for the tip
+on how to make this really efficient. So, below is a GenServer that you can use as a local
+aggregate server, but in OTP!</p>
+
+<figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="k">defmodule</span> <span class="no">Telemetry</span><span class="o">.</span><span class="no">LocalAggregation</span> <span class="k">do</span>
+  <span class="nv">@moduledoc</span> <span class="sd">"""
+  Module to handle local aggregation of collected custom metrics.
+
+  Because these functions are going to be called _very_ often, we are using some pretty serious
+  performance optimizations to make sure collecting and processing these metrics doesn't
+  contribute too much to slowing things down in the app.
+  """</span>
+
+  <span class="kn">use</span> <span class="no">GenServer</span>
+
+  <span class="c1"># This offset is what allows us to keep the count and the aggregate value in the same counter</span>
+  <span class="c1"># for a given metric. We use the last 20 bits to keep the total count and the first 44 bits to</span>
+  <span class="c1"># keep the measurements. This will give us storage for 1 million entries before it is reset. The</span>
+  <span class="c1"># offset for the last 20 bits is 17592186044416.</span>
+  <span class="nv">@counter_offset</span> <span class="mi">17_592_186_044_416</span>
+
+  <span class="c1"># Counter lists in Erlang are 1-indexed, and they're always a list of counters. We're only ever</span>
+  <span class="c1"># using counter lists with only a single counter.</span>
+  <span class="nv">@index</span> <span class="mi">1</span>
+
+  <span class="c1">## PUBLIC API ##</span>
+
+  <span class="nv">@spec</span> <span class="n">start_link</span><span class="p">(</span><span class="n">pos_integer</span><span class="p">(),</span> <span class="n">function</span><span class="p">(),</span> <span class="no">System</span><span class="o">.</span><span class="n">time_unit</span><span class="p">())</span> <span class="p">::</span> <span class="no">GenServer</span><span class="o">.</span><span class="n">on_start</span><span class="p">()</span>
+  <span class="k">def</span> <span class="n">start_link</span><span class="p">(</span><span class="n">aggregate_interval_in_ms</span><span class="p">,</span> <span class="n">publish_fun</span><span class="p">,</span> <span class="n">publish_time_unit</span> <span class="p">\\</span> <span class="ss">:millisecond</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="n">aggregate_interval_in_ms</span><span class="p">,</span> <span class="n">publish_fun</span><span class="p">,</span> <span class="n">publish_time_unit</span><span class="p">}</span>
+    <span class="no">GenServer</span><span class="o">.</span><span class="n">start_link</span><span class="p">(</span><span class="bp">__MODULE__</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="ss">name:</span> <span class="bp">__MODULE__</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="nv">@spec</span> <span class="n">add_event</span><span class="p">(</span><span class="no">String</span><span class="o">.</span><span class="n">t</span><span class="p">(),</span> <span class="n">non_neg_integer</span><span class="p">(),</span> <span class="no">System</span><span class="o">.</span><span class="n">time_unit</span><span class="p">())</span> <span class="p">::</span> <span class="ss">:ok</span>
+  <span class="k">def</span> <span class="n">add_event</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">time_unit</span> <span class="p">\\</span> <span class="ss">:native</span><span class="p">)</span> <span class="k">do</span>
+    <span class="no">GenServer</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="bp">__MODULE__</span><span class="p">,</span> <span class="p">{</span><span class="ss">:add_event</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">time_unit</span><span class="p">})</span>
+  <span class="k">end</span>
+
+  <span class="c1">## CALLBACKS ##</span>
+
+  <span class="nv">@impl</span> <span class="no">true</span>
+  <span class="k">def</span> <span class="n">init</span><span class="p">({</span><span class="n">aggregate_interval_in_ms</span><span class="p">,</span> <span class="n">publish_fun</span><span class="p">,</span> <span class="n">publish_time_unit</span><span class="p">})</span> <span class="k">do</span>
+    <span class="n">initial_state</span> <span class="o">=</span> <span class="p">{</span><span class="n">aggregate_interval_in_ms</span><span class="p">,</span> <span class="n">publish_fun</span><span class="p">,</span> <span class="n">publish_time_unit</span><span class="p">,</span> <span class="p">%{},</span> <span class="n">tags</span><span class="p">()}</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">schedule_send_aggregates</span><span class="p">(</span><span class="n">initial_state</span><span class="p">)</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">state</span><span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="nv">@impl</span> <span class="no">true</span>
+  <span class="k">def</span> <span class="n">handle_cast</span><span class="p">({</span><span class="ss">:add_event</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">time_unit</span><span class="p">},</span> <span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">new_state</span> <span class="o">=</span> <span class="n">add_value</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">time_unit</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+    <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="n">new_state</span><span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="nv">@impl</span> <span class="no">true</span>
+  <span class="k">def</span> <span class="n">handle_info</span><span class="p">(</span><span class="ss">:send_aggregates</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">new_state</span> <span class="o">=</span>
+      <span class="n">state</span>
+      <span class="o">|&gt;</span> <span class="n">schedule_send_aggregates</span><span class="p">()</span>
+      <span class="o">|&gt;</span> <span class="n">send_aggregates</span><span class="p">()</span>
+
+    <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="n">new_state</span><span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="c1">## HELPERS ##</span>
+
+  <span class="k">defp</span> <span class="n">tags</span><span class="p">()</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">hostname</span><span class="p">}</span> <span class="o">=</span> <span class="ss">:inet</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>
+    <span class="p">%{</span><span class="ss">hostname:</span> <span class="no">List</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">hostname</span><span class="p">)}</span>
+  <span class="k">end</span>
+
+  <span class="k">defp</span> <span class="n">schedule_send_aggregates</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">{</span><span class="n">aggregate_interval_in_ms</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">}</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="no">Process</span><span class="o">.</span><span class="n">send_after</span><span class="p">(</span><span class="n">self</span><span class="p">(),</span> <span class="ss">:send_aggregates</span><span class="p">,</span> <span class="n">aggregate_interval_in_ms</span><span class="p">)</span>
+    <span class="n">state</span>
+  <span class="k">end</span>
+
+  <span class="k">defp</span> <span class="n">add_value</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">time_unit</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">{</span><span class="n">aggregate_interval_in_ms</span><span class="p">,</span> <span class="n">publish_fun</span><span class="p">,</span> <span class="n">publish_time_unit</span><span class="p">,</span> <span class="n">counters</span><span class="p">,</span> <span class="n">tags</span><span class="p">}</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">new_value</span> <span class="o">=</span> <span class="nv">@counter_offset</span> <span class="o">+</span> <span class="n">value</span>
+
+    <span class="k">case</span> <span class="no">Map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">counters</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">do</span>
+      <span class="no">nil</span> <span class="o">-&gt;</span>
+        <span class="n">new_counter</span> <span class="o">=</span> <span class="ss">:counters</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nv">@index</span><span class="p">,</span> <span class="p">[</span><span class="ss">:write_concurrency</span><span class="p">])</span>
+        <span class="ss">:counters</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_counter</span><span class="p">,</span> <span class="nv">@index</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span>
+        <span class="n">new_counters</span> <span class="o">=</span> <span class="no">Map</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">counters</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="p">{</span><span class="n">new_counter</span><span class="p">,</span> <span class="n">time_unit</span><span class="p">})</span>
+        <span class="p">{</span><span class="n">aggregate_interval_in_ms</span><span class="p">,</span> <span class="n">publish_fun</span><span class="p">,</span> <span class="n">publish_time_unit</span><span class="p">,</span> <span class="n">new_counters</span><span class="p">,</span> <span class="n">tags</span><span class="p">}</span>
+
+      <span class="p">{</span><span class="n">counter</span><span class="p">,</span> <span class="n">_</span><span class="p">}</span> <span class="o">-&gt;</span>
+        <span class="ss">:counters</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">counter</span><span class="p">,</span> <span class="nv">@index</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span>
+        <span class="n">state</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">defp</span> <span class="n">send_aggregates</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">{</span><span class="n">_</span><span class="p">,</span> <span class="n">publish_fun</span><span class="p">,</span> <span class="n">publish_time_unit</span><span class="p">,</span> <span class="n">counters</span><span class="p">,</span> <span class="n">tags</span><span class="p">}</span> <span class="o">=</span> <span class="n">state</span>
+
+    <span class="n">for</span> <span class="p">{</span><span class="n">name</span><span class="p">,</span> <span class="p">{</span><span class="n">counter</span><span class="p">,</span> <span class="n">record_time_unit</span><span class="p">}}</span> <span class="o">&lt;-</span> <span class="n">counters</span> <span class="k">do</span>
+      <span class="n">count</span> <span class="o">=</span> <span class="ss">:counters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">counter</span><span class="p">,</span> <span class="nv">@index</span><span class="p">)</span>
+      <span class="ss">:counters</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">counter</span><span class="p">,</span> <span class="nv">@index</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="n">value</span> <span class="o">=</span> <span class="n">avg_in_ms</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">record_time_unit</span><span class="p">,</span> <span class="n">publish_time_unit</span><span class="p">)</span>
+      <span class="n">publish_fun</span><span class="o">.</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">state</span>
+  <span class="k">end</span>
+
+  <span class="k">defp</span> <span class="n">avg_in_ms</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="k">do</span>
+    <span class="mi">0</span>
+  <span class="k">end</span>
+
+  <span class="k">defp</span> <span class="n">avg_in_ms</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">record_time_unit</span><span class="p">,</span> <span class="n">publish_time_unit</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">div</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="nv">@counter_offset</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">rem</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="nv">@counter_offset</span><span class="p">)</span>
+    <span class="n">average</span> <span class="o">=</span> <span class="n">trunc</span><span class="p">(</span><span class="n">total</span> <span class="o">/</span> <span class="n">counts</span><span class="p">)</span>
+    <span class="no">System</span><span class="o">.</span><span class="n">convert_time_unit</span><span class="p">(</span><span class="n">average</span><span class="p">,</span> <span class="n">record_time_unit</span><span class="p">,</span> <span class="n">publish_time_unit</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>I benchmarked this solution, and it turns out to be as effective as I expected, and on my machine
+the p99 for adding a measurement is 1 microsecond, which I think isn’t too bad!</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">Operating System: macOS
+CPU Information: Intel(R) Core(TM) i9-9980HK CPU @ 2.40GHz
+Number of Available Cores: 16
+Available memory: 32 GB
+Elixir 1.10.0
+Erlang 22.3.2
+
+Benchmark suite executing with the following configuration:
+warmup: 1 s
+time: 10 s
+memory time: 0 ns
+reduction time: 0 ns
+parallel: 1
+inputs: none specified
+Estimated total run time: 11 s
+
+Benchmarking add_value...
+
+Name                ips        average  deviation         median         99th %
+add_value        2.28 M      438.04 ns  ±4644.31%           0 ns        1000 ns</code></pre></figure>
+
+<h2 id="some-highlights">Some highlights</h2>
+
+<p>The real fun and interesting stuff going on here is in the add_value/3 helper there.</p>
+
+<figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="k">defp</span> <span class="n">add_value</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">time_unit</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+  <span class="p">{</span><span class="n">aggregate_interval_in_ms</span><span class="p">,</span> <span class="n">publish_fun</span><span class="p">,</span> <span class="n">publish_time_unit</span><span class="p">,</span> <span class="n">counters</span><span class="p">,</span> <span class="n">tags</span><span class="p">}</span> <span class="o">=</span> <span class="n">state</span>
+  <span class="n">new_value</span> <span class="o">=</span> <span class="nv">@counter_offset</span> <span class="o">+</span> <span class="n">value</span>
+
+  <span class="k">case</span> <span class="no">Map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">counters</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">do</span>
+    <span class="no">nil</span> <span class="o">-&gt;</span>
+      <span class="n">new_counter</span> <span class="o">=</span> <span class="ss">:counters</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nv">@index</span><span class="p">,</span> <span class="p">[</span><span class="ss">:write_concurrency</span><span class="p">])</span>
+      <span class="ss">:counters</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_counter</span><span class="p">,</span> <span class="nv">@index</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span>
+      <span class="n">new_counters</span> <span class="o">=</span> <span class="no">Map</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">counters</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="p">{</span><span class="n">new_counter</span><span class="p">,</span> <span class="n">time_unit</span><span class="p">})</span>
+      <span class="p">{</span><span class="n">aggregate_interval_in_ms</span><span class="p">,</span> <span class="n">publish_fun</span><span class="p">,</span> <span class="n">publish_time_unit</span><span class="p">,</span> <span class="n">new_counters</span><span class="p">,</span> <span class="n">tags</span><span class="p">}</span>
+
+    <span class="p">{</span><span class="n">counter</span><span class="p">,</span> <span class="n">_</span><span class="p">}</span> <span class="o">-&gt;</span>
+      <span class="ss">:counters</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">counter</span><span class="p">,</span> <span class="nv">@index</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span>
+      <span class="n">state</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+
+<p>We’re using the <code class="highlighter-rouge">:counters</code> module from Erlang, which gives us highly optimized 64 bit signed
+integers that we can perform super fast operations on. But since we’re doing an aggregation (in
+this case, just using the average of the values over the configured time), we need both the count
+of events and the total of those events. With a little bit of thinking, we can store both of those
+values in the same number by using an offset! By adding <code class="highlighter-rouge">@counter_offset</code> there, we’re using the
+first 44 bits to keep the running sum of measurements for a given metric, and the following 20
+bits to keep the count of events. This means we can store up to about 1 million events before
+those bits overflow and reset, which is <em>more</em> than enough for pretty much all cases.</p>
+
+<p>There might be little bits of customization here and there for different metrics providers or
+things like that, but the above solution is generalized enough to work for most applications, and
+pretty extensible for additional kinds of aggregations or metrics. Either way, aside from having
+another OS process running on your host and sending it UDP packets with this kind of info, I don’t
+think you’ll find a more highly optimized solution to this problem than this!</p>
+
+
+        </section>
+
+        <footer class="post-footer">
+
+            <!-- Everything inside the #author tags pulls data from the author -->
+            <!-- #author-->
+
+            
+            <figure class="author-image">
+                <a class="img" href="/author/devon" style="background-image: url(/images/cropped_headshot.jpg)"><span class="hidden">'s Picture</span></a>
+            </figure>
+            
+
+            <section class="author">
+                <h4><a href="/author/devon">Devon C. Estes</a></h4>
+                
+                
+                    <p> Ruby and Elixir developer, chess player, and American living in Germany</p>
+                
+                <div class="author-meta">
+                    <span class="author-location icon-location"> Berlin, Germany</span> 
+                    <span class="author-link icon-link"><a href="http://www.devonestes.com"> http://www.devonestes.com</a></span> 
+                </div>
+            </section>
+
+            <!-- /author  -->
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Local Metrics Aggregation With Counters&amp;url=http://www.devonestes.com/local-metrics-aggregation-with-counters/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://www.devonestes.com/local-metrics-aggregation-with-counters/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://www.devonestes.com/local-metrics-aggregation-with-counters/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+        </footer>
+
+    </article>
+
+</main>
+<aside class="read-next">
+
+    <!-- [[! next_post ]] -->
+    
+    <!-- [[! /next_post ]] -->
+    <!-- [[! prev_post ]] -->
+    
+        <a class="read-next-story prev no-cover" href="/inside-a-reduction">
+            <section class="post">
+                <h2>What's Inside a Reduction?</h2>
+                <p>I recently finished up the basics for a feature in Benchee that I had been...</p>
+            </section>
+        </a>
+    
+    <!-- [[! /prev_post ]] -->
+</aside>
