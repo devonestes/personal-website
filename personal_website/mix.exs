@@ -37,7 +37,9 @@ defmodule PersonalWebsite.MixProject do
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:earmark, "~> 1.3"},
+      {:makeup_elixir, "~> 0.14"},
     ]
   end
 

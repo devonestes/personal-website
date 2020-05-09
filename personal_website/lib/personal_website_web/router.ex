@@ -9,19 +9,12 @@ defmodule PersonalWebsiteWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   scope "/", PersonalWebsiteWeb do
     pipe_through :browser
 
     get "/", PageController, :index
-    get "/local-metrics-aggregation-with-counters", PageController, :show
+    get "/about", PageController, :about
+    get "/:slug", PageController, :show
+    get "/tag/:tag", PageController, :index_by_tag
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", PersonalWebsiteWeb do
-  #   pipe_through :api
-  # end
 end

@@ -1,0 +1,29 @@
+---
+title: I Got My Programming Time Back And So Can You
+tags: hacks schedules
+description: I usually work remotely from Berlin (or wherever my family happens to be at the moment, which today is Sacramento), which I really like, but recently I spent about a month in the office. It was great seeing all my colleagues 
+date: 2016-06-16 10:18:00
+---
+I usually work remotely from Berlin (or wherever my family happens to be at the moment, which today is Sacramento), which I really like, but recently I spent about a month in the office. It was great seeing all my colleagues in person again and having more time to spend with them, but one thing I quickly noticed was that when I got to San Francisco, all my coding time mysteriously dissappeared! I use RescueTime to track my productivity, and while I was working remotely from Berlin I averaged about 25 hours a week of actual time doing things that I considered 'programming' - pretty much any time spent on GitHub reviewing PRs, in the terminal (including vim), in documentation on Dash, or time spent on localhost:3000. But in my first three weeks in the office, I was averaging only about 17 hours per week, and even though I was spending about 33% less time programming, I felt that I was at least half as productive if not less. So what happened?!?
+
+At first I thought it had to be due to the little breaks that happen when you're in the office - you go to get a new seltzer water and spend 10 minutes chatting with a colleague about your puppies, or you walk to the restroom and on the way back spend 20 minutes helping a colleague debug something weird that's happening. I wasn't about to stop doing this since these interactions are a key part of why you go to the office in the first place, but then I looked at my calendar for those first three weeks and I noticed a pattern.
+
+![old pattern](/assets/images/old_schedule.png)
+
+That was a kind of average day for me in the office (I explicitly added my luch time in my calendar for this blog post - you'll see why later). I'd imagine that this wouldn't be considered too out of the ordinary for many developers - you have daily standup at 10am, a sort of smaller breakout meeting for 30 minutes, lunch for 30 minutes, an hour for your bi-weekly code review session with your teem, an hour for a standing cross-functional meeting, and a special event at the end of the day to celebrate everyone's birthdays.
+
+What this left me was a day that was scattered, with a lot of context switching. I'm much more of a 'flow' programmer than a 'pomodoro' programmer - i.e., I'm most effective when I have a couple of hours to really get into a problem. My sweet spot is about two hours before I need to take a break, and most of the really good work is done in that second hour when I'm really in the zone. But my schedule wasn't allowing that!
+
+It also led to flat out wasted time. For example, when I had 30 minutes between lunch and a meeting, I'd spend that 30 minutes catching up on Twitter & Feedly, or I would just take a longer lunch. I would think __"There's no way I'm going to get anything done before this next meeting, so I'll just kill some time until then"__. That's a pretty common thought for many people, I think, but it's one I'd like to avoid.
+
+So I realized that maybe I'm so productive in Berlin not because I'm in my nice, quiet home office, but because I have four hours of focused time to work when everyone else is alseep! That concentrated time to get into the zone might be the key - so I decided to try and experiment. I would block off two 2 hour chunks of my day and see what happened. Here's what my revised schedule looked like:
+
+![old pattern](/assets/images/new_schedule.png)
+
+I still have four hours a day available for meetings if anyone wants me to join them, but most people hate 9am meetings and 4pm meetings, and _really_ hate lunch meetings, so choosing that time to be available was probably helpful. I thought of it as a little [nudge](http://freakonomics.com/2008/04/11/nudge/) to increase the perceived cost of having me in a meeting - if someone really needs me in a meeting, they need to pay a little price for it by doing something they don't like doing. When my time is 'free' it's much more likely to be wasted - or at least that was my theory.
+
+So, what about the results of this experiment? In one word, __great!__ I'm back up to around 25 hours a week of productive coding time, and I feel like I'm contributing at my normal level again. That second point is super important to me, since feeling productive is one thing that gives me a lot of joy in my work. When I leave a day and feel like I didn't get anything done it's a real bummer for me, so I'm really happy to be feeling that less these days.
+
+Now, for the downsides. I can't say for sure that I've noticed them, but that doesn't mean they're not there. I'm certainly in fewer meetings these days, and that is a double edged sword. Only time will tell if that leads to less beneficial communication within my team and across teams, and there would certainly be problems if that is the case. It's something I'm keeping a particular eye out for in our retros, and I'll be happy to adjust the experiment if that turns out to be the case. But for now, there haven't been any noticable problems that have arisen from my little experiment!
+
+I've heard of certain companies that 'no meeting days' and the like but it might be really interesting for a company to have 'no meeting time' every day! Imagine if every day you knew you had a concentrated two hour block of time just to __get stuff done!__ Collaboration and meetings are great, but there's a point of diminishing returns there, and I'd be really interested to hear of any companies that have experimented with some cultrual adaptations to try and maximize the benefits of collaboration while minizming the costs.
