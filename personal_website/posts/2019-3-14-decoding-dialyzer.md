@@ -19,7 +19,7 @@ formatting.
 
 Here's the code that we're going to be using for the examples today:
 
-{% highlight elixir %}
+```
 defmodule Test
   @spec concat(atom(), String.t()) :: String.t()
   def concat(first, second) do
@@ -31,7 +31,7 @@ defmodule Test
     concat("string", :atom)
   end
 end
-{% endhighlight %}
+```
 
 That small bit of code has one fairly obvious bug, but because of that bug
 Dialyzer gives us two warnings, and these two are among the more common (and
@@ -49,16 +49,16 @@ warnings: `no_return`.
 When we run Dialyzer on that very small program, one of the warnings we see
 looks like this with the new formatting:
 
-{% highlight plain %}
+```
 lib/my_app/test.ex:8:no_return
 Function call_concat/0 has no local return.
-{% endhighlight %}
+```
 
 or like this with the old Dialyzer formatting:
 
-{% highlight plain %}
+```
 lib/my_app/test.ex:8: Function call_concat/0 has no local return
-{% endhighlight %}
+```
 
 This warning is telling us that the function `call_concat/0` does not return.
 Basically, there is no way that you can call this function and have it do
@@ -81,7 +81,7 @@ have a bug here because it knows for a _fact_ what the values of the variables
 in that example are because we have a string and atom literal. For example, if
 we have this code:
 
-{% highlight elixir %}
+```
 defmodule Test do
   @spec concat(atom(), String.t()) :: String.t()
   def concat(first, second) do
@@ -93,7 +93,7 @@ defmodule Test do
     concat(string, atom)
   end
 end
-{% endhighlight %}
+```
 
 Then Dialyzer won't give us a `no_return` warning. It gives us a different
 warning, but it can't say for certain that there's a function that will not
@@ -110,7 +110,7 @@ information. Luckily, that's where the next fairly common warning comes in.
 
 The second warning that we get for that code is:
 
-{% highlight plain %}
+```
 lib/test.ex:9:call
 The call:
 Test.concat("string", :atom)
@@ -120,13 +120,13 @@ will never return since the success typing is:
 
 and the contract is
 (atom(), String.t()) :: String.t()
-{% endhighlight %}
+```
 
 or:
 
-{% highlight plain %}
+```
 lib/test.ex:9: The call 'Elixir.PotionProxy.Client.MainWorker':concat(#{#<115>(8, 1, 'integer', ['unsigned', 'big']), #<116>(8, 1, 'integer', ['unsigned', 'big']), #<114>(8, 1, 'integer', ['unsigned', 'big']), #<105>(8, 1, 'integer', ['unsigned', 'big']), #<110>(8, 1, 'integer', ['unsigned', 'big']), #<103>(8, 1, 'integer', ['unsigned', 'big'])}#,'atom') will never return since the success typing is (atom(),binary()) -> binary() and the contract is (atom(),'Elixir.String':t()) -> 'Elixir.String':t()
-{% endhighlight %}
+```
 
 This example really shows how much more helpful the new formatting is!
 

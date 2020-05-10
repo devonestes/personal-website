@@ -9,7 +9,7 @@ I was recently doing some work on documenting and adding some missing typespecs
 to the Elixir codebase, and in that work I saw something that I thought I could
 improve.
 
-{% highlight elixir %}
+```
 def default_options do
   [
     enabled: true,
@@ -23,7 +23,7 @@ def default_options do
     width: 80
   ]
 end
-{% endhighlight %}
+```
 
 I thought "gee, why do we need to allocate a new list every time we call that
 function? It would make sense to pull that out into a module attribute, right?"
@@ -33,7 +33,7 @@ having to undergo the expensive allocation of memory and copying of this new
 data into that new memory. Quick win, right? So I went ahead and pushed this up
 for review as part of my documentation PR.
 
-{% highlight elixir %}
+```
 @default_options [
   enabled: true,
   doc_bold: [:bright],
@@ -47,7 +47,7 @@ for review as part of my documentation PR.
 ]
 
 def default_options, do: @default_options
-{% endhighlight %}
+```
 
 Well, José informed me that there is absolutely no memory difference between
 these two versions of the same code. How could this be? And what accounted for

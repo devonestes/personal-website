@@ -2,6 +2,8 @@ defmodule PersonalWebsite.Post do
   @enforce_keys [:slug, :author, :title, :body, :description, :tags, :date, :template]
   defstruct [:slug, :author, :title, :body, :description, :tags, :date, :template]
 
+  alias PersonalWebsite.Highlighter
+
   def parse!(filename, contents) do
     slug =
       filename
@@ -49,7 +51,7 @@ defmodule PersonalWebsite.Post do
     do: {:description, String.trim(value)}
 
   defp parse_attr({:body, value}),
-    do: {:body, value |> Earmark.as_html!()}
+  do: {:body, value |> Earmark.as_html!() |> Highlighter.highlight_code_blocks()}
 
   defp parse_attr({:date, value}) do
     value = String.trim(value)

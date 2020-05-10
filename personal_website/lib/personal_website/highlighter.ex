@@ -3,19 +3,6 @@ defmodule PersonalWebsite.Highlighter do
   Performs code highlighting.
   """
 
-  # If new lexers are available, add them here:
-  defp pick_language_and_lexer(""), do: {"elixir", Makeup.Lexers.ElixirLexer, []}
-
-  defp pick_language_and_lexer(lang) do
-    case Makeup.Registry.fetch_lexer_by_name(lang) do
-      {:ok, {lexer, opts}} ->
-        {lang, lexer, opts}
-
-      :error ->
-        {lang, nil, []}
-    end
-  end
-
   @doc """
   Highlights all code block in an already generated HTML document.
   """
@@ -31,6 +18,19 @@ defmodule PersonalWebsite.Highlighter do
     case pick_language_and_lexer(lang) do
       {_language, nil, _opts} -> full_block
       {language, lexer, opts} -> render_code(language, lexer, opts, code, outer_opts)
+    end
+  end
+
+  # If new lexers are available, add them here:
+  defp pick_language_and_lexer(""), do: {"elixir", Makeup.Lexers.ElixirLexer, []}
+
+  defp pick_language_and_lexer(lang) do
+    case Makeup.Registry.fetch_lexer_by_name(lang) do
+      {:ok, {lexer, opts}} ->
+        {lang, lexer, opts}
+
+      :error ->
+        {lang, nil, []}
     end
   end
 

@@ -31,7 +31,7 @@ have in our community.
 When I got the feature implemented I ran our sort of cannonical benchmark, comparing
 `Enum.flat_map/2` to `Enum.map/2 |> List.flatten/1`, and I saw the following results:
 
-{% highlight text %}
+```
 Operating System: Linux
 CPU Information: Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz
 Number of Available Cores: 8
@@ -63,7 +63,7 @@ flat_map             0.61 K
 map.flatten          1.28 K - 2.10x reduction count +0.67 K
 
 **All measurements for reduction count were the same**
-{% endhighlight %}
+```
 
 What I expected to see was a tight correlation between runtime and reduction count - essentially
 I expected to see the same percentage of difference between runtime and reduction count. But as
@@ -89,7 +89,7 @@ instructions that aren't `call` and `call_ext` (which actually call functions).
 
 For example, here are the BEAM instructions for `Enum.flat_map/2`:
 
-{% highlight text %}
+```
 {function, flat_map, 2, 246}.
   {label,245}.
     {line,[{location,"lib/enum.ex",1054}]}.
@@ -173,7 +173,7 @@ For example, here are the BEAM instructions for `Enum.flat_map/2`:
   {label,253}.
     {line,[{location,"lib/enum.ex",1065}]}.
     {call_ext_last,1,{extfunc,lists,reverse,1},1}.
-{% endhighlight %}
+```
 
 That's a lot of non-function calls happening in there! All those instructions for `move`, `bif`,
 `kill`, `get_map_elements`, `test`, `jump`, `allocate`, `make_fun2`, etc. are _not_ counted as a
@@ -184,7 +184,7 @@ longer to execute even though it still counts as only one reduction.
 Here's another simpler example that I think really drives this point home. Below are two functions
 that each count as one reduction when they're called:
 
-{% highlight elixir %}
+```
 defmodule Test do
   def a_from_map(%{"a" => a}) do
     a
@@ -194,11 +194,11 @@ defmodule Test do
     [a, b, c, d]
   end
 end
-{% endhighlight %}
+```
 
 and here is the BEAM assembly for those functions:
 
-{% highlight text %}
+```
 {function, a_from_map, 1, 8}.
   {label,7}.
     {line,[{location,"lib/test.ex",2}]}.
@@ -229,11 +229,11 @@ and here is the BEAM assembly for those functions:
     {put_list,{x,5},{x,0},{x,0}}.
     {put_list,{x,4},{x,0},{x,0}}.
     return.
-{% endhighlight %}
+```
 
 And here's the benchmark I'm running:
 
-{% highlight elixir %}
+```
 Benchee.run(
   %{
     "a_from_map" => fn ->
@@ -247,11 +247,11 @@ Benchee.run(
   warmup: 0.1,
   reduction_time: 0.1
 )
-{% endhighlight %}
+```
 
 When I run the benchmark for these two functions we get the following results:
 
-{% highlight text %}
+```
 Operating System: Linux
 CPU Information: Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz
 Number of Available Cores: 8
@@ -284,7 +284,7 @@ Reduction count statistics:
 Name        Reduction count
 a_from_map                1
 a_from_map2               1 - 1.00x reduction count +0
-{% endhighlight %}
+```
 
 As we can see, our first function `a_from_map/1` only has 4 instructions in its assembly (ignoring
 the function info in label 7), but the second function `a_from_map2/4` has 14 instructions (again
@@ -326,7 +326,7 @@ better and faster, so it wasn't a total waste!
 Want to see something really crazy, but also kind of cool?! Let's expand a bit on our previous
 `Test` module above and add a third function that will take two reductions:
 
-{% highlight elixir %}
+```
 defmodule Test do
   def a_from_map(%{"a" => a}) do
     a
@@ -344,11 +344,11 @@ defmodule Test do
     a
   end
 end
-{% endhighlight %}
+```
 
 Now, here's the assembly for those functions:
 
-{% highlight text %}
+```
 {function, a_from_map, 1, 8}.
   {label,7}.
     {line,[{location,"lib/test.ex",2}]}.
@@ -398,11 +398,11 @@ Now, here's the assembly for those functions:
     {get_map_elements,{f,13},{x,0},{list,[{literal,<<"a">>},{x,1}]}}.
     {move,{x,1},{x,0}}.
     return.
-{% endhighlight %}
+```
 
 And here's the benchmark I'm running:
 
-{% highlight elixir %}
+```
 Benchee.run(
   %{
     "a_from_map" => fn ->
@@ -419,7 +419,7 @@ Benchee.run(
   warmup: 0.1,
   reduction_time: 0.1
 )
-{% endhighlight %}
+```
 
 It would be totally reasonable to think that the new `a_from_map3` function would probably come in
 between the two previous functions, right? It's doing the same thing as `a_from_map` but just
@@ -428,7 +428,7 @@ more computation, right?
 
 Wrong! Check this out:
 
-{% highlight text %}
+```
 Operating System: Linux
 CPU Information: Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz
 Number of Available Cores: 8
@@ -465,7 +465,7 @@ Name        Reduction count
 a_from_map3               2
 a_from_map                1 - 0.50x reduction count -1
 a_from_map2               1 - 0.50x reduction count -1
-{% endhighlight %}
+```
 
 The BEAM has dozens of ways of optimizing applications both at compile-time and at runtime, so
 when it comes to performance optimization on the BEAM, never guess and always measure! There are

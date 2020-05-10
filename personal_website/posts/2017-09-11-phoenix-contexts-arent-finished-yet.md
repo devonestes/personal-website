@@ -24,7 +24,7 @@ is only uni-directional.
 
 Let's go with the example in the documentation to keep consistent. 
 
-{% highlight elixir %}
+```
 defmodule HelloWeb.UserController do
   use HelloWeb, :controller
 
@@ -53,7 +53,7 @@ defmodule HelloWeb.UserController do
   end
   ...
 end
-{% endhighlight %}
+```
 
 Now, let's look at this example a little deeper. The stated goal of these
 contexts is to keep the parts of our larger system decoupled and independent.
@@ -88,7 +88,7 @@ independent.**
 
 ## Good and Bad dependencies
 
-So, not all dependencies are bad!! Two of the dependencies I've highlighted in
+```
 that picture above are ok - I might even go so far as to say they're encouraged!
 
 We are all dependent on data in each and every one of our functions. If we
@@ -125,7 +125,7 @@ different module for testing!
 
 We could update our controller to look like this:
 
-{% highlight elixir %}
+```
 defmodule HelloWeb.UserController do
   use HelloWeb, :controller
 
@@ -155,20 +155,20 @@ defmodule HelloWeb.UserController do
   end
   ...
 end
-{% endhighlight %}
+```
 
 We could then add some configuration to `config/test.exs`
 
-{% highlight elixir %}
+```
 config :hello, :accounts_module, Hello.FakeAccounts
-{% endhighlight %}
+```
 
 And then in our `config/prod.exs` and `config/dev.exs` we could add:
 
 
-{% highlight elixir %}
+```
 config :hello, :accounts_module, Hello.Accounts
-{% endhighlight %}
+```
 
 This would allow us to use a fake implementation of that behavior when testing
 this part of application in isolation. The downside is it would probably end up
@@ -185,7 +185,7 @@ could rely on a default argument.
 
 Let's update our controller and see what that might look like:
 
-{% highlight elixir %}
+```
 defmodule HelloWeb.UserController do
   use HelloWeb, :controller
 
@@ -214,13 +214,13 @@ defmodule HelloWeb.UserController do
   end
   ...
 end
-{% endhighlight %}
+```
 
 I think this is preferable to the configuration option, but with one major
 downside - it means we need to test our controllers in a very specific way. Most
 controller tests I've seen look something like this:
 
-{% highlight elixir %}
+```
 defmodule HelloWeb.UserControllerTest do
   ...
   test "index returns a list of users", %{conn: conn} do
@@ -229,13 +229,13 @@ defmodule HelloWeb.UserControllerTest do
   end
   ...
 end
-{% endhighlight %}
+```
 
 Nowhere in there are we explicitly _calling_ the function that we would need to
 call in order to pass in that fake module. We would need to edit that test to
 look like this:
 
-{% highlight elixir %}
+```
 defmodule HelloWeb.UserControllerTest do
   ...
   test "index returns a list of users", %{conn: conn} do
@@ -244,7 +244,7 @@ defmodule HelloWeb.UserControllerTest do
   end
   ...
 end
-{% endhighlight %}
+```
 
 Personally I could argue that this is actually preferable to the established
 norm, but I generally value following the established norm over doing what I

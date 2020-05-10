@@ -11,16 +11,16 @@ of all test failures that shouldn't fail.
 
 Can you guess what it is?
 
-{% highlight elixir %}
+```
 assert list == [user_1, user_2, user_3]
-{% endhighlight %}
+```
 
 It also has a cousin that is responsible for many other test failures when in
 fact nothing should have failed.
 
-{% highlight elixir %}
+```
 assert [%User{id: ^user_1_id, posts: posts} | _] = data
-{% endhighlight %}
+```
 
 Why are these tests often the source of flakiness? Well, if you're dealing with
 Phoenix applications, you're potentially dealing with a database. And if you're
@@ -43,11 +43,11 @@ To solve the first case above, you can write a function called
 that the data you expect to be the contents of a list
 really is the content of that list, but without asserting the order:
 
-{% highlight elixir %}
+```
 def contains_exactly(list_1, list_2) do
   list_1 -- list_2 == [] and list_2 -- list_1 == []
 end
-{% endhighlight %}
+```
 
 It's just a wrapper around two boolean checks, but it gives a good name to
 what you're doing and reads well in your tests. It's also not a very high

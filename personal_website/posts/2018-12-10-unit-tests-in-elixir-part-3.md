@@ -44,7 +44,7 @@ just use the real thing!
 Just for reference, let's imagine that we have the following module and the
 following test:
 
-{% highlight elixir %}
+```
 defmodule MyApp.Users do
 
   alias MyApp.{Repo, Users.User}
@@ -69,12 +69,12 @@ defmodule MyApp.UsersTest do
     end
   end
 end
-{% endhighlight %}
+```
 
 That's really clear and easy to understand what's going on. If we wanted to make
 that a "real" unit test, we could do something like this:
 
-{% highlight elixir %}
+```
 defmodule MyApp.Users do
 
   alias MyApp.{Repo, Users.User}
@@ -106,7 +106,7 @@ defmodule MyApp.UsersTest do
     end
   end
 end
-{% endhighlight %}
+```
 
 That's not _so_ bad, but I sure do prefer the first version! Mainly because
 there I'm making assertions about data in the database (well, really the data
@@ -121,7 +121,7 @@ mutable state. If your unit tests are running concurrently (as I said they
 should be in part 1), you're going to have race conditions when reading from and
 writing to the file system, right? Let's use the following example:
 
-{% highlight elixir %}
+```
 defmodule MyCSV do
   def persist(list) do
     csv = Enum.join(list, ",")
@@ -131,7 +131,7 @@ defmodule MyCSV do
       |> File.write!(csv)
   end
 end
-{% endhighlight %}
+```
 
 There's no way we can unit test that function with `async: true` because we'd be
 running into issues with race conditions on that `results.csv` file. But, much
@@ -141,7 +141,7 @@ of the others as well.
 
 First, let's extract a constant in that function out as a default variable:
 
-{% highlight elixir %}
+```
 defmodule MyCSV do
   @default_path Path.expand("../../output/results.csv", __DIR__)
   def persist(list, path \\ @default_path) do
@@ -149,7 +149,7 @@ defmodule MyCSV do
     File.write!(path, csv)
   end
 end
-{% endhighlight %}
+```
 
 Now we have the ability to pass in a path to that function. This means when
 we're unit testing that function, we can give a unique path for each test which
@@ -159,7 +159,7 @@ But how can we generate a unique path for each test? Well, there are a few ways,
 but here's my favorite. I have a function that I use pretty often that generates
 a unique path, and it looks like this:
 
-{% highlight elixir %}
+```
 def unique_path() do
   path =
     Path.join([
@@ -172,7 +172,7 @@ def unique_path() do
 
   path
 end
-{% endhighlight %}
+```
 
 The way I guarantee the uniqueness of this path is with
 `abs(System.monotonic_time(:nanosecond))`. There's no way two tests can execute this
@@ -185,7 +185,7 @@ folder exists before we put stuff in it.
 
 Now when I test that function, it looks something like this:
 
-{% highlight elixir %}
+```
 defmodule MyCSVTest do
   describe "persist/2" do
     test "converts the list to a CSV and writes it to the file system" do
@@ -197,12 +197,12 @@ defmodule MyCSVTest do
     end
   end
 end
-{% endhighlight %}
+```
 
 Now, to present the alternative, you could also unit test that function in a
 different way. Instead of extracting the path, you could do this:
 
-{% highlight elixir %}
+```
 defmodule MyCSV do
   def persist(list, file_module \\ File) do
     csv = Enum.join(list, ",")
@@ -212,7 +212,7 @@ defmodule MyCSV do
       |> file_module.write!(csv)
   end
 end
-{% endhighlight %}
+```
 
 And then in your test you could use a fake module in place of the `File` module
 and assert that a command was sent in the same way we did in those assertions for

@@ -48,7 +48,7 @@ function in this module should return an `%Ecto.Changeset{}` struct.
 
 An example might look like:
 
-{% highlight elixir %}
+```
 defmodule MyApp.SocialMedia.Users.User do
   @moduledoc """
   A user that has social media posts
@@ -83,7 +83,7 @@ defmodule MyApp.SocialMedia.Users.User do
     |> validate_required(@required_fields)
   end
 end
-{% endhighlight %}
+```
 
 In a simple app this doesn't seem like much, but in production applications this
 behavior alone can reach a couple hundred lines of code, so I think it's smart
@@ -118,7 +118,7 @@ You'll notice above that we named our resource `MyApp.SocialMedia.Users.User` -
 the corresponding Secondary Context for that resource will be named
 `MyApp.SocialMedia.Users`, and it might look something like this:
 
-{% highlight elixir %}
+```
 defmodule MyApp.SocialMedia.Users do
   @moduledoc """
   Secondary Context for our users
@@ -149,7 +149,7 @@ defmodule MyApp.SocialMedia.Users do
     Repo.preload(user, :facebook_posts)
   end
 end
-{% endhighlight %}
+```
 
 Again, in this silly example this might not seem like a lot, but in production
 applications this becomes a pretty large amount of code sometimes. You will
@@ -169,7 +169,7 @@ Also, within a Secondary Context, do not reach across boundaries to another
 resource directly. For example, the following would be disallowed under these
 rules:
 
-{% highlight elixir %}
+```
 defmodule MyApp.SocialMedia.Users do
   # ...
 
@@ -177,14 +177,14 @@ defmodule MyApp.SocialMedia.Users do
     Repo.preload(post, :user).user
   end
 end
-{% endhighlight %}
+```
 
 Even though we're using the Repo in a Secondary Context and we're returning a
 `User` struct, both of which are allowed, we're passing a `FacebookPost` struct
 to the repo in the `Users` Secondary Context, which is bad. Instead, we should go
 through that resource's Secondary Context if we want to access that data, like so:
 
-{% highlight elixir %}
+```
 defmodule MyApp.SocialMedia.Users do
   # ...
 
@@ -192,7 +192,7 @@ defmodule MyApp.SocialMedia.Users do
     FacebookPosts.with_user(post).user
   end
 end
-{% endhighlight %}
+```
 
 Calling functions in one Secondary Context from a different Secondary Context is
 allowed, although you should be careful about how you define dependencies
@@ -215,7 +215,7 @@ So, it will frequently happen that our Primary Context will call many
 functions from our Secondary Contexts, and compose those together to form
 higher-level functionality. Here's an example:
 
-{% highlight elixir %}
+```
 defmodule MyApp.SocialMedia do
   @moduledoc """
   Functions for dealing with social media posts and post authors
@@ -247,7 +247,7 @@ defmodule MyApp.SocialMedia do
     |> FacebookPosts.bulk_create(user)
   end
 end
-{% endhighlight %}
+```
 
 This is where, in my propsal here, the real context boundary takes place.
 Nothing outside of this Primary Context should call any of the functions in any

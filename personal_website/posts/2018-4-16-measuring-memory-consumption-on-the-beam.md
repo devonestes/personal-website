@@ -15,14 +15,14 @@ _just_ about run time. Memory consumption counts, too!
 So, if you want to measure memory usage, you use Benchee just like you normally
 would, but you also need to say how long you want to measure memory for:
 
-{% highlight elixir %}
+```
 map_fun = fn num -> num + 1 end
 
 Benchee.run(%{
   "flat_map"    => fn -> Enum.flat_map(1..1000, map_fun) end,
   "map.flatten" => fn -> 1..1000 |> Enum.map(map_fun) |> List.flatten end
 }, memory_time: 2)
-{% endhighlight %}
+```
 
 For the vast majority of the functions you're going to benchmark, you don't need
 to run the measurement for very long since most of the time functions use the

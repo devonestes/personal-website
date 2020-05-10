@@ -1,3 +1,16 @@
+<header class="main-header no-cover">
+  <nav class="main-nav overlay clearfix">
+    <a class="blog-logo" href="/"><img src="/images/logo.png" alt="Blog Logo" /></a>
+    <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+  </nav>
+
+  <div class="vertical">
+    <div class="main-header-content inner">
+      <h1 class="page-title">Devon C. Estes</h1>
+      <h2 class="page-description"></h2>
+    </div>
+  </div>
+</header>
 <div>
   <%= render "pagination.html", conn: @conn, page: @page, num_pages: @num_pages %>
 

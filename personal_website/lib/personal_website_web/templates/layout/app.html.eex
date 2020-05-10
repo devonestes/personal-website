@@ -14,14 +14,10 @@
     <link rel="alternate" type="application/rss+xml" title="Devon C. Estes" href="/feed.xml" />
 
     <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/css/highlight.css" />
     <link rel="stylesheet" type="text/css" href="/css/codefund.css" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
     <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
-
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css">
-    <style>.hljs { background: none; }</style>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
 
     <meta property="og:site_name" content="Devon C. Estes" />
     <meta property="og:type" content="website" />
@@ -50,8 +46,6 @@
       <ul>
         <li class="nav-home  nav-current" role="presentation"><a href="/">Home</a></li>
         <li class="nav-about " role="presentation"><a href="/about">About Me</a></li>
-        <li class="nav-elixir " role="presentation"><a href="/tag/Elixir">On Elixir</a></li>
-        <li class="nav-ruby " role="presentation"><a href="/tag/Ruby">On Ruby</a></li>
       </ul>
       <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
     </div>
@@ -59,22 +53,6 @@
     <span class="nav-cover"></span>
 
     <div class="site-wrapper">
-      <header class="main-header no-cover">
-        <nav class="main-nav overlay clearfix">
-          <a class="blog-logo" href="/"><img src="/images/logo.png" alt="Blog Logo" /></a>
-          <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
-        </nav>
-
-        <div class="vertical">
-          <div class="main-header-content inner">
-            <h1 class="page-title">Devon C. Estes</h1>
-            <h2 class="page-description"></h2>
-          </div>
-        </div>
-
-        <a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
-      </header>
-
       <%= @inner_content %>
     </div>
 

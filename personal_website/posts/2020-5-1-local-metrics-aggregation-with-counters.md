@@ -35,7 +35,7 @@ mine. There's no way I'd come up with something this good on my own, so thanks t
 on how to make this really efficient. So, below is a GenServer that you can use as a local
 aggregate server, but in OTP!
 
-{% highlight elixir %}
+```
 defmodule Telemetry.LocalAggregation do
   @moduledoc """
   Module to handle local aggregation of collected custom metrics.
@@ -149,12 +149,12 @@ defmodule Telemetry.LocalAggregation do
     System.convert_time_unit(average, record_time_unit, publish_time_unit)
   end
 end
-{% endhighlight %}
+```
 
 I benchmarked this solution, and it turns out to be as effective as I expected, and on my machine
 the p99 for adding a measurement is 1 microsecond, which I think isn't too bad!
 
-{% highlight text %}
+```
 Operating System: macOS
 CPU Information: Intel(R) Core(TM) i9-9980HK CPU @ 2.40GHz
 Number of Available Cores: 16
@@ -175,13 +175,13 @@ Benchmarking add_value...
 
 Name                ips        average  deviation         median         99th %
 add_value        2.28 M      438.04 ns  ±4644.31%           0 ns        1000 ns
-{% endhighlight %}
+```
 
-## Some highlights
+```
 
 The real fun and interesting stuff going on here is in the add_value/3 helper there.
 
-{% highlight elixir %}
+```
 defp add_value(name, value, time_unit, state) do
   {aggregate_interval_in_ms, publish_fun, publish_time_unit, counters, tags} = state
   new_value = @counter_offset + value
@@ -198,7 +198,7 @@ defp add_value(name, value, time_unit, state) do
       state
   end
 end
-{% endhighlight %}
+```
 
 We're using the `:counters` module from Erlang, which gives us highly optimized 64 bit signed
 integers that we can perform super fast operations on. But since we're doing an aggregation (in

@@ -19,9 +19,9 @@ an umbrella application, where one application is a standard Mix app, and the
 other one is a standard Gleam app. Start off with this to generate a new Phoenix
 application that sets up an umbrella app for you.
 
-{% highlight text %}
+```
 mix phx.new --umbrella gleam_example
-{% endhighlight %}
+```
 
 Now that we have our two applications - `:gleam_example` and
 `:gleam_example_web`, we are going to delete that `apps/gleam_example` directory
@@ -33,9 +33,9 @@ First, you'll need to have Gleam and rebar3 installed, which you can easily do
 with `asdf`. Then, to start a new Gleam application we have a familiar CLI to
 work with:
 
-{% highlight text %}
+```
 gleam new gleam_example
-{% endhighlight %}
+```
 
 This generates the standard structure of a new gleam application. You should now
 be able to `cd` into that directory and run the tests with `rebar3 eunit`. Once
@@ -54,12 +54,12 @@ us: `{:gleam_example, in_umbrella: true, manager: :rebar3}`.
 Now if we try and start our server, it'll work, but we'll still see a warning in
 our terminal that looks like this:
 
-{% highlight text %}
+```
 warning: path "apps/gleam_example" is a directory but it has no mix.exs. Mix
 won't consider this directory as part of your umbrella application. Please add
 a "mix.exs" or set the ":apps" key in your umbrella configuration with all
 relevant apps names as atoms
-{% endhighlight %}
+```
 
 I don't like warnings, so let's fix this. What's happening here is Mix is saying
 "I found this directory in your `/apps` folder, but it doesn't look like it's a
@@ -67,7 +67,7 @@ Mix project, so why are you telling me to compile it?!" So let's tell Mix
 specifically what apps we want it to compile for us by going to the top level
 `mix.exs` file. There we'll see configuration that looks like this:
 
-{% highlight elixir %}
+```
   def project do
     [
       apps_path: "apps",
@@ -75,13 +75,13 @@ specifically what apps we want it to compile for us by going to the top level
       deps: deps()
     ]
   end
-{% endhighlight %}
+```
 
 Because we've set `apps_path: "apps"`, Mix assumes that all directories there
 are Mix applications. We need to tell Mix that this is not true by explicitly
 adding an `apps:` key to that configuration:
 
-{% highlight elixir %}
+```
   def project do
     [
       apps_path: "apps",
@@ -90,7 +90,7 @@ adding an `apps:` key to that configuration:
       deps: deps()
     ]
   end
-{% endhighlight %}
+```
 
 Now it will only try and compile the Elixir application for us and not the Gleam
 application!
@@ -103,7 +103,7 @@ PageController that's automatically generated for us and make the cannonical
 Hello, world! example. Luckily, because Gleam compiles to Erlang, it looks
 pretty familiar:
 
-{% highlight elixir %}
+```
 defmodule GleamExampleWeb.PageController do
   use GleamExampleWeb, :controller
 
@@ -111,7 +111,7 @@ defmodule GleamExampleWeb.PageController do
     text(conn, :gleam_example.hello_world())
   end
 end
-{% endhighlight %}
+```
 
 And that's it! Now we have a Phoenix application that calls Gleam code!
 

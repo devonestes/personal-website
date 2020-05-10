@@ -15,7 +15,7 @@ something that talks to another process?
 For today let's work on unit testing the functions in the `Persist` module in
 the following code:
 
-{% highlight elixir %}
+```
 defmodule KVStore do
   use GenServer
 
@@ -49,7 +49,7 @@ defmodule Persist do
     Enum.map(keys, &KVStore.read/1)
   end
 end
-{% endhighlight %}
+```
 
 Now all of those functions in `Persist` send messages to a GenServer. How can we
 unit test them when all their functionality depends on inter-process
@@ -64,7 +64,7 @@ So, we need a seam in which we can inject our dependencies, and in the case of
 testing, we can use a mock (or test double, which are pretty much the same
 thing). The way I like to do that is with default arguments, like so:
 
-{% highlight elixir %}
+```
 defmodule Persist do
   def write_all(params, kvstore \\ KVStore) when is_map(params) do
     Enum.each(params, fn {k, v} -> kvstore.write(k, v) end)
@@ -74,7 +74,7 @@ defmodule Persist do
     Enum.map(keys, &kvstore.read/1)
   end
 end
-{% endhighlight %}
+```
 
 Now that code behaves exactly the same as before, but we also have a seam into
 which we can inject our dependency as an argument to a function. Yes, it's a
@@ -82,7 +82,7 @@ little unwieldy having a default argument at the end of every function there. It
 isn't as _pretty_. But, it allows us to properly unit test those functions like
 so:
 
-{% highlight elixir %}
+```
 defmodule PersistTest do
   use ExUnit.Case, async: true
 
@@ -106,7 +106,7 @@ defmodule PersistTest do
     end
   end
 end
-{% endhighlight %}
+```
 
 Ok, so what's going on here. First, we can see that we're injecting a new module
 as our test double. That test double isn't actually a `GenServer` - it just hard

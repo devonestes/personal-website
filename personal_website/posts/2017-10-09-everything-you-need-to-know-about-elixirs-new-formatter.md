@@ -39,7 +39,7 @@ a better way - and there is! You can configure the formatter to know which files
 to format automatically. This is accomplished with a `.formatter.exs` file. That
 file looks something like this:
 
-{% highlight elixir %}
+```
 [
   inputs: [
     "lib/**/*.{ex,exs}",
@@ -47,7 +47,7 @@ file looks something like this:
     "mix.exs"
   ]
 ]
-{% endhighlight %}
+```
 
 That's a basic file that will make sure all `.ex` or `.exs` files are formatted
 every time you run `mix format` without an argument.
@@ -57,7 +57,7 @@ You want more formatting options you say? Well, you got it!
 If you have macros in your application that you _really_ don't want using
 parentheses, you can configure that in your `.formatter.exs` file like so:
 
-{% highlight elixir %}
+```
 [
   inputs: [
     "lib/**/*.{ex,exs}",
@@ -69,7 +69,7 @@ parentheses, you can configure that in your `.formatter.exs` file like so:
     my_other_macro: 3
   ]
 ]
-{% endhighlight %}
+```
 
 In that case, it won't enforce the parentheses rule for those macro calls. In
 that keyword list you have the macro name as the key, and the arity as the

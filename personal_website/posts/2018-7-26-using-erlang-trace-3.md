@@ -58,7 +58,7 @@ And while that function is being run, every time a garbage collection event
 happens, our tracer is receiving messages and storing that info for later. The
 messages that it's receiving are a keyword list that look something like this:
 
-{% highlight elixir %}
+```
 [
   old_heap_block_size: 0,
   heap_block_size: 233,
@@ -72,7 +72,7 @@ messages that it's receiving are a keyword list that look something like this:
   bin_old_vheap_size: 0,
   bin_old_vheap_block_size: 46422
 ]
-{% endhighlight %}
+```
 
 All those values stand for the amount of memory (in words, not bytes!) allocated
 for those various things. There are two types of messages that we get for each

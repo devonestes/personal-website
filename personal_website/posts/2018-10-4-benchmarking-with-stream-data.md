@@ -19,7 +19,7 @@ until we ship 1.0), there is another thing you can do right now if you want.
 Let's say that we want to benchmark integer addition. We can think of a few
 different combinations of integers to add, and use them as inputs, like this:
 
-{% highlight elixir %}
+```
 Benchee.run(
   %{
     "add two integers" => fn {int1, int2} -> int1 + int2 end
@@ -32,11 +32,11 @@ Benchee.run(
   time: 5,
   memory_time: 1
 )
-{% endhighlight %}
+```
 
 And we might see results like this:
 
-{% highlight text %}
+```
 Operating System: Linux
 CPU Information: Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz
 Number of Available Cores: 8
@@ -89,7 +89,7 @@ Name                Memory usage
 add two integers             0 B
 
 **All measurements for memory usage were the same**
-{% endhighlight %}
+```
 
 Ok, so we know that adding two integers is a VERY fast operation, and given the
 super high deviation, we can see that adding to large integers is for some
@@ -113,7 +113,7 @@ counted towards the measured runtime.
 
 So, then we can set our benchmark up like this:
 
-{% highlight elixir %}
+```
 stream = StreamData.integer()
 get_num = fn -> stream |> Enum.take(1) |> hd() end
 
@@ -125,14 +125,14 @@ Benchee.run(
   time: 5,
   memory_time: 1
 )
-{% endhighlight %}
+```
 
 And now we can see that our results are pretty darn similar to the ones that we
 had when we specifically gave 3 inputs. The deviation is still super high for
 such a fast operation, but we can clearly see that the average, median and 99th
 percentile are all significantly higher than our previous results:
 
-{% highlight text %}
+```
 Operating System: Linux
 CPU Information: Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz
 Number of Available Cores: 8
@@ -163,7 +163,7 @@ Name                              Memory usage
 adding two random integers                 0 B
 
 **All measurements for memory usage were the same**
-{% endhighlight %}
+```
 
 So, which pairs of nubmers were the fastest and slowest? That we'll have to
 answer at a later time once we add that feature to benchee, but for now we can

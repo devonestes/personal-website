@@ -24,27 +24,27 @@ So this is the first real surprise I found. Let's look at the two following
 examples:
 
 ##### Example 1
-{% highlight elixir %}
+```
 defmodule Counter.Guard do
   def tup(input) when elem(input, 0) == :ok, do: 0
   def tup(_), do: 1
 end
-{% endhighlight %}
+```
 
 ##### Example 2
-{% highlight elixir %}
+```
 defmodule Counter.PatternMatch do
   def tup({:ok}), do: 0
   def tup(_), do: 1
 end
-{% endhighlight %}
+```
 
 I'm not usually a betting man, but I would have put money on the pattern
 matching version being at least a little faster than the one with `elem/2` in
 the guard clause. But I whipped up a benchmark, and it turns out that's not the
 case at all!
 
-{% highlight text %}
+```
 Name                       ips        average  deviation         median
 guard clause           38.67 K       25.86 μs    ±45.43%       23.00 μs
 pattern matching       30.04 K       33.28 μs    ±85.16%       28.00 μs
@@ -52,7 +52,7 @@ pattern matching       30.04 K       33.28 μs    ±85.16%       28.00 μs
 Comparison:
 guard clause           38.67 K
 pattern matching       30.04 K - 1.29x slower
-{% endhighlight %}
+```
 
 Semantically that's the exact same code, but the pattern matching version is
 almost 30% slower. This is even more surprising given how common it is to
@@ -64,20 +64,20 @@ clause. In the following example, the guard clause version was almost 15%
 slower.
 
 ##### Example 1
-{% highlight elixir %}
+```
 defmodule Counter.Guard do
   def tup(input) when elem(input, 0) == :ok and elem(input, 2) == :hi, do: 0
   def tup(_), do: 1
 end
-{% endhighlight %}
+```
 
 ##### Example 2
-{% highlight elixir %}
+```
 defmodule Counter.PatternMatch do
   def tup({:ok, _, :hi}), do: 0
   def tup(_), do: 1
 end
-{% endhighlight %}
+```
 
 ## map_size/1 and tuple_size/1
 
@@ -86,25 +86,25 @@ and `tuple_size/1` should be slow too, right? WRONG! They're actually super fast
 in guard clauses! Let's look at another example.
 
 ##### Example 1
-{% highlight elixir %}
+```
 defmodule Counter.Guard do
   def size(tup) when tuple_size(tup) == 2, do: 0
   def size(_), do: 1
 end
-{% endhighlight %}
+```
 
 ##### Example 2
-{% highlight elixir %}
+```
 defmodule Counter.PatternMatch do
   def size({_, _}), do: 0
   def size(_), do: 1
 end
-{% endhighlight %}
+```
 
 This time the runtimes were a little closer together, but still the guard clause
 was a little bit faster. 
 
-{% highlight text %}
+```
 Name                       ips        average  deviation         median
 guard clause           40.38 K       24.77 μs    ±47.22%       22.00 μs
 pattern matching       37.35 K       26.78 μs    ±65.15%       24.00 μs
@@ -112,7 +112,7 @@ pattern matching       37.35 K       26.78 μs    ±65.15%       24.00 μs
 Comparison:
 guard clause           40.38 K
 pattern matching       37.35 K - 1.08x slower
-{% endhighlight %}
+```
 
 `map_size/1` is similarly optimized as a guard clause and has similar results.
 

@@ -9,7 +9,7 @@ I've been turning something over in my mind recently, so I'm going to try and wr
 
 First off, testing private functions. Coming from Ruby, I never tested private functions. However, when we have code like the below, it makes me wonder if maybe we should!
 
-{% highlight elixir %}
+```
 def cpu_speed, do: cpu_speed(os())
 
 defp cpu_speed(:Windows) do
@@ -32,7 +32,7 @@ defp parse_cpu_for(:Linux, raw_output) do
   ["model name\t:" <> cpu_info] = Regex.run(~r/model name.*:[\w \(\)\-\@\.]*ghz/i, raw_output)
   String.trim(cpu_info)
 end
-{% endhighlight %}
+```
 
 Having pattern matching means that I can very easily test each branch of the logic involved in this part of the application in isolation. This is awesome - or is it?! Are private functions implementation details that shouldn't be tested like they are in OOP, or are they just a way to limit your "interface"? Because of the nature of what we're testing (system information), we can't test the public function unless we test on macOS, Linux and Windows separately.
 
@@ -40,7 +40,7 @@ I ended up settling on not testing these private methods. First off, I _do_ thin
 
 The next issue that I had here was that we're having to test code that deals with the unpredictable outside world - specifically, we need to make system calls on all three platforms and then handle those system calls. Tobias had the great recommendation of pulling all this into a single function so we can keep our error handling in one place. But, how do we test this? 
 
-{% highlight elixir %}
+```
 defp system_cmd(cmd, args) do
   {output, exit_code} = System.cmd(cmd, args)
   if exit_code > 0 do
@@ -51,7 +51,7 @@ defp system_cmd(cmd, args) do
     output
   end
 end
-{% endhighlight %}
+```
 
 Because that `System.cmd/2` call relies on the system on which the code is run, we can't control the output of that function. That means we can't test the error handling without forcing the machine to fail somehow in a predictable way - and that's tricky.
 
@@ -63,7 +63,7 @@ So, now I was thinking of two possible solutions:
 
 Here's what option 1 would look like:
 
-{% highlight elixir %}
+```
 def system_cmd(cmd, args, system_func \\ &System.cmd/2) do
   {output, exit_code} = system_func.(cmd, args)
   if exit_code > 0 do
@@ -74,11 +74,11 @@ def system_cmd(cmd, args, system_func \\ &System.cmd/2) do
     output
   end
 end
-{% endhighlight %}
+```
 
 And here's what option 2 would look like:
 
-{% highlight elixir %}
+```
 defp system_cmd(cmd, args) do
   cmd |> System.cmd(args) |> handle_errors
 end
@@ -88,7 +88,7 @@ def handle_errors({output, _}) do
   IO.puts(output)
   "N/A"
 end
-{% endhighlight %}
+```
 
 After considering both options, I ended up [going with option number 1](https://github.com/PragTob/benchee/pull/88). My thinking here was two fold. First off, I liked the "readability" of having all the logic in one function. It wasn't too much logic, and it (to me) makes it easier to see the flow of control when using `if/else` instead of pattern matching here. Second, though, I felt that just testing the handling of errors alone, and not unit testing `system_cmd/2`, was a little odd. Maybe that's a feeling that I'm still applying inaccurately from my OO experience, but to be honest, that's why I went with that decision.
 

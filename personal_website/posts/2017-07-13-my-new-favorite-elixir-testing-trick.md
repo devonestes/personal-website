@@ -18,7 +18,7 @@ to deal with the gnarly outside world (like IO).
 I've been doing a big refactor on [Benchee](https://github.com/PragTob/benchee)
 recently, and while working on that I ran across the following test:
 
-{% highlight elixir %}
+```
 test "asks to print what is currently benchmarking" do
   test_suite()
   |> benchmark("Something", fn -> :timer.sleep 10 end)
@@ -26,7 +26,7 @@ test "asks to print what is currently benchmarking" do
 
   assert_receive {:benchmarking, "Something"}
 end
-{% endhighlight %}
+```
 
 I thought "Woah, that looks just like an assertion on an object receiving a
 message in Ruby! What black magic is happening here?" Well, of course it wasn't
@@ -43,7 +43,7 @@ magic on it to make sure stuff is printed would be duplicating test behavior.
 So, instead we have this wonderful module:
 
 
-{% highlight elixir %}
+```
 defmodule Benchee.Test.FakeBenchmarkPrinter do
   def duplicate_benchmark_warning(name) do
     send self(), {:duplicate, name}
@@ -65,7 +65,7 @@ defmodule Benchee.Test.FakeBenchmarkPrinter do
     send self(), {:input_information, name}
   end
 end
-{% endhighlight %}
+```
 
 What that module does is replicate the same interface as the actual `Printer`
 module, but instead of writing to the console, it sends messages to the current

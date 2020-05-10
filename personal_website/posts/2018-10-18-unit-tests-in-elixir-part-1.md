@@ -41,7 +41,7 @@ But if your function calls other functions, that's ok! As long as all the stuff
 you're testing for is within a single process, it's still a unit test in my
 book. Take the following example:
 
-{% highlight elixir %}
+```
 defmodule MyApp.Transform do
   def validate_parse_and_format_for_csv(raw_json) do
     raw_json
@@ -50,7 +50,7 @@ defmodule MyApp.Transform do
     |> MyApp.Format.csv()
   end
 end
-{% endhighlight %}
+```
 
 Here we have a function that we're unit testing. The behavior of this function
 is a composition of behavior of other functions. In theory, it should be
@@ -61,7 +61,7 @@ into that today).
 
 If I were to unit test that function, I'd test it in the following way:
 
-{% highlight elixir %}
+```
 defmodule MyApp.TransformTest do
   use ExUnit.Case, async: true
 
@@ -73,7 +73,7 @@ defmodule MyApp.TransformTest do
     end
   end
 end
-{% endhighlight %}
+```
 
 Yes, technically this test is duplicating tests that are already unit tested in
 those composite functions, but when we're writing unit tests we're defining
@@ -95,7 +95,7 @@ documented, right? Otherwise, you shouldn't be using that library.
 In ExUnit, you're only allowed one level of nesting with `describe` blocks. This
 is by design! When you're writing unit tests, you should do it like this:
 
-{% highlight elixir %}
+```
 defmodule MyApp.UsersTest do
   use MyApp.DataCase, async: true
 
@@ -115,7 +115,7 @@ defmodule MyApp.UsersTest do
     end
   end
 end
-{% endhighlight %}
+```
 
 Always put a describe block showing exactly which function is under test - even
 if there's only one test for now! It makes reading tests much easier, especially

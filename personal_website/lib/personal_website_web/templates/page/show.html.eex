@@ -1,43 +1,49 @@
+<header class="main-header post-head no-cover">
+  <nav class="main-nav  clearfix">
+    <a class="blog-logo" href="/"><img src="/images/logo.png" alt="Blog Logo"></a>
+      <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+  </nav>
+</header>
 <main class="content" role="main">
-    <article class="post tag-test tag-content">
-      <header class="post-header">
-        <h1 class="post-title"><%= @post.title %></h1>
-        <section class="post-meta">
-          <time class="post-date" datetime="<%= @post.date %>"><%= @post.date %></time>
-          Devon C. Estes on 
-          <%= for tag <- @post.tags do %>
-            <a href="/tag/<%= tag %>"><%= tag %></a>
-          <% end %>
-        </section>
-        <div id="codefund_ad"></div>
-      </header>
+  <article class="post tag-test tag-content">
+    <header class="post-header">
+      <h1 class="post-title"><%= @post.title %></h1>
+      <section class="post-meta">
+        <time class="post-date" datetime="<%= @post.date %>"><%= @post.date %></time>
+        Devon C. Estes on 
+        <%= for tag <- @post.tags do %>
+          <a href="/tag/<%= tag %>"><%= tag %></a>
+        <% end %>
+      </section>
+      <div id="codefund_ad"></div>
+    </header>
 
-      <section class="post-content">
-        <%= raw @post.body %>
+    <section class="post-content">
+      <%= raw @post.body %>
+    </section>
+
+    <footer class="post-footer">
+      <figure class="author-image">
+          <a class="img" href="/" style="background-image: url(/images/cropped_headshot.jpg)"><span class="hidden">'s Picture</span></a>
+      </figure>
+
+      <section class="author">
+        <h4>Devon C. Estes</h4>
+        <p> Elixir developer, chess player, and American living in Germany</p>
+        <div class="author-meta">
+          <span class="author-location icon-location"> Berlin, Germany</span> 
+          <span class="author-link icon-link">
+            <a href="http://www.devonestes.com"> http://www.devonestes.com</a>
+          </span> 
+        </div>
       </section>
 
-      <footer class="post-footer">
-        <figure class="author-image">
-            <a class="img" href="/" style="background-image: url(/images/cropped_headshot.jpg)"><span class="hidden">'s Picture</span></a>
-        </figure>
-
-        <section class="author">
-          <h4>Devon C. Estes</h4>
-          <p> Elixir developer, chess player, and American living in Germany</p>
-          <div class="author-meta">
-            <span class="author-location icon-location"> Berlin, Germany</span> 
-            <span class="author-link icon-link">
-              <a href="http://www.devonestes.com"> http://www.devonestes.com</a>
-            </span> 
-          </div>
-        </section>
-
-        <section class="share">
-          <h4>Share this post</h4>
-          <a class="icon-twitter" href="http://twitter.com/share?text=<%= @post.title %>&amp;url=http://www.devonestes.com/<%= @post.slug %>" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-            <span class="hidden">Twitter</span>
-          </a>
-        </section>
-      </footer>
-    </article>
+      <section class="share">
+        <h4>Share this post</h4>
+        <a class="icon-twitter" href="http://twitter.com/share?text=<%= @post.title %>&amp;url=http://www.devonestes.com/<%= @post.slug %>" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <span class="hidden">Twitter</span>
+        </a>
+      </section>
+    </footer>
+  </article>
 </main>

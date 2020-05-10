@@ -21,24 +21,24 @@ what I'm referring to.
 * **type** - This is the definition of a type (using `object` in Absinthe). These defintions
     usually look something like this:
 
-{% highlight elixir %}
+```
 object :user do
   field :id, :id
   field :name, :string
   field :age, :integer
 end
-{% endhighlight %}
+```
 
 * **input object** - This is a type, but it's kind of special since it is used to define the
     arguments given to an operation (if any are needed). They look just like objects, but use a
     different macro for definition:
 
-{% highlight elixir %}
+```
 input_object :user_input do
   field :name, :string
   field :age, :integer
 end
-{% endhighlight %}
+```
 
 * **schema** - the last thing we needed was another thing in our application called a "schema"
     (since database schemas and Ecto schemas already a thing), but here we are. When you're
@@ -48,14 +48,14 @@ end
     certain domain concepts in our application to make them easier to work with, and those usually
     look like this:
 
-{% highlight elixir %}
+```
 object :user_queries do
   field :users, list_of(:user) do
     description("A list of all users in the system.")
     resolve(&UserResolver.list/3)
   end
 end
-{% endhighlight %}
+```
 
 Ok, so with that out of the way, we're going to use the cannonical blog post example for our
 domain today, with `user`s, `post`s and `comment`s.
@@ -67,7 +67,7 @@ thoughts on that stuff](/a-proposal-for-context-rules) before. But, this is what
 directory structure would look like (minus the normal stuff in every project like config and
 such):
 
-{% highlight text %}
+```
 .
 +-- lib
 |   +-- blog
@@ -122,7 +122,7 @@ such):
 +-- README.md
 +-- mix.exs
 +-- etc...
-{% endhighlight %}
+```
 
 I think the general idea there is pretty clear - we separate `type`s, `resolver`s and `schema`s
 into their own directories. Each type should have a corresponding resolver, and if there are
@@ -136,7 +136,7 @@ In our `types` directory, we have a file for each type - but that file can conta
 these sorts of things. For example, in `blog_web/types/user.ex`, we could have something like
 this:
 
-{% highlight elixir %}
+```
 defmodule BlogWeb.Types.User do
   use Absinthe.Schema.Notation
 
@@ -172,7 +172,7 @@ defmodule BlogWeb.Types.User do
     field :age, :integer
   end
 end
-{% endhighlight %}
+```
 
 These are all of our user-related types, and so we can put them all there. If we needed more
 specific objects or input objects related to users, we could also put them here.
@@ -190,7 +190,7 @@ but what goes in `blog_web/schemas` are essentially decomposed parts of one larg
 in `blog_web/schema.ex`. So, we chunk that one huge schema up into smaller pieces, and those
 pieces look something like this (for example, `blog_web/schemas/queries/user.ex`):
 
-{% highlight elixir %}
+```
 defmodule BlogWeb.Schemas.Queries.User do
   use Absinthe.Schema.Notation
 
@@ -206,7 +206,7 @@ defmodule BlogWeb.Schemas.Queries.User do
     end
   end
 end
-{% endhighlight %}
+```
 
 In there we've defined our queries relating to users, as well as documentation and resolution
 functions for those queries. The same restrictions go for mutations and subscriptions.
@@ -217,7 +217,7 @@ like we've done above with our `:user_input` above.
 
 Once we have all those bits and pieces, we put it together in a `blog_web/schema.ex` file like so:
 
-{% highlight elixir %}
+```
 defmodule BlogWeb.Schema do
   use Absinthe.Schema
 
@@ -257,7 +257,7 @@ defmodule BlogWeb.Schema do
     import_fields(:post_subscriptions)
   end
 end
-{% endhighlight %}
+```
 
 If you're consistent enough with naming and such you could potentially even write a nice little
 macro to take care of all that for you, but _please_ don't jump right to that since macros can be
@@ -268,7 +268,7 @@ a huge pain to maintain over time.
 Ok, just really quick on this one. Resolver functions are tested just like any other function, and
 those tests look like this (in `test/blog_web/resolvers/user_resolver_test.exs`):
 
-{% highlight elixir %}
+```
 defmodule BlogWeb.Resolvers.UserResolverTest do
   use Blog.DataCase, async: true
 
@@ -281,14 +281,14 @@ defmodule BlogWeb.Resolvers.UserResolverTest do
     end
   end
 end
-{% endhighlight %}
+```
 
 Then, our schemas are tested in files that mirror the way they're defined, so we test user queries
 in `test/blog_web/schemas/queries/user_test.exs` and comment mutations in
 `test/blog_web/schemas/mutations/comment_test.exs`. The describe blocks in those tests are for
 each query/mutation/subscription under test, and look like this:
 
-{% highlight elixir %}
+```
 defmodule BlogWeb.Schemas.Mutations.CommentTest do
   use Blog.DataCase, async: true
 
@@ -325,7 +325,7 @@ defmodule BlogWeb.Schemas.Mutations.CommentTest do
     # more tests here
   end
 end
-{% endhighlight %}
+```
 
 So, we're testing two things there - the response to our client, **and the side effects!** I've
 seen so many times where just the response is tested in these kinds of tests, but the side effects

@@ -16,7 +16,7 @@ which really helps with the development as well.
 Credo provides some lovely functions that can be used for testing checks. The basic setup for all
 my tests of custom Credo checks looks like this:
 
-{% highlight elixir %}
+```
 defmodule MyCheck.ConsistentFunctionDefinitionsTest do
   use Assertions.Case, async: true
 
@@ -58,7 +58,7 @@ defmodule MyCheck.ConsistentFunctionDefinitionsTest do
     end)
   end
 end
-{% endhighlight %}
+```
 
 Let's break that down a little bit.
 
@@ -79,7 +79,7 @@ of parsed ASTs or anything I can do that super easily.
 Now that I have a test that will help me develop my check, I start off with the basics of a custom
 Credo check.
 
-{% highlight elixir %}
+```
 defmodule Nicene.ConsistentFunctionDefinitions do
   @moduledoc """
   Function definitions should use one or the other style, not a mix of the two.
@@ -101,7 +101,7 @@ defmodule Nicene.ConsistentFunctionDefinitions do
     )
   end
 end
-{% endhighlight %}
+```
 
 This gives me the `run/2` function I need, and `use`s `Credo.Check`, saying that this check is a
 readability check, with high priority and a default exit_status of 1. `run/2` needs to return a
@@ -113,7 +113,7 @@ For this check I first need a list of all the functions defined in this module, 
 I'm going to walk the AST and look for function definitions. There's a convenient Credo helper for
 that as well!
 
-{% highlight elixir %}
+```
 defmodule Nicene.ConsistentFunctionDefinitions do
   @moduledoc """
   Function definitions should use one or the other style, not a mix of the two.
@@ -155,7 +155,7 @@ defmodule Nicene.ConsistentFunctionDefinitions do
     )
   end
 end
-{% endhighlight %}
+```
 
 `Credo.Code.prewalk/3` is essentially the same as `Enum.reduce/2`, and lets us recursively go
 through all nodes in the AST, and if we hit a node that matches the pattern we're looking for
@@ -169,7 +169,7 @@ time, since syntax matters, we're going to iterate over the lines of the actual 
 not the AST. And what do you know - Credo gives us a helpful function for that as well!
 do you know - Credo provides another helpful function for that!
 
-{% highlight elixir %}
+```
 defmodule Nicene.ConsistentFunctionDefinitions do
   @moduledoc """
   Function definitions should use one or the other style, not a mix of the two.
@@ -236,7 +236,7 @@ defmodule Nicene.ConsistentFunctionDefinitions do
     )
   end
 end
-{% endhighlight %}
+```
 
 `Credo.SourceFile.lines/1` gives us a list of all lines in the file, along with its line number.
 We then iterate through each of those lines, and if it's a line that we know we defined a function
