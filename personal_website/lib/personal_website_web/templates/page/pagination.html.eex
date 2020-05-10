@@ -1,0 +1,11 @@
+<div class="inner">
+  <nav class="pagination" role="pagination">
+    <%= if @page > 1 do %>
+      <a class="newer-posts" href="<%= @conn.request_path %>?page=<%= @page - 1 %>" title="Previous Page">« Newer Posts</a>
+    <% end %>
+    <span class="page-number"> Page <%= @page %> of <%= @num_pages %></span>
+    <%= if @page < @num_pages do %>
+      <a class="older-posts" href="<%= @conn.request_path %>?page=<%= @page + 1 %>" title="Next Page">Older Posts »</a>
+    <% end %>
+  </nav>
+</div>

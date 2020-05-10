@@ -13,8 +13,7 @@ defmodule PersonalWebsiteWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    get "/about", PageController, :about
-    get "/:slug", PageController, :show
     get "/tag/:tag", PageController, :index_by_tag
+    get "/:slug", PageController, :show
   end
 end

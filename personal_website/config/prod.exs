@@ -1,7 +1,7 @@
 use Mix.Config
 
 config :personal_website, PersonalWebsiteWeb.Endpoint,
-  url: [host: "devonestes.com", port: 80],
+  url: [host: "localhost", port: 4000],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 config :logger, level: :info
@@ -39,7 +39,3 @@ config :logger, level: :info
 #       force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
-
-# Finally import the config/prod.secret.exs which loads secrets
-# and configuration from environment variables.
-import_config "prod.secret.exs"

@@ -1,6 +1,6 @@
 defmodule PersonalWebsite.Post do
-  @enforce_keys [:slug, :author, :title, :body, :description, :tags, :date]
-  defstruct [:slug, :author, :title, :body, :description, :tags, :date]
+  @enforce_keys [:slug, :author, :title, :body, :description, :tags, :date, :template]
+  defstruct [:slug, :author, :title, :body, :description, :tags, :date, :template]
 
   def parse!(filename, contents) do
     slug =
@@ -16,7 +16,7 @@ defmodule PersonalWebsite.Post do
     contents = parse_contents(slug, contents)
 
     # And finally build the post struct
-    struct!(__MODULE__, [slug: slug, author: "Devon"] ++ contents)
+    struct!(__MODULE__, [slug: slug, author: "Devon", template: "show"] ++ contents)
   end
 
   defp parse_contents(_slug, contents) do
