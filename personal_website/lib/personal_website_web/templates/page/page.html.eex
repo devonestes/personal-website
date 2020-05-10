@@ -1,0 +1,9 @@
+<header class="main-header post-head no-cover">
+  <nav class="main-nav  clearfix">
+    <a class="blog-logo" href="/"><img src="/images/logo.png" alt="Blog Logo"></a>
+      <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+  </nav>
+</header>
+<main class="content" role="main">
+  <%= raw @post.body %>
+</main>

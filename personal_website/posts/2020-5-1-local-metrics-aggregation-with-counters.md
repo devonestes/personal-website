@@ -154,7 +154,7 @@ end
 I benchmarked this solution, and it turns out to be as effective as I expected, and on my machine
 the p99 for adding a measurement is 1 microsecond, which I think isn't too bad!
 
-```
+```shell
 Operating System: macOS
 CPU Information: Intel(R) Core(TM) i9-9980HK CPU @ 2.40GHz
 Number of Available Cores: 16
@@ -175,8 +175,6 @@ Benchmarking add_value...
 
 Name                ips        average  deviation         median         99th %
 add_value        2.28 M      438.04 ns  ±4644.31%           0 ns        1000 ns
-```
-
 ```
 
 The real fun and interesting stuff going on here is in the add_value/3 helper there.
