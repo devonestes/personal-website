@@ -11,7 +11,8 @@ defmodule PersonalWebsiteWeb.PageController do
 
   def show(conn, params) do
     post = Posts.get_post!(params["slug"])
-    render(conn, "#{post.template}.html", body: post)
+    post = Map.update!(post, :date, &format_date/1)
+    render(conn, "#{post.template}.html", post: post)
   end
 
   def index_by_tag(conn, params) do
