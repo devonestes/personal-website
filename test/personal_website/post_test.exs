@@ -19,8 +19,9 @@ defmodule PersonalWebsite.PostTest do
              } = Post.parse!("2020-5-1-local-metrics-aggregation-with-counters.md", input)
 
       assert date == NaiveDateTime.from_iso8601!("2020-05-01 00:18:00")
+
       assert body == """
-      """
+             """
     end
   end
 end

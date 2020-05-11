@@ -51,7 +51,7 @@ defmodule PersonalWebsite.Post do
     do: {:description, String.trim(value)}
 
   defp parse_attr({:body, value}),
-  do: {:body, value |> Earmark.as_html!() |> Highlighter.highlight_code_blocks()}
+    do: {:body, value |> Earmark.as_html!() |> Highlighter.highlight_code_blocks()}
 
   defp parse_attr({:date, value}) do
     value = String.trim(value)

@@ -40,4 +40,31 @@ defmodule PersonalWebsiteWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug PersonalWebsiteWeb.Router
+
+  def init(_, config) do
+    case System.get_env("PORT") do
+      port when is_binary(port) ->
+        port = String.to_integer(port)
+
+        http =
+          config
+          |> Keyword.get(:http, [])
+          |> Keyword.put(:port, port)
+
+        url =
+          config
+          |> Keyword.get(:url, [])
+          |> Keyword.put(:port, port)
+
+        config =
+          config
+          |> Keyword.put(:http, http)
+          |> Keyword.put(:url, url)
+
+        {:ok, config}
+
+      _ ->
+        {:ok, config}
+    end
+  end
 end
