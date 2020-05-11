@@ -39,7 +39,9 @@ defmodule PersonalWebsite.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:earmark, "~> 1.3"},
-      {:makeup_elixir, "~> 0.14"}
+      {:makeup_elixir, "~> 0.14"},
+      {:extwitter, "~> 0.12"},
+      {:timex, "~> 3.6.1"}
     ]
   end
 

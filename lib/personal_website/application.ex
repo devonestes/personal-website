@@ -6,6 +6,8 @@ defmodule PersonalWebsite.Application do
   use Application
 
   def start(_type, _args) do
+    twitter_prune()
+
     children =
       if Mix.env() == :dev do
         [
@@ -27,5 +29,28 @@ defmodule PersonalWebsite.Application do
   def config_change(changed, _new, removed) do
     PersonalWebsiteWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  @one_week_ago DateTime.add(DateTime.utc_now(), -(60 * 60 * 24 * 7))
+
+  defp twitter_prune() do
+    Task.async(fn ->
+      ExTwitter.configure(
+        consumer_key: System.get_env("CONSUMER_KEY"),
+        consumer_secret: System.get_env("CONSUMER_SECRET"),
+        access_token: System.get_env("ACCESS_TOKEN"),
+        access_token_secret: System.get_env("ACCESS_TOKEN_SECRET")
+      )
+
+      [screen_name: "devoncestes"]
+      |> ExTwitter.user_timeline()
+      |> Enum.filter(fn tweet ->
+        created_at =
+          Timex.parse!(tweet.created_at, "{WDshort} {Mshort} {0D} {h24}:{m}:{s} {Z} {YYYY}")
+
+        DateTime.diff(created_at, @one_week_ago) <= 0
+      end)
+      |> Enum.each(&ExTwitter.destroy_status(&1.id))
+    end)
   end
 end
