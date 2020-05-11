@@ -1,8 +1,11 @@
 use Mix.Config
 
 config :personal_website, PersonalWebsiteWeb.Endpoint,
-  url: [host: "localhost", port: 4000],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  #url: [scheme: "https", host: "testmetrics-app.herokuapp.com", port: 443],
+  #force_ssl: [rewrite_on: [:x_forwarded_proto]],
+  url: [host: "devonestes.herokuapp.com", port: 4000],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
 
 config :logger, level: :info
 
