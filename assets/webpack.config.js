@@ -13,7 +13,7 @@ module.exports = (env, options) => ({
       new OptimizeCSSAssetsPlugin({})
     ]
   },
-  entry: ['./js/app.js', './css/app.css'],
+  entry: ['./js/app.js', './css/app.css', './css/resume.css'],
   output: {
     filename: 'js/app.js',
     path: path.resolve(__dirname, '../priv/static')
@@ -38,6 +38,7 @@ module.exports = (env, options) => ({
   },
   plugins: [
     new MiniCssExtractPlugin({ filename: 'css/app.css' }),
+    new MiniCssExtractPlugin({ filename: 'css/resume.css' }),
     new CopyWebpackPlugin([{ from: 'static/', to: '.' }]),
     new webpack.ProvidePlugin({
       $: "jquery",

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Devon C. Estes</title>
+    <meta name="description" content="Devon C. Estes" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="alternate" type="application/rss+xml" title="Devon C. Estes" href="/feed.xml" />
+
+    <link rel="shortcut icon" href="<%= Routes.static_path(@conn, "/favicon.ico") %>" >
+
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="<%= Routes.static_path(@conn, "/css/resume.css") %>" />
+
+    <%= csrf_meta_tag() %>
+  </head>
+
+  <body lang="en">
+    <%= @inner_content %>
+  </body>
+</html>

@@ -10,6 +10,12 @@ defmodule PersonalWebsiteWeb.PageController do
   end
 
   def show(conn, params) do
+    conn =
+      case params["slug"] do
+        "resume" -> put_layout(conn, "empty.html")
+        _ -> conn
+      end
+
     post = Posts.get_post!(params["slug"])
     post = Map.update!(post, :date, &format_date/1)
     render(conn, "#{post.template}.html", post: post)
