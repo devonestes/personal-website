@@ -13,7 +13,7 @@ module.exports = (env, options) => ({
       new OptimizeCSSAssetsPlugin({})
     ]
   },
-  entry: ['./js/app.js', './css/app.css', './css/resume.css'],
+  entry: ['./js/app.js', './css/app.css'],
   output: {
     filename: 'js/app.js',
     path: path.resolve(__dirname, '../priv/static')
