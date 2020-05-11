@@ -20,7 +20,7 @@
         <h2 class="post-title"><a href="/<%= post.slug %>"><%= post.title %></a></h2>
       </header>
       <section class="post-excerpt">
-        <p><%= post.description %></p>
+        <p><%= post.description %> <a class="read-more" href="/<%= post.slug %>">»</a></p>
       </section>
       <footer class="post-meta">
           <img class="author-thumb" src="/images/cropped_headshot.jpg" alt="Author image" nopin="nopin">

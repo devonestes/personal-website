@@ -1,4 +1,4 @@
-<div class="inner">
+<div class="extra-pagination inner">
   <nav class="pagination" role="pagination">
     <%= if @page > 1 do %>
       <a class="newer-posts" href="<%= @conn.request_path %>?page=<%= @page - 1 %>" title="Previous Page">« Newer Posts</a>

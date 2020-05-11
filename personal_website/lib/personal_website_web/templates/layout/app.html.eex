@@ -9,15 +9,12 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="shortcut icon" href="/images/favicon.ico" >
-
     <link rel="alternate" type="application/rss+xml" title="Devon C. Estes" href="/feed.xml" />
 
-    <link rel="stylesheet" type="text/css" href="/css/screen.css" />
-    <link rel="stylesheet" type="text/css" href="/css/highlight.css" />
-    <link rel="stylesheet" type="text/css" href="/css/codefund.css" />
+    <link rel="shortcut icon" href="<%= Routes.static_path(@conn, "/favicon.ico") %>" >
+
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
-    <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
+    <link rel="stylesheet" type="text/css" href="<%= Routes.static_path(@conn, "/css/app.css") %>" />
 
     <meta property="og:site_name" content="Devon C. Estes" />
     <meta property="og:type" content="website" />
@@ -56,9 +53,7 @@
       <%= @inner_content %>
     </div>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="/js/jquery.fitvids.js"></script>
-    <script type="text/javascript" src="/js/index.js"></script>
-    <script src="https://codefund.io/scripts/c073469c-dfa9-4c80-89f1-4c46166782f3/embed.js?template=horizontal"></script>
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <script src="//codefund.io/scripts/c073469c-dfa9-4c80-89f1-4c46166782f3/embed.js?template=horizontal"></script>
   </body>
 </html>
