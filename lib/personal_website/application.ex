@@ -31,9 +31,9 @@ defmodule PersonalWebsite.Application do
     :ok
   end
 
-  @one_week_ago DateTime.add(DateTime.utc_now(), -(60 * 60 * 24 * 7))
-
   defp twitter_prune() do
+    one_week_ago = DateTime.add(DateTime.utc_now(), -(60 * 60 * 24 * 7))
+
     Task.async(fn ->
       ExTwitter.configure(
         consumer_key: System.get_env("CONSUMER_KEY"),
@@ -42,15 +42,19 @@ defmodule PersonalWebsite.Application do
         access_token_secret: System.get_env("ACCESS_TOKEN_SECRET")
       )
 
-      [screen_name: "devoncestes"]
+      [screen_name: "devoncestes", count: 200]
       |> ExTwitter.user_timeline()
       |> Enum.filter(fn tweet ->
         created_at =
           Timex.parse!(tweet.created_at, "{WDshort} {Mshort} {0D} {h24}:{m}:{s} {Z} {YYYY}")
 
-        DateTime.diff(created_at, @one_week_ago) <= 0
+        DateTime.diff(created_at, one_week_ago) <= 0
       end)
       |> Enum.each(&ExTwitter.destroy_status(&1.id))
+
+      [screen_name: "devoncestes", count: 200]
+      |> ExTwitter.favorites()
+      |> Enum.each(&ExTwitter.destroy_favorite(&1.id, []))
     end)
   end
 end
