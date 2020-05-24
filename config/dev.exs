@@ -19,7 +19,8 @@ config :personal_website, PersonalWebsiteWeb.Endpoint,
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"lib/personal_website_web/(live|views)/.*(ex)$",
       ~r"lib/personal_website_web/templates/.*(eex)$",
-      ~r"posts/.*(md)$"
+      ~r"posts/.*(md)$",
+      ~r"pages/.*(html)$"
     ]
   ],
   pubsub_server: PersonalWebsite.PubSub

@@ -32,30 +32,32 @@ defmodule PersonalWebsite.Application do
   end
 
   defp twitter_prune() do
-    ExTwitter.configure(
-      consumer_key: System.get_env("CONSUMER_KEY"),
-      consumer_secret: System.get_env("CONSUMER_SECRET"),
-      access_token: System.get_env("ACCESS_TOKEN"),
-      access_token_secret: System.get_env("ACCESS_TOKEN_SECRET")
-    )
+    if System.get_env("CONSUMER_KEY") do
+      ExTwitter.configure(
+        consumer_key: System.get_env("CONSUMER_KEY"),
+        consumer_secret: System.get_env("CONSUMER_SECRET"),
+        access_token: System.get_env("ACCESS_TOKEN"),
+        access_token_secret: System.get_env("ACCESS_TOKEN_SECRET")
+      )
 
-    opts = [screen_name: "devoncestes", count: 200]
+      opts = [screen_name: "devoncestes", count: 200]
 
-    Task.async(fn ->
-      one_week_ago = DateTime.add(DateTime.utc_now(), -(60 * 60 * 24 * 7))
-      opts
-      |> ExTwitter.user_timeline()
-      |> Enum.filter(&delete_tweet?(&1, one_week_ago))
-      |> Enum.each(&ExTwitter.destroy_status(&1.id))
-    end)
+      Task.async(fn ->
+        one_week_ago = DateTime.add(DateTime.utc_now(), -(60 * 60 * 24 * 7))
+        opts
+        |> ExTwitter.user_timeline()
+        |> Enum.filter(&delete_tweet?(&1, one_week_ago))
+        |> Enum.each(&ExTwitter.destroy_status(&1.id))
+      end)
 
-    Task.async(fn ->
-      one_day_ago = DateTime.add(DateTime.utc_now(), -(60 * 60 * 24))
-      opts
-      |> ExTwitter.favorites()
-      |> Enum.filter(&delete_tweet?(&1, one_day_ago))
-      |> Enum.each(&ExTwitter.destroy_favorite(&1.id, []))
-    end)
+      Task.async(fn ->
+        one_day_ago = DateTime.add(DateTime.utc_now(), -(60 * 60 * 24))
+        opts
+        |> ExTwitter.favorites()
+        |> Enum.filter(&delete_tweet?(&1, one_day_ago))
+        |> Enum.each(&ExTwitter.destroy_favorite(&1.id, []))
+      end)
+    end
   end
 
   defp delete_tweet?(tweet, date) do

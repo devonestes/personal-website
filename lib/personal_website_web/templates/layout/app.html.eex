@@ -20,16 +20,16 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Devon C. Estes" />
     <meta property="og:description" content="" />
-    <meta property="og:url" content="/" />
-    <meta property="og:image" content="/images/logo.png" />
+    <meta property="og:url" content="http://devonestes.com" />
+    <meta property="og:image" content="http://devonestes.com/images/cropped_headshot.jpg" />
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@devoncestes">
     <meta name="twitter:creator" content="@devoncestes">
     <meta name="twitter:title" content="Devon C. Estes">
-    <meta name="twitter:url" content="http://localhost:4000/">
+    <meta name="twitter:url" content="http://devonestes.com">
     <meta name="twitter:text:description" content="An (at least) monthly weblog about software">
-    <meta name="twitter:image:src" content="http://localhost:4000/images/cropped_headshot.jpg">
+    <meta name="twitter:image:src" content="http://devonestes.com/images/cropped_headshot.jpg">
 
     <%= csrf_meta_tag() %>
   </head>

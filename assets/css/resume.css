@@ -727,18 +727,6 @@ li{
   clear: both;
 }
 
-.details .location::before{
-  display: inline-block;
-  position: relative;
-  right: 3pt;
-  top: 0.25pt;
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  text-decoration: inherit;
-  content: "\f041";
-}
-
 /***** fine-tunes on the lists... *****/
 
 #main ul{
@@ -807,6 +795,19 @@ li{
   padding: 0;
 }
 
+#education{
+  line-height: 1.5;
+}
+
+#education ul{
+  margin: 0.05in 0 0.15in;
+  padding: 0;
+}
+
+#education > ul > li > b {
+  font-weight: bold;
+}
+
 #disclaimer{
   position: absolute;
   bottom: var(--sidebar-horizontal-padding);
@@ -824,3 +825,4 @@ li{
   font-weight: 400;
   font-style: normal;
 }
+
