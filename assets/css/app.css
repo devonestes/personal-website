@@ -3616,7 +3616,7 @@ code.makeup .unselectable {
 .resume #main{
   float: left;
   width: var(--main-width);
-  padding: 0.25in 0.25in 0.25in 0.25in;
+  padding: 0.25in 0.25in 0.5in 0.25in;
   font-size: 8pt;
 }
 
