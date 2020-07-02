@@ -54,6 +54,5 @@
     </div>
 
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
-    <script src="//codefund.io/scripts/c073469c-dfa9-4c80-89f1-4c46166782f3/embed.js?template=horizontal"></script>
   </body>
 </html>

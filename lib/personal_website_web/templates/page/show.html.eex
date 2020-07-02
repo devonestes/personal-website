@@ -15,7 +15,6 @@
           <a href="/tag/<%= tag %>"><%= tag %></a>
         <% end %>
       </section>
-      <div id="codefund_ad"></div>
     </header>
 
     <section class="post-content">
