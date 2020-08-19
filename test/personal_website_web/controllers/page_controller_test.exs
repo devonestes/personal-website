@@ -13,6 +13,7 @@ defmodule PersonalWebsiteWeb.PageControllerTest do
     )
   end
 
+  @tag :skip
   test "GET /:slug", %{conn: conn} do
     conn = get(conn, "/local-metrics-aggregation-with-counters")
     assert html_response(conn, 200) =~ String.trim("""

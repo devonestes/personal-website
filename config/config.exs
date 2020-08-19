@@ -12,7 +12,8 @@ config :personal_website, PersonalWebsiteWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "lKCdipsrLCP4LbjJBZrPXfSlwfO3Y/kVChOJVj/po/TTmsMBiQICgbXT/qGSFYYx",
   render_errors: [view: PersonalWebsiteWeb.ErrorView, accepts: ~w(html json)],
-  live_view: [signing_salt: "LZKYtQXg"]
+  live_view: [signing_salt: "LZKYtQXg"],
+  pubsub_server: PersonalWebsite.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,

@@ -1,58 +1,55 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <title>Devon C. Estes</title>
-    <meta name="description" content="Devon C. Estes" />
-    <meta name="HandheldFriendly" content="True" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devon C. Estes</title>
+  <meta name="description" content="Devon C. Estes" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="alternate" type="application/rss+xml" title="Devon C. Estes" href="/feed.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Devon C. Estes" href="/feed.xml" />
 
-    <link rel="shortcut icon" href="<%= Routes.static_path(@conn, "/favicon.ico") %>" >
+  <link rel="shortcut icon" href="<%= Routes.static_path(@conn, "/favicon.ico") %>" >
 
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
-    <link rel="stylesheet" type="text/css" href="<%= Routes.static_path(@conn, "/css/app.css") %>" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+  <link rel="stylesheet" type="text/css" href="<%= Routes.static_path(@conn, "/css/app.css") %>" />
 
-    <meta property="og:site_name" content="Devon C. Estes" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Devon C. Estes" />
-    <meta property="og:description" content="" />
-    <meta property="og:url" content="http://devonestes.com" />
-    <meta property="og:image" content="http://devonestes.com/images/cropped_headshot.jpg" />
+  <meta property="og:site_name" content="Devon C. Estes" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Devon C. Estes" />
+  <meta property="og:description" content="" />
+  <meta property="og:url" content="http://devonestes.com" />
+  <meta property="og:image" content="http://devonestes.com/images/cropped_headshot.jpg" />
 
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@devoncestes">
-    <meta name="twitter:creator" content="@devoncestes">
-    <meta name="twitter:title" content="Devon C. Estes">
-    <meta name="twitter:url" content="http://devonestes.com">
-    <meta name="twitter:text:description" content="An (at least) monthly weblog about software">
-    <meta name="twitter:image:src" content="http://devonestes.com/images/cropped_headshot.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@devoncestes">
+  <meta name="twitter:creator" content="@devoncestes">
+  <meta name="twitter:title" content="Devon C. Estes">
+  <meta name="twitter:url" content="http://devonestes.com">
+  <meta name="twitter:text:description" content="An (at least) monthly weblog about software">
+  <meta name="twitter:image:src" content="http://devonestes.com/images/cropped_headshot.jpg">
 
-    <%= csrf_meta_tag() %>
-  </head>
+  <%= csrf_meta_tag() %>
+</head>
 
-  <body>
-    <div class="nav">
-      <h3 class="nav-title">Menu</h3>
-      <a href="#" class="nav-close">
-        <span class="hidden">Close</span>
-      </a>
-      <ul>
-        <li class="nav-home  nav-current" role="presentation"><a href="/">Home</a></li>
-        <li class="nav-about " role="presentation"><a href="/about">About Me</a></li>
-      </ul>
-      <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
-    </div>
+<body>
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+      <span class="hidden">Close</span>
+    </a>
+    <ul>
+      <li class="nav-home  nav-current" role="presentation"><a href="/">Home</a></li>
+      <li class="nav-about " role="presentation"><a href="/about">About Me</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+  </div>
 
-    <span class="nav-cover"></span>
+  <span class="nav-cover"></span>
 
-    <div class="site-wrapper">
-      <%= @inner_content %>
-    </div>
+  <div class="site-wrapper">
+    <%= @inner_content %>
+  </div>
 
-    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
-  </body>
-</html>
+  <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+</body>

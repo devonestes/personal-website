@@ -41,7 +41,10 @@ defmodule PersonalWebsite.MixProject do
       {:earmark, "~> 1.3"},
       {:makeup_elixir, "~> 0.14"},
       {:extwitter, "~> 0.12"},
-      {:timex, "~> 3.6.1"}
+      {:timex, "~> 3.6.1"},
+      {:tesla, "~> 1.3.0"},
+      {:phoenix_live_view, "~> 0.14.2"},
+      {:floki, ">= 0.0.0", only: :test}
     ]
   end
 

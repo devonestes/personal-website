@@ -28,6 +28,9 @@ defmodule PersonalWebsiteWeb.Endpoint do
     plug Phoenix.CodeReloader
   end
 
+  socket "/live", Phoenix.LiveView.Socket,
+    websocket: [connect_info: [session: @session_options]]
+
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
