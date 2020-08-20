@@ -33,6 +33,11 @@ module.exports = (env, options) => ({
         test: /\.(woff|woff2|eot|ttf|svg)$/,
         loader: "file-loader",
         options: {outputPath: "fonts", publicPath: "/fonts"}
+      },
+      {
+        test: /\.(wav)$/i,
+        loader: "file-loader",
+        options: {name: '[name].[ext]', outputPath: "sounds", publicPath: "/sounds"}
       }
     ]
   },

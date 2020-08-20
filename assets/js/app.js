@@ -3,28 +3,18 @@
 // its own CSS file.
 import css from "../css/app.css"
 
+// We need to require this or Webpack doesn't build it.
+require('../sounds/S-Bahn10.wav');
+require('../sounds/S-Bahn5.wav');
+require('../sounds/Zehlendorf5.wav');
+require('../sounds/Zehlendorf10.wav');
+
 /**
  * Live View stuff
 **/
 import "phoenix_html"
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
-
-(function() {
-  let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-  let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
-
-  // Connect if there are any LiveViews on the page
-  liveSocket.connect()
-
-  // Expose liveSocket on window for web console debug logs and latency simulation:
-  // >> liveSocket.enableDebug()
-  // >> liveSocket.enableLatencySim(1000)
-  // The latency simulator is enabled for the duration of the browser session.
-  // Call disableLatencySim() to disable:
-  // >> liveSocket.disableLatencySim()
-  window.liveSocket = liveSocket
-})()
 
 /**
  * Main JS file for Casper behaviours
@@ -148,3 +138,46 @@ import LiveSocket from "phoenix_live_view"
     });
   };
 })( window.jQuery || window.Zepto );
+
+
+(function( $ ) {
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for(let mutation of mutationsList) {
+      var alert = mutation.target;
+      alert.load();
+      alert.play();
+    }
+  });
+
+  var audio = document.getElementById('audio-alert');
+  observer.observe(audio, {attributes: true});
+
+  $("button").click(function() {
+    var playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+      playPromise.then(function(_) {
+        audio.pause();
+      })
+      .catch(function(error) {
+        console.log(error)
+      });
+    }
+  });
+})( window.jQuery || window.Zepto );
+
+(function() {
+  let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+  let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}});
+
+  // Connect if there are any LiveViews on the page
+  liveSocket.connect();
+
+  // Expose liveSocket on window for web console debug logs and latency simulation:
+  // >> liveSocket.enableDebug()
+  // >> liveSocket.enableLatencySim(1000)
+  // The latency simulator is enabled for the duration of the browser session.
+  // Call disableLatencySim() to disable:
+  // >> liveSocket.disableLatencySim()
+  window.liveSocket = liveSocket;
+})();

@@ -7,15 +7,24 @@ defmodule PersonalWebsiteWeb.Bus do
     get_data(:ok, socket)
   end
 
-  def handle_info(:rerender, socket) do
+  def handle_info(:update_time, socket) do
+    get_data(:noreply, socket)
+  end
+
+  def handle_info(:update_bus_data, socket) do
     get_data(:noreply, socket)
   end
 
   def render(assigns) do
+    alert = unless is_nil(assigns.alert), do: Routes.static_path(assigns.socket, assigns.alert)
+
     ~L"""
     <div>
+      <div style="display:none">
+        <audio id="audio-alert" src="<%= alert %>"/>
+      </div>
       <h1 style="text-align:center;font-size:30px"><%= assigns.date %></h1>
-      <h1 style="text-align:center;font-size:30px"><%= assigns.time %></h1>
+      <h1 id="time" style="text-align:center;font-size:30px"><%= assigns.time %></h1>
       <table style="width:fit-content;margin:0 auto">
         <tr>
           <%= for {destination, _} <- assigns.bus_data do %>
@@ -32,18 +41,22 @@ defmodule PersonalWebsiteWeb.Bus do
           <% end %>
         </tr>
       </table>
+      <button>Enable sound</button>
     </div>
     """
   end
 
   defp get_data(atom, socket) do
-    Process.send_after(self(), :rerender, 1000)
     now = Timex.now("Europe/Berlin")
     {:ok, date} = Timex.format(now, "{WDfull} {Mfull} {D}")
     {:ok, time} = Timex.format(now, "{h24}:{m}:{s}")
     if String.ends_with?(time, "0") or atom == :ok do
-      {atom, assign(socket, date: date, time: time, bus_data: Bus.request_data())}
+      Process.send_after(self(), :update_bus_data, 10_000)
+      Process.send_after(self(), :update_time, 1000)
+      {alert, bus_data} = Bus.request_data()
+      {atom, assign(socket, date: date, time: time, bus_data: bus_data, alert: alert)}
     else
+      Process.send_after(self(), :update_time, 1000)
       {atom, assign(socket, date: date, time: time)}
     end
   end
