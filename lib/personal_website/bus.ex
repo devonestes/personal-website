@@ -3,8 +3,6 @@ defmodule PersonalWebsite.Bus do
   Dealing with BVG data for our bus.
   """
 
-  require Logger
-
   @url "http://fahrinfo.vbb.de/bin/mgate.exe?rnd=1597826703919"
 
   @payload """
@@ -64,7 +62,6 @@ defmodule PersonalWebsite.Bus do
   end
 
   defp bus_times(raw_times) do
-    Logger.warn(inspect(raw_times))
     {alert, bus_times} = raw_times |> parse() |> Map.pop(:alert)
 
     bus_times =

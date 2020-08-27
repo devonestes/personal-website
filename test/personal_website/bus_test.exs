@@ -1197,27 +1197,12 @@ defmodule PersonalWebsite.BusTest do
 
   describe "parse_results/1" do
     test "parses the results correctly" do
-      assert {datetime, bus_times} = Bus.parse_results(@example_response)
-      assert NaiveDateTime.compare(datetime, ~N[2020-08-19 09:47:02]) == :eq
+      assert {_alert, bus_times} = Bus.parse_results(@example_response)
 
-      assert %{
-               "← Zehlendorf" => [
-                 ~T[09:58:00],
-                 ~T[10:18:00],
-                 ~T[10:38:00],
-                 ~T[10:58:00],
-                 ~T[11:18:00],
-                 ~T[11:38:00]
-               ],
-               "→ S-Bahn" => [
-                 ~T[09:47:00],
-                 ~T[10:08:00],
-                 ~T[10:28:00],
-                 ~T[10:48:00],
-                 ~T[11:08:00],
-                 ~T[11:28:00]
-               ]
-             } == bus_times
+      assert [
+               {"← Zehlendorf", [{_, _}, {_, _}]},
+               {"S-Bahn →", [{_, _}, {_, _}]}
+             ] = bus_times
     end
   end
 

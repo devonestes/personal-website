@@ -5,6 +5,8 @@ defmodule PersonalWebsite.Application do
 
   use Application
 
+  alias SendGrid.{Email, Mail}
+
   def start(_type, _args) do
     twitter_prune()
 
@@ -17,6 +19,8 @@ defmodule PersonalWebsite.Application do
       else
         [PersonalWebsiteWeb.Endpoint]
       end
+
+    send_jfk_email()
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
@@ -44,6 +48,7 @@ defmodule PersonalWebsite.Application do
 
       Task.async(fn ->
         one_week_ago = DateTime.add(DateTime.utc_now(), -(60 * 60 * 24 * 7))
+
         opts
         |> ExTwitter.user_timeline()
         |> Enum.filter(&delete_tweet?(&1, one_week_ago))
@@ -52,6 +57,7 @@ defmodule PersonalWebsite.Application do
 
       Task.async(fn ->
         one_day_ago = DateTime.add(DateTime.utc_now(), -(60 * 60 * 24))
+
         opts
         |> ExTwitter.favorites()
         |> Enum.filter(&delete_tweet?(&1, one_day_ago))
@@ -65,5 +71,49 @@ defmodule PersonalWebsite.Application do
     |> Timex.parse!("{WDshort} {Mshort} {0D} {h24}:{m}:{s} {Z} {YYYY}")
     |> DateTime.diff(date)
     |> Kernel.<=(0)
+  end
+
+  defp send_jfk_email() do
+    if Mix.env() == :prod and Date.day_of_week(Date.utc_today()) == 6 do
+      Task.async(fn ->
+        {jfk_html, ec_html} = get_jfk_html()
+
+        base =
+          Email.build()
+          |> Email.add_to("devon.c.estes@gmail.com")
+          |> Email.put_from("devon.c.estes@gmail.com")
+
+        base
+        |> Email.put_subject("JFKS weekly update")
+        |> Email.put_html(jfk_html)
+        |> Mail.send()
+
+        base
+        |> Email.put_subject("JFK EC weekly update")
+        |> Email.put_html(ec_html)
+        |> Mail.send()
+      end)
+    end
+  end
+
+  @jfk_url "https://jfks.de/about-jfks/archive/"
+  @ec_url "https://vrigney.weebly.com/"
+  defp get_jfk_html() do
+    ec_html = get_html(@ec_url, &Function.identity/1)
+
+    jfk_html =
+      get_html(
+        @jfk_url,
+        &(&1 |> Floki.parse_document!() |> Floki.find("#content-blog") |> Floki.raw_html())
+      )
+
+    {jfk_html, ec_html}
+  end
+
+  defp get_html(url, parser) do
+    case Tesla.get(url) do
+      {:ok, %{body: body}} -> ~s(<p><a href="#{url}">To website</a></p>#{parser.(body)})
+      _ -> "Error getting HTML"
+    end
   end
 end
