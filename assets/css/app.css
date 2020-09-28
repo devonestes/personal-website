@@ -1013,19 +1013,19 @@ body:not(.post-template) .post-title {
    5. Single Post - When you click on an individual post
    ========================================================================== */
 
-.post-template .post-header {
+.post-header {
     margin-bottom: 3.4rem;
 }
 
-.post-template .post-title {
+.post-title {
     margin-bottom: 0;
 }
 
-.post-template .post-meta {
+.post-meta {
     margin: 0;
 }
 
-.post-template .post-date {
+.post-date {
     padding: 0;
     margin: 0;
     border: none;
