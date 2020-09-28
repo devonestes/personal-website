@@ -40,6 +40,33 @@ defmodule PersonalWebsite.Posts do
 
   @tags posts |> Enum.flat_map(& &1.tags) |> Enum.uniq() |> Enum.sort()
 
+  date_formatter = &(&1 |> DateTime.from_naive!("Etc/UTC") |> Timex.format!("{RFC1123}"))
+
+  channel = %{
+    title: "Devon Estes",
+    link: "http://devonestes.com",
+    desc: "The personal blog of Devon Estes",
+    date: @posts |> hd() |> Map.get(:date) |> date_formatter.(),
+    lang: "en-us"
+  }
+
+  items =
+    for %{title: title} = post when is_binary(title) <- @posts do
+      """
+      <item>
+        <title>#{post.title}</title>
+        <description><![CDATA[#{post.description}]]></description>
+        <pubDate>#{date_formatter.(post.date)}</pubDate>
+        <link>http://devonestes.com/#{post.slug}</link>
+        <guid>http://devonestes.com/#{post.slug}</guid>
+      </item>
+      """
+    end
+
+  @rss_feed [channel: channel, items: items]
+
+  def rss_feed(), do: @rss_feed
+
   def list_posts(nil), do: list_posts("1")
 
   def list_posts(page) do

@@ -1,0 +1,9 @@
+<channel>
+  <title><%= @channel.title %></title>
+  <link><%= @channel.link %></link>
+  <description><%= @channel.desc %></description>
+  <lastBuildDate><%= @channel.date %></lastBuildDate>
+  <language><%= @channel.lang %></language>
+  <atom:link href="http://devonestes.com/feed.xml" rel="self" type="application/rss+xml" />
+  <%= Enum.join(@items, "\n") %>
+</channel>

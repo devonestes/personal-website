@@ -15,6 +15,7 @@ defmodule PersonalWebsiteWeb.Router do
 
     get "/", PageController, :index
     live "/bus", Bus
+    get "/feed.xml", PageController, :rss_feed
     get "/tag/:tag", PageController, :index_by_tag
     get "/:slug", PageController, :show
   end

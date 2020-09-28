@@ -26,6 +26,12 @@ defmodule PersonalWebsiteWeb.PageController do
     render(conn, "index.html", posts: posts, page: page, num_pages: num_pages)
   end
 
+  def rss_feed(conn, _) do
+    conn
+    |> put_resp_content_type("text/xml")
+    |> render("rss.xml", Posts.rss_feed())
+  end
+
   defp format_date(date) do
     "#{date.day} #{month_for(date.month)} #{date.year}"
   end
