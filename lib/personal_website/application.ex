@@ -8,6 +8,13 @@ defmodule PersonalWebsite.Application do
   alias SendGrid.{Email, Mail}
 
   def start(_type, _args) do
+    Vapor.load!([%Vapor.Provider.Dotenv{overwrite: true}])
+    Application.put_env(:personal_website, :gitea_token, System.fetch_env!("GITEA_API_TOKEN"))
+    Application.put_env(:personal_website, :git_host, System.fetch_env!("GIT_HOST"))
+    Application.put_env(:personal_website, :muzak_price_id, System.fetch_env!("PRICE_ID"))
+    Application.put_env(:personal_website, :stripe_public_key, System.fetch_env!("STRIPE_PUBLIC_KEY"))
+    Application.put_env(:stripity_stripe, :api_key, System.fetch_env!("STRIPE_SECRET_KEY"))
+
     twitter_prune()
 
     children =
