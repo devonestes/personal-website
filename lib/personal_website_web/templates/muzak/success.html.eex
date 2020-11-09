@@ -1,0 +1,11 @@
+<div>
+  <h1>You've signed up!</h1>
+
+  <p>You now have credentials to fetch `muzak` - you can add it to your deps like so:</p>
+
+  <p>{:muzak, git: <%= inspect(@url) %>}, tag: <%= inspect(@version) %>}, only: :test}</p>
+  <p>The above credentials are _only_ for your team, so please do not share them publicly. Since
+    I optimized to make it easiest for folks to use, that means we're really working on the
+    honor system here. I would really hate to have to make this more secure (and harder to use)
+    if folks do the wrong thing 😀.</p>
+</div>
