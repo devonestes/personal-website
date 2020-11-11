@@ -5,8 +5,12 @@ defmodule PersonalWebsiteWeb.MuzakController do
     render(conn, "index.html")
   end
 
-  def signup(conn, _) do
-    {:ok, %{id: id}} = Stripe.Session.create(get_args())
+  def signup(conn, params) do
+    {:ok, %{id: id}} =
+      params["email"]
+      |> get_args(params["password"])
+      |> Stripe.Session.create()
+
     render_response(conn, id)
   end
 
@@ -15,23 +19,33 @@ defmodule PersonalWebsiteWeb.MuzakController do
     render(conn, "success.html", version: Mix.Project.config()[:version], url: url)
   end
 
-  def manage(conn, %{"email" => email}) do
-    {:ok, %{data: [customer]}} = Stripe.Customer.list(%{email: email})
-    {:ok, session} = Stripe.BillingPortal.Session.create(%{customer: customer.id})
-    redirect(conn, external: session.url)
+  def manage(conn, %{"email" => email, "password" => password}) do
+    {:ok, %{data: customers}} = Stripe.Customer.list(%{email: email})
+
+    customers
+    |> Enum.find(&(hd(&1.subscriptions.data).metadata["billing_portal_password"] == password))
+    |> case do
+      nil ->
+        html(conn, "Looks like we couldn't find your account - go back and try again")
+
+      customer ->
+        {:ok, session} = Stripe.BillingPortal.Session.create(%{customer: customer.id})
+        redirect(conn, external: session.url)
+    end
   end
 
   def cancel(conn, _) do
-    html(conn, "This is where we cancel")
+    html(conn, "Cancel")
   end
 
-  defp get_args() do
+  defp get_args(email, billing_portal_password) do
     {username, password} = PersonalWebsite.Muzak.gen_credentials()
 
     %{
       payment_method_types: ["card"],
-      cancel_url: "http://www.devonestes.com/muzak/cancel",
-      success_url: "http://www.devonestes.com/muzak/success?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url: "https://www.devonestes.com/muzak",
+      success_url: "https://www.devonestes.com/muzak/success?session_id={CHECKOUT_SESSION_ID}",
+      customer_email: email,
       mode: "subscription",
       line_items: [
         %{
@@ -41,7 +55,8 @@ defmodule PersonalWebsiteWeb.MuzakController do
       ],
       metadata: %{
         username: username,
-        password: password
+        password: password,
+        billing_portal_password: billing_portal_password
       }
     }
   end
@@ -68,13 +83,15 @@ defmodule PersonalWebsiteWeb.MuzakController do
   defp create_git_user(session_id) do
     git_host = Application.get_env(:personal_website, :git_host)
 
-    {:ok, %{metadata: %{"username" => username, "password" => password}, subscription: sub_id}} =
-      Stripe.Session.retrieve(session_id)
+    {:ok,
+     %{
+       metadata: %{"username" => username, "password" => password} = metadata,
+       subscription: sub_id
+     }} = Stripe.Session.retrieve(session_id)
 
-    update_params = %{metadata: %{username: username, password: password}}
-    {:ok, _} = Stripe.Subscription.update(sub_id, update_params)
+    {:ok, _} = Stripe.Subscription.update(sub_id, %{metadata: metadata})
 
     :ok = PersonalWebsite.Muzak.create_user(username, password)
-    "http://#{username}:#{password}@#{git_host}/muzak/muzak.git"
+    "https://#{username}:#{password}@#{git_host}/muzak/muzak.git"
   end
 end
