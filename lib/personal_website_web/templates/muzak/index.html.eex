@@ -7,117 +7,92 @@
 
 <main class="content" role="main">
   <article class="post tag-test tag-content">
-    <header class="post-header" style="text-align: center">
+    <header class="post-header" style="text-align: center; margin-top: -75px">
       <h1 class="post-title" style="font-size: 52px">Muzak</h1>
       <h5>Mutation testing for Elixir</h5>
     </header>
 
     <section class="post-content">
-      <h1>What is Muzak?</h1>
       <p>
-        Muzak is a mutation testing library for Elixir applications, run with a single
-        convenient <code>mix</code> task. It is available as <b><a href="https://calebporzio.com/sponsorware">Sponsorware</a></b>, meaning that it
-        will first be released as proprietary software, available only to those who purchase a
-        license for it (for $9/month), until I reach $1,000/month in license sales, at which point
-        it will be made public under a non-commercial use license.
-      <p/>
-          
-      <p>It offers:</p>
+        Muzak is a mutation testing library for Elixir applications. It is
+        <a href="https://github.com/devonestes/muzak">open source</a> under the CC-BY-NC-ND-4.0
+        license and available on <a href="https://hex.pm/packages/muzak">Hex.pm</a>. Information
+        on getting started with Muzak can be found in
+        <a href="https://hexdocs.pm/muzak/muzak.html#getting-started">its documentation</a>.
+      </p>
+
+      <h1 class="post-title" style="font-size: 40px; text-align: center; margin-bottom: 20px">Muzak Pro</h1>
+      <p>
+        Muzak Pro is a full-featured, paid version of Muzak. It costs $29/month, and you can
+        cancel your subscription at any time. If you end up unsatisfied with Muzak Pro for any
+        reason, you can <a href="mailto:devon.c.estes@gmail.com">email me</a> and I’ll happily
+        give you a full refund. Muzak Pro includes:
+      </p>
+
       <ul>
-        <li>Highly effective, optimized mutators</li>
-        <li>Simple, flexible configuration at the command line and with a <code>.muzak.exs</code> file</li>
-        <li><code>git</code> integration to make mutation testing in CI blazing fast</li>
-        <li>Detailed, easy-to-read reports after each run</li>
-        <li>Test suite analysis to identify low-value or potentially duplicate tests</li>
-        <li>Parallel execution by spawning multiple BEAM nodes <i>(experimental)</i></li>
+        <li>No limit on the number of generated mutations</li>
+        <li>Over a dozen additional mutators</li>
+        <li><code>git</code> integration to speed up mutation testing in CI</li>
+        <li>Far more configuration options at the command line and with a <code>.muzak.exs</code> file</li>
+        <li>Extensive documentation about how to best use mutation testing</li>
+        <li>Parallel execution through spawning multiple BEAM nodes (<em>experimental</em>)</li>
+        <li>"Analysis Mode" to identify potentially low-value or duplicate tests in your test suite (<em>coming soon</em>)</li>
+        <li>Enhanced reporting, including HTML reports (<em>coming soon</em>)</li>
       </ul>
 
-      <h1>What is mutation testing?</h1>
-      <p>
-        Mutation testing is the process of automatically inserting bugs into your code and then
-        running your test suite to ensure these bugs are caught by a failing test. If you find
-        that a mutation does not trigger a test failure, then this is an indication that either
-        you have unused code that can be deleted or that you might want to add a additional tests
-        to prevent regressions.
-      </p>
-
-      <h1>Why do I need mutation testing?</h1>
-      <p>
-        Code coverage metrics based on lines of code executed in a test simply don't give you a
-        complete picture of what your tests are actually covering. If you truly want to develop a
-        comprehensive test suite that will protect against bugs making it to production, you will
-        need either exceptionally skilled humans to look at your tests and see if anything is
-        missing or you'll need mutation testing to do that search automatically.
-      </p>
-
-      <h1>Why release as Sponsorware?</h1>
-      <p>
-        I spend a fair amount of time already doing open source work. I really wanted Elixir to
-        have a top-notch, production-ready mutation testing library, but it's a <i>lot</i> of
-        work to write one and even more work to maintain and keep working for everybody. I wasn't
-        going to undertake that amount of work without some way to be compensated for it, so I'm
-        going this route instead of making it purely proprietary as it seemed like a good middle
-        ground.
-      </p>
-
-      <h1>How do I get Muzak?</h1>
-      <p>
-        Until the Sponsorware goal is met, Muzak will be distributed through a private
-        <code>git</code> repository. Once you subscribe through Stripe, you'll be given a
-        username and password that will allow you to access this <code>git</code> repository so
-        you can use it. You would then add <code>muzak</code> as a dependency in your
-        <code>mix.exs</code> file like so:
-      </p>
-      <p>
-        <code>{:muzak, git: "https://username:password@git-server.com/muzak/muzak.git", tag: "0.1.0", only: :test}</code>
-      </p>
-      <p>
-        Once the Sponsorware goal is met Muzak will be published on Hex.pm and available like any
-        other Hex package.
-      </p>
-      <p>
-        If you'd like to get access to Muzak today, you can subscribe through Stripe by clicking
-        the button below!
-      </p>
-
-      <form action="/muzak/subscribe" method="get">
-        <input type="submit" name="commit" value="Subscribe Now" id="subscribe" tabindex="4" style="-webkit-font-smoothing: antialiased; display: block; line-height: 40px; text-align: center; vertical-align: middle; background-repeat: repeat-x; text-shadow: none; font-weight: 900; box-shadow: none; border: 1px solid #f1f3f5; cursor: pointer; width: auto; color: #fff; padding: 1em 2em; background-image: linear-gradient(#1652f0,#0d40c6); border-color: #137dba; font-size: 16px; text-transform: uppercase; letter-spacing: .05em; transition: all .15s ease; border-radius: 6px; margin: 0 auto; font-family: 'Open Sans', sans-serif">
-      </form>    
-
-      <h1 style="margin-top: 75px">How do I manage my subscription?</h1>
-      <p>
-        If you already have a subscription and would like to update your information or cancel
-        your subscription, you can do that in the Stripe Billing Portal. Sign into that portal
-        with the email you used when you signed up for your subscription and the username and
-        password given to you for accessing the Muzak git server.
-      </p>
-
-      <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; background: #fff; box-shadow: 0 1px 46px -4px rgba(0,0,0,.28); border-radius: 4px; max-width: 60%; margin: 0 auto;">
+      <div style="-webkit-font-smoothing: antialiased; color: #050f19; background: #fff; box-shadow: 0 1px 46px -4px rgba(0,0,0,.28); border-radius: 4px; max-width: 60%; margin: 30px auto;">
         <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; padding: 32px 24px;">
-          <form action="/muzak/manage" method="get" style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; margin: 0;">
+          <h5 style="text-align: center; margin-bottom: 25px">Enter your email and choose a password for the Stripe Billing Portal to get started!</h5>
+          <form action="/muzak/subscribe" method="get">
             <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; position: relative; margin-bottom: 5px;">
               <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; overflow: hidden;">
                 <input type="email" name="email" id="email" placeholder="Email" tabindex="1" autocomplete="off" style="-webkit-font-smoothing: antialiased; margin: 0; font-weight: 400; margin-left: 0; display: inline-block; margin-bottom: 10px; font-size: 14px; line-height: 20px; color: #555; vertical-align: middle; background-color: #fff; border: 1px solid #ccc; transition: border linear .2s,box-shadow linear .2s,-webkit-box-shadow linear .2s; box-shadow: 0 1px 0 0 rgba(0,0,0,.02) inset; padding: 9px; border-color: #f1f3f5; border-radius: 2px; width: 100%; box-sizing: border-box;">
               </div>
             </div>
+
             <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; position: relative; margin-bottom: 5px;">
               <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; overflow: hidden;">
-                <input type="text" name="username" id="username" placeholder="Username" tabindex="2" autocomplete="off" style="-webkit-font-smoothing: antialiased; margin: 0; font-weight: 400; margin-left: 0; display: inline-block; margin-bottom: 10px; font-size: 14px; line-height: 20px; color: #555; vertical-align: middle; background-color: #fff; border: 1px solid #ccc; transition: border linear .2s,box-shadow linear .2s,-webkit-box-shadow linear .2s; box-shadow: 0 1px 0 0 rgba(0,0,0,.02) inset; padding: 9px; border-color: #f1f3f5; border-radius: 2px; width: 100%; box-sizing: border-box;">
+                <input type="password" name="password" id="password" placeholder="Password" tabindex="1" autocomplete="off" style="-webkit-font-smoothing: antialiased; margin: 0; font-weight: 400; margin-left: 0; display: inline-block; margin-bottom: 10px; font-size: 14px; line-height: 20px; color: #555; vertical-align: middle; background-color: #fff; border: 1px solid #ccc; transition: border linear .2s,box-shadow linear .2s,-webkit-box-shadow linear .2s; box-shadow: 0 1px 0 0 rgba(0,0,0,.02) inset; padding: 9px; border-color: #f1f3f5; border-radius: 2px; width: 100%; box-sizing: border-box;">
               </div>
             </div>
-            <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; position: relative; margin-bottom: 5px;">
-              <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; overflow: hidden;">
-                <input type="password" name="password" id="password" placeholder="Password" tabindex="3" autocomplete="off" style="-webkit-font-smoothing: antialiased; margin: 0; font-weight: 400; margin-left: 0; display: inline-block; margin-bottom: 10px; font-size: 14px; line-height: 20px; color: #555; vertical-align: middle; background-color: #fff; border: 1px solid #ccc; transition: border linear .2s,box-shadow linear .2s,-webkit-box-shadow linear .2s; box-shadow: 0 1px 0 0 rgba(0,0,0,.02) inset; padding: 9px; border-color: #f1f3f5; border-radius: 2px; width: 100%; box-sizing: border-box;">
-              </div>
-            </div>
-            <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; position: relative; margin-bottom: 5px;">
-              <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; overflow: hidden;">
-                <input type="submit" name="commit" value="Sign In to Stripe" id="signin_button" tabindex="4" style="-webkit-font-smoothing: antialiased; display: block; line-height: 20px; text-align: center; vertical-align: middle; background-repeat: repeat-x; text-shadow: none; font-weight: 900; box-shadow: none; border: 1px solid #f1f3f5; background-color: #1652f0; cursor: pointer; width: auto; color: #fff; padding: 1em 2em; background-image: linear-gradient(#1652f0,#0d40c6); border-color: #137dba; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; transition: all .15s ease; border-radius: 2px; margin: 0 auto; font-family: 'Open Sans', sans-serif">
-              </div>
-            </div>
+
+            <input type="submit" name="commit" value="Subscribe Now" id="subscribe" tabindex="4" style="-webkit-font-smoothing: antialiased; display: block; line-height: 40px; text-align: center; vertical-align: middle; background-repeat: repeat-x; text-shadow: none; font-weight: 900; box-shadow: none; border: 1px solid #f1f3f5; cursor: pointer; width: auto; color: #fff; padding: 1em 2em; background-image: linear-gradient(#1652f0,#0d40c6); border-color: #137dba; font-size: 14px; text-transform: uppercase; letter-spacing: .05em; transition: all .15s ease; border-radius: 6px; margin: 0 auto; font-family: 'Open Sans', sans-serif">
           </form>    
         </div>
       </div>
+
+      <h1 class="post-title" style="font-size: 40px; text-align: center; margin-bottom: 20px">Manage Subscription</h1>
+      <p>
+        If you already have a subscription and would like to update your information or cancel
+        your subscription, you can do that in the Stripe Billing Portal.
+      </p>
+
+      <div style="-webkit-font-smoothing: antialiased; color: #050f19; background: #fff; box-shadow: 0 1px 46px -4px rgba(0,0,0,.28); border-radius: 4px; max-width: 60%; margin: 30px auto;">
+        <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; padding: 32px 24px;">
+          <h5 style="text-align: center; margin-bottom: 25px">Sign in to the Stripe Billing Portal to manage your subscription</h5>
+          <form action="/muzak/manage" method="get">
+            <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; position: relative; margin-bottom: 5px;">
+              <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; overflow: hidden;">
+                <input type="email" name="email" id="email" placeholder="Email" tabindex="1" autocomplete="off" style="-webkit-font-smoothing: antialiased; margin: 0; font-weight: 400; margin-left: 0; display: inline-block; margin-bottom: 10px; font-size: 14px; line-height: 20px; color: #555; vertical-align: middle; background-color: #fff; border: 1px solid #ccc; transition: border linear .2s,box-shadow linear .2s,-webkit-box-shadow linear .2s; box-shadow: 0 1px 0 0 rgba(0,0,0,.02) inset; padding: 9px; border-color: #f1f3f5; border-radius: 2px; width: 100%; box-sizing: border-box;">
+              </div>
+            </div>
+
+            <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; position: relative; margin-bottom: 5px;">
+              <div style="font-size: 14px; line-height: 20px; -webkit-font-smoothing: antialiased; color: #050f19; overflow: hidden;">
+                <input type="password" name="password" id="password" placeholder="Password" tabindex="1" autocomplete="off" style="-webkit-font-smoothing: antialiased; margin: 0; font-weight: 400; margin-left: 0; display: inline-block; margin-bottom: 10px; font-size: 14px; line-height: 20px; color: #555; vertical-align: middle; background-color: #fff; border: 1px solid #ccc; transition: border linear .2s,box-shadow linear .2s,-webkit-box-shadow linear .2s; box-shadow: 0 1px 0 0 rgba(0,0,0,.02) inset; padding: 9px; border-color: #f1f3f5; border-radius: 2px; width: 100%; box-sizing: border-box;">
+              </div>
+            </div>
+
+            <input type="submit" name="commit" value="Sign In" id="subscribe" tabindex="4" style="-webkit-font-smoothing: antialiased; display: block; line-height: 40px; text-align: center; vertical-align: middle; background-repeat: repeat-x; text-shadow: none; font-weight: 900; box-shadow: none; border: 1px solid #f1f3f5; cursor: pointer; width: auto; color: #fff; padding: 1em 2em; background-image: linear-gradient(#1652f0,#0d40c6); border-color: #137dba; font-size: 14px; text-transform: uppercase; letter-spacing: .05em; transition: all .15s ease; border-radius: 6px; margin: 0 auto; font-family: 'Open Sans', sans-serif">
+          </form>    
+        </div>
+      </div>
+
+      <h1 class="post-title" style="font-size: 30px; text-align: center; margin-bottom: 20px">Can I get a free Muzak Pro subscription for my open source project or non-profit company?</h1>
+      <p>
+        Probably! <a href="mailto:devon.c.estes@gmail.com">Email me</a> and we can try and figure
+        something out.
+      </p>
     </section>
   </article>
 </main>

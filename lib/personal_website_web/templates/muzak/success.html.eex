@@ -1,11 +1,31 @@
 <div>
-  <h1>You've signed up!</h1>
-
-  <p>You now have credentials to fetch `muzak` - you can add it to your deps like so:</p>
-
-  <p>{:muzak, git: <%= inspect(@url) %>}, tag: <%= inspect(@version) %>}, only: :test}</p>
-  <p>The above credentials are _only_ for your team, so please do not share them publicly. Since
-    I optimized to make it easiest for folks to use, that means we're really working on the
-    honor system here. I would really hate to have to make this more secure (and harder to use)
-    if folks do the wrong thing 😀.</p>
 </div>
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav  clearfix">
+    <a class="blog-logo" href="/"><img src="/images/logo.png" alt="Blog Logo"></a>
+      <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+  </nav>
+</header>
+
+<main class="content" role="main">
+  <article class="post tag-test tag-content">
+    <header class="post-header" style="text-align: center; margin-top: -75px">
+      <h1 class="post-title" style="font-size: 52px">Subscription Successful!</h1>
+    </header>
+
+    <section class="post-content">
+      <p>You now have credentials to access Muzak Pro! You can get started by adding the
+      following line to your dependencies in your Mixfile:</p>
+
+      <p>
+        <code>{:muzak, git: <%= inspect(@url) %>, tag: <%= inspect(@version) %>, only: :test}</code>
+      </p>
+      <p>The above credentials are <b>only for your team</b>, so please do not share them publicly.</p>
+
+          <form action="/muzak" method="get">
+            <input type="submit" name="back" value="Back" id="back" tabindex="1" style="-webkit-font-smoothing: antialiased; display: block; line-height: 30px; text-align: center; vertical-align: middle; background-repeat: repeat-x; text-shadow: none; font-weight: 900; box-shadow: none; border: 1px solid #f1f3f5; cursor: pointer; width: auto; color: #fff; padding: 1em 2em; background-image: linear-gradient(#1652f0,#0d40c6); border-color: #137dba; font-size: 14px; text-transform: uppercase; letter-spacing: .05em; transition: all .15s ease; border-radius: 6px; margin: 0 auto; font-family: 'Open Sans', sans-serif">
+          </form>    
+    </section>
+  </article>
+</main>

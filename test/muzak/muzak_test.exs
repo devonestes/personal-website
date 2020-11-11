@@ -10,7 +10,8 @@ defmodule PersonalWebsite.MuzakTest do
 
       repo = "#{Application.get_env(:personal_website, :git_host)}/muzak/muzak.git"
 
-      assert {username, password} = PersonalWebsite.Muzak.create_user()
+      {username, password} = PersonalWebsite.Muzak.gen_credentials()
+      assert PersonalWebsite.Muzak.create_user(username, password) == :ok
 
       url = "http://sslemlsie:#{password}@#{repo}"
 
