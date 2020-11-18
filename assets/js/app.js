@@ -8,6 +8,7 @@ require('../sounds/S-Bahn10.wav');
 require('../sounds/S-Bahn5.wav');
 require('../sounds/Zehlendorf5.wav');
 require('../sounds/Zehlendorf10.wav');
+require('../static/images/cover_example.png');
 
 /**
  * Live View stuff

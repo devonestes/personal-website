@@ -38,6 +38,11 @@ module.exports = (env, options) => ({
         test: /\.(wav)$/i,
         loader: "file-loader",
         options: {name: '[name].[ext]', outputPath: "sounds", publicPath: "/sounds"}
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        loader: 'file-loader',
+        options: {name: '[name].[ext]', outputPath: "images", publicPath: "/images"}
       }
     ]
   },
