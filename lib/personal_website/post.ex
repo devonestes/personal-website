@@ -22,12 +22,14 @@ defmodule PersonalWebsite.Post do
   end
 
   defp parse_contents(_slug, contents) do
-    [parts, body] = Regex.split(~r/^---(.*)---/ms, contents, include_captures: true, trim: true)
+    [parts, body] = Regex.split(~r/^---(.*)---\n/ms, contents, include_captures: true, trim: true)
 
     parts
+    |> String.trim()
     |> String.split("\n")
     |> List.delete_at(-1)
     |> List.delete_at(0)
+    |> IO.inspect()
     |> Enum.map(&parse_part/1)
     |> List.insert_at(0, {:body, body})
     |> Enum.map(&parse_attr/1)
