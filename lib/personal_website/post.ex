@@ -29,7 +29,6 @@ defmodule PersonalWebsite.Post do
     |> String.split("\n")
     |> List.delete_at(-1)
     |> List.delete_at(0)
-    |> IO.inspect()
     |> Enum.map(&parse_part/1)
     |> List.insert_at(0, {:body, body})
     |> Enum.map(&parse_attr/1)
