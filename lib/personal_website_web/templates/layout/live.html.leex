@@ -15,8 +15,16 @@
     "start_url": "https://www.devonestes.com/bus",
     "orientation": "portrait",
     "display": "standalone",
-    "description": "Our bus schedule"
+    "description": "Our bus schedule",
+    "icons": [
+      { "src": "https://devonestes.com/images/logo.png", "sizes": "48x48", "type": "image/png" }
+    ]
   }' />
+
+  <link rel="apple-touch-icon" href="/images/logo.png">
+  <meta name="apple-mobile-web-app-title" content="Treble">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
   <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@socket, "/js/app.js") %>"></script>
 </head>
