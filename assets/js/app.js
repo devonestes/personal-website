@@ -143,29 +143,33 @@ import LiveSocket from "phoenix_live_view"
 
 
 (function( $ ) {
-  const observer = new MutationObserver(function(mutationsList, observer) {
-    for(let mutation of mutationsList) {
-      var alert = mutation.target;
-      alert.load();
-      alert.play();
-    }
-  });
-
   var audio = document.getElementById('audio-alert');
-  observer.observe(audio, {attributes: true});
 
-  $("button").click(function() {
-    var playPromise = audio.play();
+  if (audio !== null) {
+    const observer = new MutationObserver(function(mutationsList, observer) {
+      for(let mutation of mutationsList) {
+        var alert = mutation.target;
+        alert.load();
+        alert.play();
+      }
+    });
 
-    if (playPromise !== undefined) {
-      playPromise.then(function(_) {
-        audio.pause();
-      })
-      .catch(function(error) {
-        console.log(error)
-      });
-    }
-  });
+    observer.observe(audio, {attributes: true});
+
+    $("button").click(function() {
+      var playPromise = audio.play();
+
+      if (playPromise !== undefined) {
+        playPromise.then(function(_) {
+          audio.pause();
+        })
+        .catch(function(error) {
+          console.log(error)
+        });
+      }
+    })
+
+  };
 })( window.jQuery || window.Zepto );
 
 (function() {
