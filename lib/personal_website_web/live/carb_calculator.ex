@@ -33,12 +33,12 @@ defmodule PersonalWebsiteWeb.CarbCalculator do
       <%= f = form_for :calculator, "#", [phx_change: :update] %>
         <div>
           <label for="calculator_carb_units">Carb units (KE)</label>
-          <%= text_input f, :carb_units, inputmode: :numeric, pattern: "[0-9]*", "phx-debounce": "100", value: assigns.carb_units %>
+          <%= text_input f, :carb_units, inputmode: :decimal, pattern: "[0-9\.]*", "phx-debounce": "100", value: assigns.carb_units %>
         </div>
 
         <div>
           <label for="calculator_sensitivity_factor">Sensitivity factor</label>
-          <%= text_input f, :sensitivity_factor, inputmode: :numeric, pattern: "[0-9]*", "phx-debounce": "100", value: assigns.sensitivity_factor %>
+          <%= text_input f, :sensitivity_factor, inputmode: :decimal, pattern: "[0-9\.]*", "phx-debounce": "100", value: assigns.sensitivity_factor %>
         </div>
       </form>
 
