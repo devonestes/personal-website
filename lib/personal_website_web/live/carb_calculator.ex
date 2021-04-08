@@ -6,7 +6,7 @@ defmodule PersonalWebsiteWeb.CarbCalculator do
 
     sensitivity_factor =
       cond do
-        hour >= 0 and hour <= 8 -> 2.0
+        hour >= 0 and hour <= 8 -> 1.0
         hour >= 9 and hour <= 16 -> 0.3
         hour >= 17 and hour <= 19 -> 1.5
         hour >= 20 and hour <= 23 -> 0.5
