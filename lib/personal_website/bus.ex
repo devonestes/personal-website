@@ -172,6 +172,65 @@ defmodule PersonalWebsite.Bus do
   }
   """
 
+  @hort_payload """
+  {
+    "id":"skkiamumm88hhi4k",
+    "ver":"1.33",
+    "lang":"deu",
+    "auth":{
+        "type":"AID",
+        "aid":"hafas-vbb-webapp"
+    },
+    "client":{
+        "id":"VBB",
+        "type":"WEB",
+        "name":"VBB WebApp",
+        "l":"vs_webapp_vbb"
+    },
+    "formatted":false,
+    "svcReqL":[
+        {
+          "req":{
+              "stbLoc":{
+                "lid":"A=1@O=Schweizerhofpark (Berlin)@X=13262002@Y=52424991@U=86@L=900049254@B=1@p=1630578354@",
+                "type":"S",
+                "name":"Schweizerhofpark (Berlin)",
+                "icoX":1,
+                "extId":"900049254",
+                "state":"F",
+                "crd":{
+                    "x":13262002,
+                    "y":52424991,
+                    "floor":0
+                },
+                "pCls":8,
+                "pRefL":[
+                    0,
+                    1,
+                    2
+                ],
+                "wt":753,
+                "gidL":[
+                    "A×de:11000:900049254"
+                ]
+              },
+              "jnyFltrL":[
+                {
+                    "type":"PROD",
+                    "mode":"INC",
+                    "value":127
+                }
+              ],
+              "type":"DEP",
+              "sort":"PT"
+          },
+          "meth":"StationBoard",
+          "id":"1|8|"
+        }
+    ]
+  }
+  """
+
   def request_data() do
     {home_results, 0} =
       System.cmd("curl", [@url, "-s", "--data-binary", @home_payload, "--compressed"])
@@ -181,6 +240,9 @@ defmodule PersonalWebsite.Bus do
 
     {zehlendorf_results, 0} =
       System.cmd("curl", [@url, "-s", "--data-binary", @zehlendorf_payload, "--compressed"])
+
+    {hort_results, 0} =
+      System.cmd("curl", [@url, "-s", "--data-binary", @hort_payload, "--compressed"])
 
     volkspark_results =
       volkspark_results
@@ -215,7 +277,40 @@ defmodule PersonalWebsite.Bus do
       end)
       |> Enum.map(fn {k, v} -> {k, v |> Enum.reverse() |> Enum.take(2)} end)
 
-     zehlendorf_results =
+    hort_results =
+      hort_results
+      |> Jason.decode!()
+      |> Map.get("svcResL")
+      |> hd()
+      |> Map.get("res")
+      |> Map.get("jnyL")
+      |> Enum.filter(fn raw ->
+        raw["dirTxt"] in ["S+U Zoologischer Garten", "Dahlem, Waldfriedhof"]
+      end)
+      |> Enum.reduce(%{}, fn raw, acc ->
+        case time_diff(raw["stbStop"]) do
+          diff when diff > 0 ->
+            duration =
+              diff
+              |> Timex.Duration.from_seconds()
+              |> Timex.format_duration(:humanized)
+
+            {color, _} = color_and_alert(diff, nil)
+
+            Map.update(
+              acc,
+              "S-Bahnof Zehlendorf →",
+              [{color, duration}],
+              &[{color, duration} | &1]
+            )
+
+          _ ->
+            acc
+        end
+      end)
+      |> Enum.map(fn {k, v} -> {k, v |> Enum.reverse() |> Enum.take(2)} end)
+
+    zehlendorf_results =
       zehlendorf_results
       |> Jason.decode!()
       |> Map.get("svcResL")
@@ -231,7 +326,7 @@ defmodule PersonalWebsite.Bus do
             direction =
               case raw["dirTxt"] do
                 "U Turmstr." -> "101 Chiquitita →"
-                _ ->  "112 Home →"
+                _ -> "112 Home →"
               end
 
             {color, _} = color_and_alert(diff, direction)
@@ -255,7 +350,7 @@ defmodule PersonalWebsite.Bus do
       |> Enum.map(fn {k, v} -> {k, v |> Enum.reverse() |> Enum.take(2)} end)
 
     {alert, bus_times} = parse_results(home_results)
-    {alert, bus_times ++ volkspark_results ++ zehlendorf_results}
+    {alert, bus_times ++ volkspark_results ++ zehlendorf_results ++ hort_results}
   end
 
   def parse_results(results) do
