@@ -12,7 +12,13 @@ defmodule PersonalWebsite.Application do
     Application.put_env(:personal_website, :gitea_token, System.fetch_env!("GITEA_API_TOKEN"))
     Application.put_env(:personal_website, :git_host, System.fetch_env!("GIT_HOST"))
     Application.put_env(:personal_website, :muzak_price_id, System.fetch_env!("PRICE_ID"))
-    Application.put_env(:personal_website, :stripe_public_key, System.fetch_env!("STRIPE_PUBLIC_KEY"))
+
+    Application.put_env(
+      :personal_website,
+      :stripe_public_key,
+      System.fetch_env!("STRIPE_PUBLIC_KEY")
+    )
+
     Application.put_env(:stripity_stripe, :api_key, System.fetch_env!("STRIPE_SECRET_KEY"))
 
     twitter_prune()
@@ -81,40 +87,29 @@ defmodule PersonalWebsite.Application do
   end
 
   defp send_jfk_email() do
-    if Mix.env() == :prod and Date.day_of_week(Date.utc_today()) == 6 do
-      Task.async(fn ->
-        {jfk_html, ec_html} = get_jfk_html()
+    today = Date.utc_today()
 
+    if Mix.env() == :prod and Date.day_of_week(today) == 6 and today.day <= 7 do
+      Task.async(fn ->
         base =
           Email.build()
           |> Email.add_to("devon.c.estes@gmail.com")
           |> Email.put_from("devon.c.estes@gmail.com")
 
         base
-        |> Email.put_subject("JFKS weekly update")
-        |> Email.put_html(jfk_html)
-        |> Mail.send()
-
-        base
-        |> Email.put_subject("JFK EC weekly update")
-        |> Email.put_html(ec_html)
+        |> Email.put_subject("JFKS monthly update")
+        |> Email.put_html(get_jfk_html())
         |> Mail.send()
       end)
     end
   end
 
   @jfk_url "https://jfks.de/about-jfks/archive/"
-  @ec_url "https://vrigney.weebly.com/"
   defp get_jfk_html() do
-    ec_html = get_html(@ec_url, &Function.identity/1)
-
-    jfk_html =
-      get_html(
-        @jfk_url,
-        &(&1 |> Floki.parse_document!() |> Floki.find("#content-blog") |> Floki.raw_html())
-      )
-
-    {jfk_html, ec_html}
+    get_html(
+      @jfk_url,
+      &(&1 |> Floki.parse_document!() |> Floki.find("#content-blog") |> Floki.raw_html())
+    )
   end
 
   defp get_html(url, parser) do
