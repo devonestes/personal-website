@@ -1,22 +1,9 @@
-// We need to import the CSS so that webpack will load it.
-// The MiniCssExtractPlugin is used to separate it out into
-// its own CSS file.
-import css from "../css/app.css"
-
-// We need to require this or Webpack doesn't build it.
-require('../sounds/S-Bahn10.wav');
-require('../sounds/S-Bahn5.wav');
-require('../sounds/Zehlendorf5.wav');
-require('../sounds/Zehlendorf10.wav');
-require('../static/images/cover_example.png');
-require('../static/images/my_office.jpg');
-
 /**
  * Live View stuff
 **/
 import "phoenix_html"
 import {Socket} from "phoenix"
-import LiveSocket from "phoenix_live_view"
+import {LiveSocket} from "phoenix_live_view"
 
 /**
  * Main JS file for Casper behaviours
