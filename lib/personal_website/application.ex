@@ -24,7 +24,7 @@ defmodule PersonalWebsite.Application do
     twitter_prune()
 
     children =
-      if Mix.env() == :dev do
+      if Application.get_env(:personal_website, :mix_env) == :dev do
         [
           PersonalWebsiteWeb.Endpoint,
           {Phoenix.PubSub, [name: PersonalWebsite.PubSub, adapter: Phoenix.PubSub.PG2]}
@@ -32,8 +32,6 @@ defmodule PersonalWebsite.Application do
       else
         [PersonalWebsiteWeb.Endpoint]
       end
-
-    send_jfk_email()
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
@@ -84,38 +82,5 @@ defmodule PersonalWebsite.Application do
     |> Timex.parse!("{WDshort} {Mshort} {0D} {h24}:{m}:{s} {Z} {YYYY}")
     |> DateTime.diff(date)
     |> Kernel.<=(0)
-  end
-
-  defp send_jfk_email() do
-    today = Date.utc_today()
-
-    if Mix.env() == :prod and Date.day_of_week(today) == 6 and today.day <= 7 do
-      Task.async(fn ->
-        base =
-          Email.build()
-          |> Email.add_to("devon.c.estes@gmail.com")
-          |> Email.put_from("devon.c.estes@gmail.com")
-
-        base
-        |> Email.put_subject("JFKS monthly update")
-        |> Email.put_html(get_jfk_html())
-        |> Mail.send()
-      end)
-    end
-  end
-
-  @jfk_url "https://jfks.de/about-jfks/archive/"
-  defp get_jfk_html() do
-    get_html(
-      @jfk_url,
-      &(&1 |> Floki.parse_document!() |> Floki.find("#content-blog") |> Floki.raw_html())
-    )
-  end
-
-  defp get_html(url, parser) do
-    case Tesla.get(url) do
-      {:ok, %{body: body}} -> ~s(<p><a href="#{url}">To website</a></p>#{parser.(body)})
-      _ -> "Error getting HTML"
-    end
   end
 end

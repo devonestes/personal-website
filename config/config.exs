@@ -15,6 +15,8 @@ config :personal_website, PersonalWebsiteWeb.Endpoint,
   live_view: [signing_salt: "LZKYtQXg"],
   pubsub_server: PersonalWebsite.PubSub
 
+config :personal_website, :mix_env, Mix.env()
+
 config :sendgrid, api_key: "fake_api_key", enable_sandbox: true
 
 # Configures Elixir's Logger
