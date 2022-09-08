@@ -49,6 +49,8 @@ RUN mix deps.compile
 COPY priv priv
 
 COPY lib lib
+COPY pages pages
+COPY posts posts
 
 COPY assets assets
 
