@@ -33,8 +33,8 @@ defmodule PersonalWebsite.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.0"},
-      {:phoenix_html, "~> 2.11"},
+      {:phoenix, "~> 1.6"},
+      {:phoenix_html, "~> 3.2"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
@@ -43,7 +43,7 @@ defmodule PersonalWebsite.MixProject do
       {:extwitter, "~> 0.12"},
       {:timex, "~> 3.6.1"},
       {:tesla, "~> 1.3.0"},
-      {:phoenix_live_view, "~> 0.14.2"},
+      {:phoenix_live_view, "~> 0.17"},
       {:floki, ">= 0.0.0"},
       {:sendgrid, "~> 2.0"},
       {:stripity_stripe, "~> 2.9"},
