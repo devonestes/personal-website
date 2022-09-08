@@ -13,7 +13,7 @@
 #   - Ex: hexpm/elixir:1.13.4-erlang-25.0.2-debian-bullseye-20210902-slim
 #
 ARG ELIXIR_VERSION=1.13.4
-ARG OTP_VERSION=25.0.2
+ARG OTP_VERSION=25.0.4
 ARG DEBIAN_VERSION=bullseye-20220801-slim
 
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
@@ -90,3 +90,6 @@ COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/personal_webs
 USER nobody
 
 CMD ["/app/bin/server"]
+# Appended by flyctl
+ENV ECTO_IPV6 true
+ENV ERL_AFLAGS "-proto_dist inet6_tcp"
