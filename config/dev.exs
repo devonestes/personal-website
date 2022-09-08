@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :personal_website, PersonalWebsiteWeb.Endpoint,
   http: [port: 4000],
