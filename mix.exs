@@ -48,7 +48,7 @@ defmodule PersonalWebsite.MixProject do
       {:phoenix_live_view, "~> 0.17"},
       {:floki, ">= 0.30.0", only: :test},
       {:sendgrid, "~> 2.0"},
-      {:stripity_stripe, "~> 2.9"},
+      {:stripity_stripe, "~> 2.17"},
       {:vapor, "~> 0.10.0"}
     ]
   end
