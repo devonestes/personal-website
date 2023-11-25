@@ -3743,7 +3743,7 @@ code.makeup .unselectable {
 .resume .date span:nth-child(2)::before{
   position: relative;
   top: 1pt;
-  right: 5.5pt;
+  right: 10.5pt;
   display: block;
   height: 10pt;
   content: '|';
