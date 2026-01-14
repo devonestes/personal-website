@@ -60,6 +60,15 @@ defmodule PersonalWebsite.MixProject do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-    ["assets.deploy": ["esbuild default --minify", "phx.digest"]]
+    [
+      "assets.deploy": [
+        "esbuild default --minify",
+        "cmd cp -r assets/css priv/static/css",
+        "cmd cp -r assets/fonts priv/static/fonts",
+        "cmd cp -r assets/sounds priv/static/sounds",
+        "cmd cp -r assets/static/. priv/static/",
+        "phx.digest"
+      ]
+    ]
   end
 end

@@ -1,9 +1,12 @@
 /**
  * Live View stuff
-**/
-import "phoenix_html"
-import {Socket} from "phoenix"
-import {LiveSocket} from "phoenix_live_view"
+ **/
+import "phoenix_html";
+import { Socket } from "phoenix";
+import { LiveSocket } from "phoenix_live_view";
+import jQuery from "jquery";
+window.jQuery = jQuery;
+window.$ = jQuery;
 
 /**
  * Main JS file for Casper behaviours
@@ -11,55 +14,61 @@ import {LiveSocket} from "phoenix_live_view"
 
 /* globals jQuery, document */
 (function ($, undefined) {
-    "use strict";
+  "use strict";
 
-    var $document = $(document);
+  var $document = $(document);
 
-    $document.ready(function () {
+  $document.ready(function () {
+    var $postContent = $(".post-content");
+    $postContent.fitVids();
 
-        var $postContent = $(".post-content");
-        $postContent.fitVids();
+    $(".scroll-down").arctic_scroll();
 
-        $(".scroll-down").arctic_scroll();
-
-        $(".menu-button, .nav-cover, .nav-close").on("click", function(e){
-            e.preventDefault();
-            $("body").toggleClass("nav-opened nav-closed");
-        });
-
+    $(".menu-button, .nav-cover, .nav-close").on("click", function (e) {
+      e.preventDefault();
+      $("body").toggleClass("nav-opened nav-closed");
     });
+  });
 
-    // Arctic Scroll by Paul Adam Davis
-    // https://github.com/PaulAdamDavis/Arctic-Scroll
-    $.fn.arctic_scroll = function (options) {
+  // Arctic Scroll by Paul Adam Davis
+  // https://github.com/PaulAdamDavis/Arctic-Scroll
+  $.fn.arctic_scroll = function (options) {
+    var defaults = {
+        elem: $(this),
+        speed: 500,
+      },
+      allOptions = $.extend(defaults, options);
 
-        var defaults = {
-                elem: $(this),
-                speed: 500
-            },
+    allOptions.elem.click(function (event) {
+      event.preventDefault();
+      var $this = $(this),
+        $htmlBody = $("html, body"),
+        offset = $this.attr("data-offset") ? $this.attr("data-offset") : false,
+        position = $this.attr("data-position")
+          ? $this.attr("data-position")
+          : false,
+        toMove;
 
-            allOptions = $.extend(defaults, options);
-
-        allOptions.elem.click(function (event) {
-            event.preventDefault();
-            var $this = $(this),
-                $htmlBody = $('html, body'),
-                offset = ($this.attr('data-offset')) ? $this.attr('data-offset') : false,
-                position = ($this.attr('data-position')) ? $this.attr('data-position') : false,
-                toMove;
-
-            if (offset) {
-                toMove = parseInt(offset);
-                $htmlBody.stop(true, false).animate({scrollTop: ($(this.hash).offset().top + toMove) }, allOptions.speed);
-            } else if (position) {
-                toMove = parseInt(position);
-                $htmlBody.stop(true, false).animate({scrollTop: toMove }, allOptions.speed);
-            } else {
-                $htmlBody.stop(true, false).animate({scrollTop: ($(this.hash).offset().top) }, allOptions.speed);
-            }
-        });
-
-    };
+      if (offset) {
+        toMove = parseInt(offset);
+        $htmlBody
+          .stop(true, false)
+          .animate(
+            { scrollTop: $(this.hash).offset().top + toMove },
+            allOptions.speed,
+          );
+      } else if (position) {
+        toMove = parseInt(position);
+        $htmlBody
+          .stop(true, false)
+          .animate({ scrollTop: toMove }, allOptions.speed);
+      } else {
+        $htmlBody
+          .stop(true, false)
+          .animate({ scrollTop: $(this.hash).offset().top }, allOptions.speed);
+      }
+    });
+  };
 })(jQuery);
 
 /*global jQuery */
@@ -73,95 +82,114 @@ import {LiveSocket} from "phoenix_live_view"
  *
  */
 
-(function( $ ){
+(function ($) {
   "use strict";
 
-  $.fn.fitVids = function( options ) {
+  $.fn.fitVids = function (options) {
     var settings = {
-      customSelector: null
+      customSelector: null,
     };
 
-    if(!document.getElementById('fit-vids-style')) {
+    if (!document.getElementById("fit-vids-style")) {
       // appendStyles: https://github.com/toddmotto/fluidvids/blob/master/dist/fluidvids.js
-      var head = document.head || document.getElementsByTagName('head')[0];
-      var css = '.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}';
-      var div = document.createElement('div');
-      div.innerHTML = '<p>x</p><style id="fit-vids-style">' + css + '</style>';
+      var head = document.head || document.getElementsByTagName("head")[0];
+      var css =
+        ".fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}";
+      var div = document.createElement("div");
+      div.innerHTML = '<p>x</p><style id="fit-vids-style">' + css + "</style>";
       head.appendChild(div.childNodes[1]);
     }
 
-    if ( options ) {
-      $.extend( settings, options );
+    if (options) {
+      $.extend(settings, options);
     }
 
-    return this.each(function(){
+    return this.each(function () {
       var selectors = [
         "iframe[src*='player.vimeo.com']",
         "iframe[src*='youtube.com']",
         "iframe[src*='youtube-nocookie.com']",
         "iframe[src*='kickstarter.com'][src*='video.html']",
         "object",
-        "embed"
+        "embed",
       ];
 
       if (settings.customSelector) {
         selectors.push(settings.customSelector);
       }
 
-      var $allVideos = $(this).find(selectors.join(','));
+      var $allVideos = $(this).find(selectors.join(","));
       $allVideos = $allVideos.not("object object"); // SwfObj conflict patch
 
-      $allVideos.each(function(){
+      $allVideos.each(function () {
         var $this = $(this);
-        if (this.tagName.toLowerCase() === 'embed' && $this.parent('object').length || $this.parent('.fluid-width-video-wrapper').length) { return; }
-        var height = ( this.tagName.toLowerCase() === 'object' || ($this.attr('height') && !isNaN(parseInt($this.attr('height'), 10))) ) ? parseInt($this.attr('height'), 10) : $this.height(),
-            width = !isNaN(parseInt($this.attr('width'), 10)) ? parseInt($this.attr('width'), 10) : $this.width(),
-            aspectRatio = height / width;
-        if(!$this.attr('id')){
-          var videoID = 'fitvid' + Math.floor(Math.random()*999999);
-          $this.attr('id', videoID);
+        if (
+          (this.tagName.toLowerCase() === "embed" &&
+            $this.parent("object").length) ||
+          $this.parent(".fluid-width-video-wrapper").length
+        ) {
+          return;
         }
-        $this.wrap('<div class="fluid-width-video-wrapper"></div>').parent('.fluid-width-video-wrapper').css('padding-top', (aspectRatio * 100)+"%");
-        $this.removeAttr('height').removeAttr('width');
+        var height =
+            this.tagName.toLowerCase() === "object" ||
+            ($this.attr("height") && !isNaN(parseInt($this.attr("height"), 10)))
+              ? parseInt($this.attr("height"), 10)
+              : $this.height(),
+          width = !isNaN(parseInt($this.attr("width"), 10))
+            ? parseInt($this.attr("width"), 10)
+            : $this.width(),
+          aspectRatio = height / width;
+        if (!$this.attr("id")) {
+          var videoID = "fitvid" + Math.floor(Math.random() * 999999);
+          $this.attr("id", videoID);
+        }
+        $this
+          .wrap('<div class="fluid-width-video-wrapper"></div>')
+          .parent(".fluid-width-video-wrapper")
+          .css("padding-top", aspectRatio * 100 + "%");
+        $this.removeAttr("height").removeAttr("width");
       });
     });
   };
-})( window.jQuery || window.Zepto );
+})(window.jQuery || window.Zepto);
 
-
-(function( $ ) {
-  var audio = document.getElementById('audio-alert');
+(function ($) {
+  var audio = document.getElementById("audio-alert");
 
   if (audio !== null) {
-    const observer = new MutationObserver(function(mutationsList, observer) {
-      for(let mutation of mutationsList) {
+    const observer = new MutationObserver(function (mutationsList, observer) {
+      for (let mutation of mutationsList) {
         var alert = mutation.target;
         alert.load();
         alert.play();
       }
     });
 
-    observer.observe(audio, {attributes: true});
+    observer.observe(audio, { attributes: true });
 
-    $("button").click(function() {
+    $("button").click(function () {
       var playPromise = audio.play();
 
       if (playPromise !== undefined) {
-        playPromise.then(function(_) {
-          audio.pause();
-        })
-        .catch(function(error) {
-          console.log(error)
-        });
+        playPromise
+          .then(function (_) {
+            audio.pause();
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
-    })
+    });
+  }
+})(window.jQuery || window.Zepto);
 
-  };
-})( window.jQuery || window.Zepto );
-
-(function() {
-  let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-  let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}});
+(function () {
+  let csrfToken = document
+    .querySelector("meta[name='csrf-token']")
+    .getAttribute("content");
+  let liveSocket = new LiveSocket("/live", Socket, {
+    params: { _csrf_token: csrfToken },
+  });
 
   // Connect if there are any LiveViews on the page
   liveSocket.connect();
