@@ -3794,6 +3794,11 @@ code.makeup .unselectable {
   margin-bottom: 0.25in;
 }
 
+.resume #profile .decorator::before,
+.resume #profile .decorator::after{ /* no timeline dot on the summary block */
+  display: none;
+}
+
 /***** fine-tunes on the details block where the real juice is *****/
 
 .resume .details{
