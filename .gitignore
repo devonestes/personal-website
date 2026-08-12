@@ -36,3 +36,6 @@ npm-debug.log
 .elixir_ls/
 
 .env
+
+# Local scratch — not for publishing
+/tmp/
