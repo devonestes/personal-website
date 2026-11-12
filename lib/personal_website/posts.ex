@@ -44,20 +44,27 @@ defmodule PersonalWebsite.Posts do
 
   channel = %{
     title: "Devon Estes",
-    link: "http://devonestes.com",
+    link: "https://devonestes.com",
     desc: "The personal blog of Devon Estes",
     date: @posts |> hd() |> Map.get(:date) |> date_formatter.(),
     lang: "en-us"
   }
 
+  xml_escape = fn text ->
+    text
+    |> String.replace("&", "&amp;")
+    |> String.replace("<", "&lt;")
+    |> String.replace(">", "&gt;")
+  end
+
   items =
     for %{title: title} = post when is_binary(title) <- @posts do
       """
       <item>
-        <title>#{post.title}</title>
+        <title>#{xml_escape.(post.title)}</title>
         <description><![CDATA[#{post.description}]]></description>
         <pubDate>#{date_formatter.(post.date)}</pubDate>
-        <link>http://devonestes.com/#{post.slug}</link>
+        <link>https://devonestes.com/#{post.slug}</link>
         <guid>http://devonestes.com/#{post.slug}</guid>
       </item>
       """
