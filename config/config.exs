@@ -20,11 +20,10 @@ config :personal_website, PersonalWebsiteWeb.Endpoint,
 
 config :personal_website, :mix_env, Mix.env()
 
-config :sendgrid, api_key: "fake_api_key", enable_sandbox: true
 
-# Pin the Stripe API version to the one stripity_stripe 2.x used, so upgrading the library
-# doesn't silently change request/response shapes for the Muzak checkout flow.
-config :stripity_stripe, api_version: "2020-08-27"
+# Use the timezone data bundled with the tzdata package instead of downloading and parsing a fresh
+# copy at boot, which spikes memory on the small production VM. It's refreshed on dependency updates.
+config :tzdata, :autoupdate, :disabled
 
 # Configures Elixir's Logger
 config :logger, :console,

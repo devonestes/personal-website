@@ -1,7 +1,5 @@
 import Config
 
-config :sendgrid, api_key: Map.fetch!(System.get_env(), "SENDGRID_API_KEY"), enable_sandbox: false
-
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
 # system starts, so it is typically used to load production configuration

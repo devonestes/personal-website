@@ -49,8 +49,6 @@ defmodule PersonalWebsite.MixProject do
       {:tesla, "~> 1.15"},
       {:phoenix_live_view, "~> 1.1"},
       {:floki, ">= 0.38.0", only: :test},
-      {:sendgrid, "~> 2.0"},
-      {:stripity_stripe, "~> 3.2"},
       {:vapor, "~> 0.10.0"}
     ]
   end

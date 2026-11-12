@@ -15,12 +15,6 @@ defmodule PersonalWebsiteWeb.Router do
 
     get "/", PageController, :index
     get "/retirement", RetirementController, :show
-    get "/muzak", MuzakController, :info
-    get "/muzak/subscribe", MuzakController, :signup
-    get "/muzak/success", MuzakController, :get_credentials
-    get "/muzak/cancel", MuzakController, :cancel
-    get "/muzak/manage", MuzakController, :manage
-    live "/bus", Bus
     live "/carb_calculator", CarbCalculator
     get "/feed.xml", PageController, :rss_feed
     get "/tag/:tag", PageController, :index_by_tag
