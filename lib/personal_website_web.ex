@@ -19,7 +19,9 @@ defmodule PersonalWebsiteWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: PersonalWebsiteWeb
+      use Phoenix.Controller,
+        formats: [html: "View", xml: "View"],
+        layouts: [html: {PersonalWebsiteWeb.LayoutView, :app}]
 
       import Plug.Conn
       import Phoenix.LiveView.Controller
@@ -35,7 +37,7 @@ defmodule PersonalWebsiteWeb do
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
-        only: [get_flash: 1, get_flash: 2, view_module: 1, view_template: 1]
+        only: [view_module: 1, view_template: 1, get_csrf_token: 0]
 
       # Include shared imports and aliases for views
       unquote(view_helpers())
@@ -54,7 +56,7 @@ defmodule PersonalWebsiteWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {PersonalWebsiteWeb.LayoutView, "live.html"}
+        layout: {PersonalWebsiteWeb.LayoutView, :live}
 
       unquote(view_helpers())
     end
@@ -70,9 +72,10 @@ defmodule PersonalWebsiteWeb do
 
   defp view_helpers do
     quote do
-      use Phoenix.HTML
+      import Phoenix.HTML
+      use PhoenixHTMLHelpers
 
-      import Phoenix.LiveView.Helpers
+      import Phoenix.Component
       import Phoenix.View
       import PersonalWebsiteWeb.ErrorHelpers
 

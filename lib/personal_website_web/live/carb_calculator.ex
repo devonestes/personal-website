@@ -28,21 +28,37 @@ defmodule PersonalWebsiteWeb.CarbCalculator do
   end
 
   def render(assigns) do
-    ~L"""
+    ~H"""
     <div style="text-align:center;margin-bottom:50px">
-      <%= f = form_for :calculator, "#", [phx_change: :update] %>
+      <form id="calculator" phx-change="update">
         <div>
           <label for="calculator_carb_units">Carb units (KE)</label>
-          <%= text_input f, :carb_units, inputmode: :decimal, pattern: "[0-9\.]*", "phx-debounce": "100", value: assigns.carb_units %>
+          <input
+            type="text"
+            id="calculator_carb_units"
+            name="calculator[carb_units]"
+            inputmode="decimal"
+            pattern="[0-9\.]*"
+            phx-debounce="100"
+            value={@carb_units}
+          />
         </div>
 
         <div>
           <label for="calculator_sensitivity_factor">Sensitivity factor</label>
-          <%= text_input f, :sensitivity_factor, inputmode: :decimal, pattern: "[0-9\.]*", "phx-debounce": "100", value: assigns.sensitivity_factor %>
+          <input
+            type="text"
+            id="calculator_sensitivity_factor"
+            name="calculator[sensitivity_factor]"
+            inputmode="decimal"
+            pattern="[0-9\.]*"
+            phx-debounce="100"
+            value={@sensitivity_factor}
+          />
         </div>
       </form>
 
-      <h1>Give <b><%= assigns.insulin_units %></b> units of insulin</h1>
+      <h1>Give <b>{@insulin_units}</b> units of insulin</h1>
     </div>
     """
   end

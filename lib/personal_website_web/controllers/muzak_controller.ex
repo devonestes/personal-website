@@ -9,7 +9,7 @@ defmodule PersonalWebsiteWeb.MuzakController do
     {:ok, %{id: id}} =
       params["email"]
       |> get_args(params["password"])
-      |> Stripe.Session.create()
+      |> Stripe.Checkout.Session.create()
 
     render_response(conn, id)
   end
@@ -87,7 +87,7 @@ defmodule PersonalWebsiteWeb.MuzakController do
      %{
        metadata: %{"username" => username, "password" => password} = metadata,
        subscription: sub_id
-     }} = Stripe.Session.retrieve(session_id)
+     }} = Stripe.Checkout.Session.retrieve(session_id)
 
     {:ok, _} = Stripe.Subscription.update(sub_id, %{metadata: metadata})
 

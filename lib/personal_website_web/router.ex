@@ -7,7 +7,7 @@ defmodule PersonalWebsiteWeb.Router do
     plug :fetch_live_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :put_root_layout, {PersonalWebsiteWeb.LayoutView, :root}
+    plug :put_root_layout, html: {PersonalWebsiteWeb.LayoutView, :root}
   end
 
   scope "/", PersonalWebsiteWeb do

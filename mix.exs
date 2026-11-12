@@ -5,12 +5,12 @@ defmodule PersonalWebsite.MixProject do
     [
       app: :personal_website,
       version: "0.1.0",
-      elixir: "~> 1.5",
+      elixir: "~> 1.18",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      listeners: [Phoenix.CodeReloader]
     ]
   end
 
@@ -33,22 +33,24 @@ defmodule PersonalWebsite.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.6"},
-      {:phoenix_html, "~> 3.2"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_dashboard, "~> 0.6"},
-      {:esbuild, "~> 0.4", runtime: Mix.env() == :dev},
-      {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"},
-      {:earmark, "~> 1.3"},
-      {:makeup_elixir, "~> 0.14"},
-      {:extwitter, "~> 0.12"},
-      {:timex, "~> 3.6.1"},
-      {:tesla, "~> 1.3.0"},
-      {:phoenix_live_view, "~> 0.17"},
-      {:floki, ">= 0.30.0", only: :test},
+      {:phoenix, "~> 1.8"},
+      {:phoenix_html, "~> 4.2"},
+      {:phoenix_html_helpers, "~> 1.0"},
+      {:phoenix_view, "~> 2.0"},
+      {:phoenix_live_reload, "~> 1.6", only: :dev},
+      {:phoenix_live_dashboard, "~> 0.8"},
+      {:esbuild, "~> 0.10", runtime: Mix.env() == :dev},
+      {:jason, "~> 1.4"},
+      {:plug_cowboy, "~> 2.7"},
+      {:earmark, "~> 1.4"},
+      {:makeup_elixir, "~> 1.0"},
+      {:extwitter, "~> 0.14"},
+      {:timex, "~> 4.0"},
+      {:tesla, "~> 1.15"},
+      {:phoenix_live_view, "~> 1.1"},
+      {:floki, ">= 0.38.0", only: :test},
       {:sendgrid, "~> 2.0"},
-      {:stripity_stripe, "~> 2.17"},
+      {:stripity_stripe, "~> 3.2"},
       {:vapor, "~> 0.10.0"}
     ]
   end

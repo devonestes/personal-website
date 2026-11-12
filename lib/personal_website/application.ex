@@ -5,8 +5,6 @@ defmodule PersonalWebsite.Application do
 
   use Application
 
-  alias SendGrid.{Email, Mail}
-
   def start(_type, _args) do
     Vapor.load!([%Vapor.Provider.Dotenv{overwrite: true}])
     Application.put_env(:personal_website, :gitea_token, System.fetch_env!("GITEA_API_TOKEN"))
@@ -27,7 +25,7 @@ defmodule PersonalWebsite.Application do
       if Application.get_env(:personal_website, :mix_env) == :dev do
         [
           PersonalWebsiteWeb.Endpoint,
-          {Phoenix.PubSub, [name: PersonalWebsite.PubSub, adapter: Phoenix.PubSub.PG2]}
+          {Phoenix.PubSub, name: PersonalWebsite.PubSub}
         ]
       else
         [PersonalWebsiteWeb.Endpoint]

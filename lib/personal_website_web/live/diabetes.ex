@@ -29,14 +29,14 @@ defmodule PersonalWebsiteWeb.Diabetes do
   end
 
   def render(assigns) do
-    ~L"""
+    ~H"""
     <div style="text-align:center;margin-bottom:50px">
       <div style="display:none">
-        <audio id="audio-alert" src="<%= unless is_nil(assigns.alert), do: Routes.static_path(assigns.socket, assigns.alert) %>"/>
+        <audio id="audio-alert" src={@alert && Routes.static_path(PersonalWebsiteWeb.Endpoint, @alert)} />
       </div>
       <h1>Nightscout</h1>
-      <h2><%= assigns.bg %></h2>
-      <button style="margin:0 auto" phx-click="toggle-sound"><%= assigns.sound %></button>
+      <h2>{@bg}</h2>
+      <button style="margin:0 auto" phx-click="toggle-sound">{@sound}</button>
     </div>
     """
   end

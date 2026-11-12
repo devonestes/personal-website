@@ -12,7 +12,7 @@ defmodule PersonalWebsiteWeb.PageController do
   def show(conn, params) do
     conn =
       case params["slug"] do
-        "resume" -> put_layout(conn, "empty.html")
+        "resume" -> put_layout(conn, html: {PersonalWebsiteWeb.LayoutView, :empty})
         _ -> conn
       end
 

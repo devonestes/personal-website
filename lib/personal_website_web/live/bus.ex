@@ -41,24 +41,25 @@ defmodule PersonalWebsiteWeb.Bus do
   end
 
   def render(assigns) do
-    ~L"""
+    ~H"""
     <div style="text-align:center;margin-bottom:50px">
       <div style="display:none">
-        <audio id="audio-alert" src="<%= unless is_nil(assigns.alert), do: Routes.static_path(assigns.socket, assigns.alert) %>"/>
+        <audio id="audio-alert" src={@alert && Routes.static_path(PersonalWebsiteWeb.Endpoint, @alert)} />
       </div>
-      <h1 style="text-align:center;font-size:30px"><%= assigns.date %></h1>
-      <h1 id="time" style="text-align:center;font-size:30px"><%= assigns.time %></h1>
+      <h1 style="text-align:center;font-size:30px">{@date}</h1>
+      <h1 id="time" style="text-align:center;font-size:30px">{@time}</h1>
       <div style="display:flex;flex-wrap:wrap;justify-content:center">
-        <%= for {destination, times} <- assigns.bus_data do %>
-          <div>
-            <h2 style="font-size:30px;padding:10px 50px;background:white;border:none;text-align:center"><%= destination %></h2>
-            <%= for {color, time} <- times do %>
-              <p style="font-size:50px;text-align:center;font-weight:900;color:<%= color %>"><%= time %></p>
-            <% end %>
-          </div>
-        <% end %>
+        <div :for={{destination, times} <- @bus_data}>
+          <h2 style="font-size:30px;padding:10px 50px;background:white;border:none;text-align:center">{destination}</h2>
+          <p
+            :for={{color, time} <- times}
+            style={"font-size:50px;text-align:center;font-weight:900;color:#{color}"}
+          >
+            {time}
+          </p>
+        </div>
       </div>
-      <button style="margin:0 auto" phx-click="toggle-sound"><%= assigns.sound %></button>
+      <button style="margin:0 auto" phx-click="toggle-sound">{@sound}</button>
     </div>
     """
   end

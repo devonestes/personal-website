@@ -3,12 +3,18 @@ defmodule PersonalWebsite.Muzak do
   Context for dealing with Muzak-related operations, such as managing users.
   """
 
-  use Tesla
-
-  plug Tesla.Middleware.BaseUrl, "https://#{Application.get_env(:personal_website, :git_host)}/api/v1"
-  plug Tesla.Middleware.Headers, [{"accept", "application/json"}, {"content-type", "application/json"}]
-  plug Tesla.Middleware.Query, [access_token: Application.get_env(:personal_website, :gitea_token)]
-  plug Tesla.Middleware.JSON
+  # Built at runtime because :git_host and :gitea_token are only set in Application.start/2.
+  defp client() do
+    Tesla.client([
+      {Tesla.Middleware.BaseUrl,
+       "https://#{Application.fetch_env!(:personal_website, :git_host)}/api/v1"},
+      {Tesla.Middleware.Headers,
+       [{"accept", "application/json"}, {"content-type", "application/json"}]},
+      {Tesla.Middleware.Query,
+       [access_token: Application.fetch_env!(:personal_website, :gitea_token)]},
+      Tesla.Middleware.JSON
+    ])
+  end
 
   def gen_credentials() do
     {random_string(), random_password()}
@@ -29,14 +35,14 @@ defmodule PersonalWebsite.Muzak do
       username: username
     }
 
-    case post("/admin/users", body) do
+    case Tesla.post(client(), "/admin/users", body) do
       {:ok, %{status: 201}} -> :ok
       _ -> :error
     end
   end
 
   defp add_user_to_team(username) do
-    case put("/teams/2/members/#{username}", %{}) do
+    case Tesla.put(client(), "/teams/2/members/#{username}", %{}) do
       {:ok, %{status: 204}} -> :ok
       _ -> :error
     end
