@@ -2,8 +2,10 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-  <title>Devon C. Estes</title>
-  <meta name="description" content="Devon C. Estes" />
+  <% meta = meta(assigns) %>
+  <title><%= meta.page_title %></title>
+  <meta name="description" content="<%= meta.description %>" />
+  <link rel="canonical" href="<%= meta.url %>" />
   <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -14,20 +16,22 @@
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
   <link rel="stylesheet" type="text/css" href="<%= Routes.static_path(@conn, "/css/app.css") %>" />
 
-  <meta property="og:site_name" content="Devon C. Estes" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Devon C. Estes" />
-  <meta property="og:description" content="" />
-  <meta property="og:url" content="http://devonestes.com" />
-  <meta property="og:image" content="http://devonestes.com/images/cropped_headshot.jpg" />
+  <meta property="og:site_name" content="<%= site_name() %>" />
+  <meta property="og:type" content="<%= meta.type %>" />
+  <meta property="og:title" content="<%= meta.title %>" />
+  <meta property="og:description" content="<%= meta.description %>" />
+  <meta property="og:url" content="<%= meta.url %>" />
+  <meta property="og:image" content="<%= meta.image %>" />
+  <%= if meta.type == "article" do %>
+  <meta property="article:author" content="<%= site_name() %>" />
+  <% end %>
 
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="<%= if meta.large_image?, do: "summary_large_image", else: "summary" %>">
   <meta name="twitter:site" content="@devoncestes">
   <meta name="twitter:creator" content="@devoncestes">
-  <meta name="twitter:title" content="Devon C. Estes">
-  <meta name="twitter:url" content="http://devonestes.com">
-  <meta name="twitter:text:description" content="An (at least) monthly weblog about software">
-  <meta name="twitter:image:src" content="http://devonestes.com/images/cropped_headshot.jpg">
+  <meta name="twitter:title" content="<%= meta.title %>">
+  <meta name="twitter:description" content="<%= meta.description %>">
+  <meta name="twitter:image" content="<%= meta.image %>">
 
   <%= csrf_meta_tag() %>
 </head>

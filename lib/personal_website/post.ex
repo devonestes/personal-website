@@ -1,6 +1,6 @@
 defmodule PersonalWebsite.Post do
   @enforce_keys [:slug, :author, :title, :body, :description, :tags, :date, :template]
-  defstruct [:slug, :author, :title, :body, :description, :tags, :date, :template]
+  defstruct [:slug, :author, :title, :body, :description, :tags, :date, :template, :image]
 
   alias PersonalWebsite.Highlighter
 
@@ -50,6 +50,9 @@ defmodule PersonalWebsite.Post do
 
   defp parse_attr({:description, value}),
     do: {:description, String.trim(value)}
+
+  defp parse_attr({:image, value}),
+    do: {:image, String.trim(value)}
 
   defp parse_attr({:body, value}),
     do: {:body, value |> Earmark.as_html!() |> Highlighter.highlight_code_blocks()}
